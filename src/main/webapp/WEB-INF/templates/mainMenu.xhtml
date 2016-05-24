@@ -1,0 +1,2425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:pm="http://primefaces.org/modena">
+
+<f:view contentType="text/html">
+
+	<h:head>
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+		</f:facet>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title" /></title>
+		<link rel="stylesheet" type="text/css"
+			href="${request.contextPath}/resources/css/style.css" />
+		<link rel="shortcut icon"
+			href="${request.contextPath}/resources/css/images/Logo.jpg" />
+
+		<script src="../resources/resources/js/core/core.js"></script>
+		<script src="../resources/resources/js/components/slideshow.js"></script>
+		<script src="../resources/resources/js/components/slideshow-fx.js"></script>
+
+		<!-- <script
+			src="../resources/resources/yadcf-0.8.9/jquery.dataTables.yadcf.js"></script>
+
+		<script type="text/javascript"
+			src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script> -->
+
+		<h:outputScript name="js/ripple-effect.js" library="modena-layout" />
+		<h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
+		<h:outputScript name="js/layout.js" library="modena-layout" />
+
+		<script type="text/javascript">
+
+		function createClass(name,rules){
+		    var style = document.createElement('style');
+		    style.type = 'text/css';
+		    document.getElementsByTagName('head')[0].appendChild(style);
+		    if(!(style.sheet||{}).insertRule) 
+		        (style.styleSheet || style.sheet).addRule(name, rules);
+		    else
+		        style.sheet.insertRule(name+"{"+rules+"}",0);
+		}
+
+		function applyClass(name,element,doRemove){
+		    if(typeof element.valueOf() == "string"){
+		        element = document.getElementById(element);
+		    }
+		    if(!element) return;
+		    if(doRemove){
+		        element.className = element.className.replace(new RegExp("\\b" + name + "\\b","g"));
+		    }else{      
+		        element.className = element.className + " " + name;
+		    }
+		}
+
+		var originalPrimeFacesAjaxUtilsUpdateElement = PrimeFaces.ajax.Utils.updateElement;
+		PrimeFaces.ajax.Utils.updateElement = function(id, content, xhr) {
+		    //call the original function first that does the basic updating
+		    originalPrimeFacesAjaxUtilsUpdateElement.apply(this, arguments);
+		    // Do your work here...
+		    
+		    var windowHeight = $(window).outerHeight();
+			var windowWight  = $(window).outerWidth();
+	
+			if(windowHeight &lt; 961) {
+				var TableHeight80 = windowHeight/100 * 80;
+	    		var TableHeight40 = windowHeight/100 * 40;
+	    		var TableHeight60 = windowHeight/100 * 60;
+	
+	    		createClass('.TableHeight40 .ui-datatable-scrollable-body', "height:" + (TableHeight40) +"px! important;");
+	    		createClass('.TableHeight60 .ui-datatable-scrollable-body', "height:" + (TableHeight60) +"px! important;");
+	    		createClass('.TableHeight80 .ui-datatable-scrollable-body', "height:" + (TableHeight80) +"px! important;");
+	    		
+			}
+			else{
+				var TableHeight80 = windowHeight;
+	    		var TableHeight40 = windowHeight/100 * 40;
+	    		var TableHeight60 = windowHeight/100 * 40;
+	
+	    		createClass('.TableHeight40 .ui-datatable-scrollable-body', "height:" + (TableHeight40) +"px! important;");
+	    		createClass('.TableHeight60 .ui-datatable-scrollable-body', "height:" + (TableHeight60) +"px! important;");
+	    		createClass('.TableHeight80 .ui-datatable-scrollable-body', "height:" + (TableHeight80) +"px! important;");
+	    	}
+		    
+		    switch (id) {
+		    	case 'mainTaskForm:tasks':
+		    		var TableByID = document.getElementById("mainTaskForm:tasks");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight40", "mainTaskForm:tasks", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:taskTimeTrackingForm:timeTrackings':
+		    		var TableByID = document.getElementById("tabViewID:taskTimeTrackingForm:timeTrackings");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight40", "tabViewID:taskTimeTrackingForm:timeTrackings", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:taskStatusHistoryForm:statusHistories':
+		    		var TableByID = document.getElementById("tabViewID:taskStatusHistoryForm:statusHistories");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight40", "tabViewID:taskStatusHistoryForm:statusHistories", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:MenuFileID':
+		    		var TableByID = document.getElementById("tabViewID:MenuFileID");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight40", "tabViewID:MenuFileID", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:MenuTaskHistory':
+		    		var TableByID = document.getElementById("tabViewID:MenuTaskHistory");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight40", "tabViewID:MenuTaskHistory", false);
+		    		}
+		    		break;
+
+		    	case 'projectFileForm:files':
+		    		var TableByID = document.getElementById("projectFileForm:files");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "projectFileForm:files", false);
+		    		}
+		    		break;
+
+		    	case 'projectsForm:projectsUsers':
+		    		var TableByID = document.getElementById("projectsForm:projectsUsers");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight60", "projectsForm:projectsUsers", false);
+		    		}
+		    		break;
+
+		    	case 'projectsForm:projectsUserRoles':
+		    		var TableByID = document.getElementById("projectsForm:projectsUserRoles");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight60", "projectsForm:projectsUserRoles", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:projectContractForm:contracts':
+		    		var TableByID = document.getElementById("tabViewID:projectContractForm:contracts");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:projectContractForm:contracts", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:contractorOrganizationForm:contractorOrganizations':
+		    		var TableByID = document.getElementById("tabViewID:contractorOrganizationForm:contractorOrganizations");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:contractorOrganizationForm:contractorOrganizations", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:customerOrganizationForm:customerOrganizations':
+		    		var TableByID = document.getElementById("tabViewID:customerOrganizationForm:customerOrganizations");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:customerOrganizationForm:customerOrganizations", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:formatTimeTrackingForm:formatTimeTrackings':
+		    		var TableByID = document.getElementById("tabViewID:formatTimeTrackingForm:formatTimeTrackings");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:formatTimeTrackingForm:formatTimeTrackings", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:projectMilestoneForm:projectMilestonees':
+		    		var TableByID = document.getElementById("tabViewID:projectMilestoneForm:projectMilestonees");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:projectMilestoneForm:projectMilestonees", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:taskTypeForm:taskTypes':
+		    		var TableByID = document.getElementById("tabViewID:taskTypeForm:taskTypes");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:taskTypeForm:taskTypes", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:taskStatusForm:taskStatuses':
+		    		var TableByID = document.getElementById("tabViewID:taskStatusForm:taskStatuses");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:taskStatusForm:taskStatuses", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:taskPriorityForm:taskPriorityes':
+		    		var TableByID = document.getElementById("tabViewID:taskPriorityForm:taskPriorityes");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:taskPriorityForm:taskPriorityes", false);
+		    		}
+		    		break;
+
+		    	case 'tabViewID:projectCostSettingForm:projectCostSettings':
+		    		var TableByID = document.getElementById("tabViewID:projectCostSettingForm:projectCostSettings");
+		    		if(TableByID !=null) {
+			    		applyClass("TableHeight80", "tabViewID:projectCostSettingForm:projectCostSettings", false);
+		    		}
+		    		break;
+				default:
+					break;
+		    }
+		};
+				
+		$(document).ready(function() {
+
+		function setSize() {
+
+				var windowHeight = $(window).outerHeight();
+				var windowWight  = $(window).outerWidth();
+
+				var longWightDialogSize  			= 696;
+				var longHeightDialogSize 			= 500;
+				var longMinWightDialogSize  		= 600;
+				var longMaxWightDialogSize  		= 800;
+				var longMinHeightDialogSize 		= 800;
+				var longMaxHeightDialogSize 		= 1023;
+				var wightBar						= 20;
+				var heightBar						= 160;
+				var wightSize 			 			= windowWight - wightBar;
+				var heightSize 			 			= windowHeight - heightBar;
+				var MaxHeightWizard 				= 590 + heightBar;
+				var windowNormalWight 	 			= 800;
+				var windowNormalWightBar 	 		= windowNormalWight - wightBar;
+	
+				var DialogByIDStyleClass = document.getElementsByClassName("ui-dialog-content ui-widget-content");
+				var i;
+				var currentWigth;
+				for (i = 0; i &lt; DialogByIDStyleClass.length; i++) {
+	    			if (windowWight &lt; windowNormalWight){
+	    				DialogByIDStyleClass[i].style.width = (wightSize) +"px! important;";
+			    		DialogByIDStyleClass[i].style.maxHeight = (heightSize) +"px! important;";
+			    		DialogByIDStyleClass[i].setAttribute("style", "width:" + (wightSize) +"px! important;" + "max-height:" + (heightSize) +"px! important;");
+					}
+	    			else {
+	    				DialogByIDStyleClass[i].style.width = (windowNormalWightBar) +"px! important;";
+			    		DialogByIDStyleClass[i].style.maxHeight = (heightSize) +"px! important;";
+			    		DialogByIDStyleClass[i].setAttribute("style", "width:" + (windowNormalWightBar) +"px! important;" + "max-height:" + (heightSize) +"px! important;");
+			    	}
+				}
+	
+				var ConfirmDialogStyleClass = document.getElementsByClassName("ui-confirm-dialog");
+				var i;
+				for (i = 0; i &lt; ConfirmDialogStyleClass.length; i++) {
+					DialogByIDStyleClass = ConfirmDialogStyleClass[i].getElementsByClassName("ui-dialog-content ui-widget-content");
+					DialogByIDStyleClass[0].style.width = "auto ! important;";
+	  			 		DialogByIDStyleClass[0].style.height = "auto ! important;";
+	  			 		DialogByIDStyleClass[0].setAttribute("style", "width: auto ! important;" + "height: auto ! important;");
+			    }
+	
+				DialogGreetingProcess = document.getElementById("greetingProcess");
+				DialogByIDStyleClass = DialogGreetingProcess.getElementsByClassName("ui-dialog-content ui-widget-content");
+				DialogByIDStyleClass[0].style.width = "auto ! important;";
+		 		DialogByIDStyleClass[0].style.height = "auto ! important;";
+		 		DialogByIDStyleClass[0].setAttribute("style", "width: auto ! important;" + "height: auto ! important;");
+					
+		 		var DialogByID = document.getElementById("projectWizardDialog");
+	    		if(DialogByID !=null) {
+		    		var DialogByIDStyleClass = DialogByID.getElementsByClassName("ui-dialog-content ui-widget-content");
+		    		DialogByIDStyleClass[0].style.width = (wightSize) +"px! important;";
+				   	DialogByIDStyleClass[0].style.maxHeight = (heightSize) +"px! important;";
+				    DialogByIDStyleClass[0].setAttribute("style", "width:" + (wightSize) +"px! important;" + "max-height:" + (heightSize) +"px! important;");
+		  		}
+
+			};
+
+			function createClass(name,rules){
+			    var style = document.createElement('style');
+			    style.type = 'text/css';
+			    document.getElementsByTagName('head')[0].appendChild(style);
+			    if(!(style.sheet||{}).insertRule) 
+			        (style.styleSheet || style.sheet).addRule(name, rules);
+			    else
+			        style.sheet.insertRule(name+"{"+rules+"}",0);
+			}
+
+			function applyClass(name,element,doRemove){
+			    if(typeof element.valueOf() == "string"){
+			        element = document.getElementById(element);
+			    }
+			    if(!element) return;
+			    if(doRemove){
+			        element.className = element.className.replace(new RegExp("\\b" + name + "\\b","g"));
+			    }else{      
+			        element.className = element.className + " " + name;
+			    }
+			}
+				
+			function setTabSize() {
+
+				var windowHeight = $(window).outerHeight();
+				var windowWight  = $(window).outerWidth();
+
+				if(windowHeight &lt; 961) {
+					var TableHeight80 = windowHeight/100 * 80;
+		    		var TableHeight40 = windowHeight/100 * 40;
+		    		var TableHeight60 = windowHeight/100 * 60;
+
+		    		createClass('.TableHeight40 .ui-datatable-scrollable-body', "height:" + (TableHeight40) +"px! important;");
+		    		createClass('.TableHeight60 .ui-datatable-scrollable-body', "height:" + (TableHeight60) +"px! important;");
+		    		createClass('.TableHeight80 .ui-datatable-scrollable-body', "height:" + (TableHeight80) +"px! important;");
+		    		
+				}
+				else{
+					var TableHeight80 = windowHeight;
+		    		var TableHeight40 = windowHeight/100 * 40;
+		    		var TableHeight60 = windowHeight/100 * 50;
+
+		    		createClass('.TableHeight40 .ui-datatable-scrollable-body', "height:" + (TableHeight40) +"px! important;");
+		    		createClass('.TableHeight60 .ui-datatable-scrollable-body', "height:" + (TableHeight60) +"px! important;");
+		    		createClass('.TableHeight80 .ui-datatable-scrollable-body', "height:" + (TableHeight80) +"px! important;");
+		    	}
+
+	    		var TableByID = document.getElementById("mainTaskForm:tasks");
+	    		if(TableByID !=null) {
+		    		applyClass("TableHeight40", "mainTaskForm:tasks", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:taskTimeTrackingForm:timeTrackings");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight40", "tabViewID:taskTimeTrackingForm:timeTrackings", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:taskStatusHistoryForm:statusHistories");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight40", "tabViewID:taskStatusHistoryForm:statusHistories", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:MenuFileID");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight40", "tabViewID:MenuFileID", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:MenuTaskHistory");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight40", "tabViewID:MenuTaskHistory", false);
+	    		}
+	    		
+	    		var TableByID = document.getElementById("projectFileForm:files");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "projectFileForm:files", false);
+	    		}
+
+	    		var TableByID = document.getElementById("projectsForm:projectsUsers");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight60", "projectsForm:projectsUsers", false);
+	    		}
+
+	    		var TableByID = document.getElementById("projectsForm:projectsUserRoles");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight60", "projectsForm:projectsUserRoles", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:projectContractForm:contracts");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:projectContractForm:contracts", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:contractorOrganizationForm:contractorOrganizations");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:contractorOrganizationForm:contractorOrganizations", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:customerOrganizationForm:customerOrganizations");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:customerOrganizationForm:customerOrganizations", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:formatTimeTrackingForm:formatTimeTrackings");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:formatTimeTrackingForm:formatTimeTrackings", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:projectMilestoneForm:projectMilestonees");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:projectMilestoneForm:projectMilestonees", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:taskTypeForm:taskTypes");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:taskTypeForm:taskTypes", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:taskStatusForm:taskStatuses");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:taskStatusForm:taskStatuses", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:taskPriorityForm:taskPriorityes");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:taskPriorityForm:taskPriorityes", false);
+	    		}
+
+	    		var TableByID = document.getElementById("tabViewID:projectCostSettingForm:projectCostSettings");
+	    		if(TableByID !=null) {
+	    			applyClass("TableHeight80", "tabViewID:projectCostSettingForm:projectCostSettings", false);
+	    		}
+			};
+
+			$(window).resize(function() {
+					setSize();
+					setTabSize();
+			});
+
+			$(window).load(function() {
+				  setSize();
+				  setTabSize();
+			});
+
+		});
+
+		</script>
+
+		<ui:insert name="head" />
+
+	</h:head>
+
+	<h:body styleClass="BlueModena body WidAutoOnMobile">
+
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js"
+			target="head" />
+		<h:outputScript library="omnifaces" name="fixviewstate.js"
+			target="head" />
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog id="greetingProcess" widgetVar="statusDialog"
+			showHeader="false" draggable="true" closable="false"
+			resizable="false" appendTo="@(body)"
+			style="background: transparent; border: none;
+			background-color: transparent; background-image: none;
+			box-shadow:none!important;">
+			<i class="fa fa-spinner fa-pulse fa-4x" style="color: #87afc1;"></i>
+		</p:dialog>
+
+		<p:growl id="growlMessages" showDetail="false" sticky="false"
+			life="13000" />
+
+		<ui:insert name="header" />
+
+		<ui:insert name="content" />
+
+		<p:dialog header="Edit Project" widgetVar="projectDialogEdit"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="projectEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="EditProjectName" value="Name:" />
+							<p:inputText id="EditProjectName"
+								value="#{ProjectServiceImpl.selectedCurrentProject.name}"
+								required="true" title="Enter project name!">
+								<f:validateLength minimum="1" />
+							</p:inputText>
+
+							<p:outputLabel for="EditProjectStartDate" value="Start date:" />
+							<p:calendar id="EditProjectStartDate"
+								value="#{ProjectServiceImpl.selectedCurrentProject.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="EditProjectFinishDate" value="Finish date:" />
+							<p:calendar id="EditProjectFinishDate"
+								value="#{ProjectServiceImpl.selectedCurrentProject.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad" update=":projectEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ProjectServiceImpl.update(ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('projectDialogEdit').hide()"
+						update=":currentProjectForm:project
+						:currentProjectHeaderForm:projectHeader" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('projectDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Project" widgetVar="projectDialogADD"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="projectADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="ADDProjectName" value="Name:" />
+							<p:inputText id="ADDProjectName"
+								value="#{ProjectServiceImpl.projectADD.name}" required="true"
+								title="Enter project Name!">
+								<f:validateLength minimum="2" maximum="255" />
+							</p:inputText>
+
+
+							<p:outputLabel for="ADDProjectStartDate" value="Start date:" />
+							<p:calendar id="ADDProjectStartDate"
+								value="#{ProjectServiceImpl.projectADD.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="ADDProjectFinishDate" value="Finish date:" />
+							<p:calendar id="ADDProjectFinishDate"
+								value="#{ProjectServiceImpl.projectADD.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad" update=":projectADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{GlobalControllerImpl.createProjectByUser(ProjectServiceImpl.projectADD, user)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('projectDialogADD').hide()"
+						update=":currentProjectForm:project
+						:currentProjectHeaderForm:projectHeader" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('projectDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="projectWizardDialog" header="Project Wizard"
+			widgetVar="projectWizardDialog" modal="true" showEffect="pop"
+			resetValues="true" resizable="false" dynamic="true" closable="true"
+			draggable="true" visible="#{GlobalControllerImpl.flagNewUser}"
+			styleClass="wizard dialogWizard">
+
+			<p:ajax event="close"
+				onstart="PF('projectWizard').loadStep(PF('projectWizard').cfg.steps [0], true)"
+				listener="#{GlobalControllerImpl.changeListenerEndWizard()}" />
+
+			<p:outputPanel>
+				<h:form id="wizardCurrentProjectForm">
+					<b><p:outputLabel for="project" value="Project: "
+							style="width:10%;" /></b>
+					<p:selectOneMenu id="project"
+						value="#{ProjectServiceImpl.selectedCurrentProject}" effect="fold"
+						converter="omnifaces.SelectItemsConverter" editable="false"
+						disabled="true" style="width:90%;">
+						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
+							var="project" itemLabel="#{project}" itemValue="#{project}" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}" />
+					</p:selectOneMenu>
+				</h:form>
+			</p:outputPanel>
+
+			<h:form id="wizardTabViewID" styleClass="Wid100">
+
+				<p:wizard showNavBar="false" widgetVar="projectWizard"
+					onback="if (PF('projectWizard').getStepIndex(PF('projectWizard').currentStep) === 1) 
+							{ PF('stepBackward').disable(); } PF('stepForward').enable(); PF('stepFinish').disable();"
+					onnext="if (PF('projectWizard').getStepIndex(PF('projectWizard').currentStep) === 8) 
+							{ PF('stepForward').disable(); PF('stepFinish').enable();} PF('stepBackward').enable();"
+					flowListener="#{GlobalControllerImpl.onFlowProcess}"
+					showStepStatus="true" styleClass="Wid100 projectWizardButton">
+
+					<p:tab id="projectTab" title="Project">
+
+						<h:form id="projectEditForm" style="text-align: left">
+							<p:focus />
+							<div class="Container100 ui-fluid">
+								<div class="ContainerIndent">
+
+									<p:panelGrid id="regPanelGrid" columns="2"
+										columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+										style="border:0px none; background-color:transparent;">
+
+										<p:outputLabel for="EditProjectName" value="Name:" />
+										<p:inputText id="EditProjectName"
+											value="#{ProjectServiceImpl.selectedCurrentProject.name}"
+											required="true" title="Enter project name!">
+											<f:validateLength minimum="1" />
+											<p:ajax event="change"
+												action="#{ProjectServiceImpl.update(ProjectServiceImpl.selectedCurrentProject)}"
+												update=":wizardCurrentProjectForm:project, :currentProjectForm:project
+										:currentProjectHeaderForm:projectHeader" />
+										</p:inputText>
+
+										<p:outputLabel for="EditProjectStartDate" value="Start date:" />
+										<p:calendar id="EditProjectStartDate"
+											value="#{ProjectServiceImpl.selectedCurrentProject.startDate}"
+											required="true" pattern="dd.MM.yyyy" mask="true"
+											process="@this">
+											<p:ajax event="dateSelect"
+												action="#{ProjectServiceImpl.update(ProjectServiceImpl.selectedCurrentProject)}"
+												update=":wizardCurrentProjectForm:project :currentProjectForm:project
+											:currentProjectHeaderForm:projectHeader" />
+										</p:calendar>
+
+										<p:outputLabel for="EditProjectFinishDate"
+											value="Finish date:" />
+										<p:calendar id="EditProjectFinishDate"
+											value="#{ProjectServiceImpl.selectedCurrentProject.finishDate}"
+											required="true" pattern="dd.MM.yyyy" mask="true"
+											process="@this">
+											<p:ajax event="dateSelect"
+												action="#{ProjectServiceImpl.update(ProjectServiceImpl.selectedCurrentProject)}"
+												update=":wizardCurrentProjectForm:project :currentProjectForm:project
+											 :currentProjectHeaderForm:projectHeader" />
+										</p:calendar>
+
+									</p:panelGrid>
+								</div>
+							</div>
+							<div class="EmptyBox100"></div>
+							<div class="EmptyBox57"></div>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuContracts" title="Contracts">
+
+						<h:form id="projectContractForm">
+							<p:contextMenu for="contracts">
+								<p:menuitem value="Edit" update="wizardProjectContractEditForm"
+									icon="fa fa-pencil" aria-hidden="true"
+									oncomplete="PF('wizardProjectContractDialogEdit').show()" />
+							</p:contextMenu>
+
+							<p:dataTable reflow="true" id="contracts" var="contract"
+								value="#{ContractServiceImpl.contracts}" rowKey="#{contract.id}"
+								rowIndexVar="rowIndex"
+								selection="#{ContractServiceImpl.selectedContract}"
+								selectionMode="single" resizableColumns="true"
+								draggableColumns="true" liveResize="true" scrollable="true"
+								styleClass="dataTableWizard" scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true" action="#{ContractServiceImpl.clear()}"
+											update="wizardProjectContractADDForm"
+											oncomplete="PF('wizardProjectContractDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<!-- <p:ajax event="rowSelect"
+									listener="#{ContractServiceImpl.onRowSelect}"
+									update="growlMessages" /> -->
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name" sortBy="#{contract.name}">
+									<h:outputText id="nameFade" value="#{contract.name}" />
+									<p:tooltip id="toolNameFadeFade" for="nameFade"
+										value="#{contract.name}" />
+								</p:column>
+
+								<p:column headerText="Start date" sortBy="#{contract.startDate}"
+									styleClass="columnCenter">
+									<h:outputText value="#{contract.startDate}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Finish date"
+									sortBy="#{contract.finishDate}" styleClass="columnCenter">
+									<h:outputText value="#{contract.finishDate}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{ContractServiceImpl.setSelectedContract(contract)}"
+										update="wizardProjectContractEditForm,:wizardTabViewID:projectContractForm:contracts"
+										resetValues="true"
+										oncomplete="PF('wizardProjectContractDialogEdit').show()"
+										styleClass="editCommandButton" process="@this" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{ContractServiceImpl.delete(contract, ProjectServiceImpl.selectedCurrentProject)}"
+										update=":wizardTabViewID:projectContractForm:contracts"
+										styleClass="deleteCommandButton" process="@this">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuContractorOrganization" title="Contractors">
+
+						<h:form id="contractorOrganizationForm">
+							<p:dataTable reflow="true" id="contractorOrganizations"
+								var="contractorOrganization"
+								value="#{ContractorOrganizationServiceImpl.contractorOrganizations}"
+								rowKey="#{contractorOrganization.id}"
+								selection="#{ContractorOrganizationServiceImpl.selectedContractorOrganization}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true"
+											action="#{ContractorOrganizationServiceImpl.clear()}"
+											update=":wizardContractorOrganizationADDForm"
+											oncomplete="PF('wizardContractorOrganizationDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name"
+									sortBy="#{contractorOrganization.name}">
+									<h:outputText value="#{contractorOrganization.name}" />
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{ContractorOrganizationServiceImpl.setSelectedContractorOrganization(contractorOrganization)}"
+										update=":wizardContractorOrganizationEditForm, :wizardTabViewID:contractorOrganizationForm:contractorOrganizations"
+										resetValues="true"
+										oncomplete="PF('wizardContractorOrganizationDialogEdit').show()"
+										styleClass="editCommandButton" process="@this" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{ContractorOrganizationServiceImpl.delete(contractorOrganization, ProjectServiceImpl.selectedCurrentProject)}"
+										update=":wizardContractorOrganizationADDForm, :wizardTabViewID:contractorOrganizationForm:contractorOrganizations"
+										styleClass="deleteCommandButton" process="@this">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+
+								</p:column>
+
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuCustomerOrganization" title="Customers">
+
+						<h:form id="customerOrganizationForm">
+							<p:dataTable reflow="true" id="customerOrganizations"
+								var="customerOrganization"
+								value="#{CustomerOrganizationServiceImpl.customerOrganizations}"
+								rowKey="#{customerOrganization.id}"
+								selection="#{CustomerOrganizationServiceImpl.selectedCustomerOrganization}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true"
+											action="#{CustomerOrganizationServiceImpl.clear()}"
+											update=":wizardCustomerOrganizationADDForm"
+											oncomplete="PF('wizardCustomerOrganizationDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name"
+									sortBy="#{customerOrganization.name}">
+									<h:outputText value="#{customerOrganization.name}" />
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{CustomerOrganizationServiceImpl.setSelectedCustomerOrganization(customerOrganization)}"
+										update=":wizardCustomerOrganizationEditForm, :wizardTabViewID:customerOrganizationForm:customerOrganizations"
+										resetValues="true"
+										oncomplete="PF('wizardCustomerOrganizationDialogEdit').show()"
+										styleClass="editCommandButton" process="@this" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{CustomerOrganizationServiceImpl.delete(customerOrganization, ProjectServiceImpl.selectedCurrentProject)}"
+										update=":wizardCustomerOrganizationADDForm, :wizardTabViewID:customerOrganizationForm:customerOrganizations"
+										styleClass="deleteCommandButton" process="@this">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuFormatTimeTracking" title="Time Format">
+
+						<h:form id="formatTimeTrackingForm">
+							<p:dataTable reflow="true" id="formatTimeTrackings"
+								var="formatTimeTracking"
+								value="#{FormatTimeTrackingServiceImpl.formatTimeTrackings}"
+								rowKey="#{formatTimeTracking.id}"
+								selection="#{FormatTimeTrackingServiceImpl.selectedFormatTimeTracking}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true"
+											action="#{FormatTimeTrackingServiceImpl.clear()}"
+											update=":wizardFormatTimeTrackingADDForm"
+											oncomplete="PF('wizardFormatTimeTrackingDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name" sortBy="#{formatTimeTracking.name}">
+									<h:outputText value="#{formatTimeTracking.name}" />
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{FormatTimeTrackingServiceImpl.setSelectedFormatTimeTracking(formatTimeTracking)}"
+										update=":wizardFormatTimeTrackingEditForm, :wizardTabViewID:formatTimeTrackingForm:formatTimeTrackings"
+										resetValues="true"
+										oncomplete="PF('wizardFormatTimeTrackingDialogEdit').show()"
+										styleClass="editCommandButton" process="@this"
+										disabled="#{formatTimeTracking.constant}" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{FormatTimeTrackingServiceImpl.delete(ProjectServiceImpl.selectedCurrentProject, formatTimeTracking)}"
+										update=":wizardFormatTimeTrackingADDForm, :wizardTabViewID:formatTimeTrackingForm:formatTimeTrackings"
+										styleClass="deleteCommandButton" process="@this"
+										disabled="#{formatTimeTracking.constant}">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuProjectCostSetting" title="Project Cost">
+
+						<h:form id="projectCostSettingForm">
+							<p:contextMenu for="projectCostSettings">
+								<p:menuitem value="Edit"
+									update=":wizardProjectCostSettingEditForm" icon="fa fa-pencil"
+									aria-hidden="true"
+									oncomplete="PF('wizardProjectCostSettingDialogEdit').show()" />
+							</p:contextMenu>
+
+							<p:dataTable reflow="true" id="projectCostSettings"
+								var="projectCostSetting"
+								value="#{ProjectCostSettingEntityServiceImpl.projectCostSettings}"
+								rowKey="#{projectCostSetting.id}" rowIndexVar="rowIndex"
+								selection="#{ProjectCostSettingEntityServiceImpl.selectedProjectCostSetting}"
+								selectionMode="single" resizableColumns="true"
+								draggableColumns="true" liveResize="true" scrollable="true"
+								styleClass="dataTableWizard" scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true"
+											action="#{ProjectCostSettingEntityServiceImpl.clear()}"
+											update=":wizardProjectCostSettingADDForm"
+											oncomplete="PF('wizardProjectCostSettingDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<!-- <p:ajax event="rowSelect"
+							listener="#{ProjectCostSettingEntityServiceImpl.onRowSelect}"
+							update="growlMessages" /> -->
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Format Time"
+									filterBy="#{projectCostSetting.formatTimeTracking}"
+									filterStyle="display:none"
+									sortBy="#{projectCostSetting.formatTimeTracking.name}">
+									<h:outputText value="#{projectCostSetting.formatTimeTracking}" />
+								</p:column>
+
+								<p:column headerText="Start date"
+									sortBy="#{projectCostSetting.startDate}"
+									styleClass="columnCenter">
+									<h:outputText value="#{projectCostSetting.startDate}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Finish date"
+									sortBy="#{projectCostSetting.finishDate}"
+									styleClass="columnCenter">
+									<h:outputText value="#{projectCostSetting.finishDate}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Cost" sortBy="#{projectCostSetting.cost}"
+									styleClass="columnCenter">
+									<h:outputText value="#{projectCostSetting.cost}">
+										<f:convertNumber pattern="#00.00" />
+									</h:outputText>
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{ProjectCostSettingEntityServiceImpl.setSelectedProjectCostSetting(projectCostSetting)}"
+										update=":wizardProjectCostSettingEditForm,:wizardTabViewID:projectCostSettingForm:projectCostSettings"
+										resetValues="true"
+										oncomplete="PF('wizardProjectCostSettingDialogEdit').show()"
+										styleClass="editCommandButton" process="@this" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{ProjectCostSettingEntityServiceImpl.delete(projectCostSetting, ProjectServiceImpl.selectedCurrentProject)}"
+										update=":wizardTabViewID:projectCostSettingForm:projectCostSettings"
+										styleClass="deleteCommandButton" process="@this">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuProjectMilestone" title="Milestone">
+
+						<h:form id="projectMilestoneForm">
+							<p:dataTable reflow="true" id="projectMilestonees"
+								var="projectMilestone"
+								value="#{ProjectMilestoneServiceImpl.projectMilestones}"
+								rowKey="#{projectMilestone.id}"
+								selection="#{ProjectMilestoneServiceImpl.selectedProjectMilestone}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true"
+											action="#{ProjectMilestoneServiceImpl.clear()}"
+											update=":wizardProjectMilestoneADDForm"
+											oncomplete="PF('wizardProjectMilestoneDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name" sortBy="#{projectMilestone.name}">
+									<h:outputText value="#{projectMilestone.name}" />
+								</p:column>
+
+								<p:column headerText="Start date"
+									sortBy="#{projectMilestone.startDate}"
+									styleClass="columnCenter">
+									<h:outputText value="#{projectMilestone.startDate}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Finish date"
+									sortBy="#{projectMilestone.finishDate}"
+									styleClass="columnCenter">
+									<h:outputText value="#{projectMilestone.finishDate}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{ProjectMilestoneServiceImpl.setSelectedProjectMilestone(projectMilestone)}"
+										update=":wizardProjectMilestoneEditForm, :wizardTabViewID:projectMilestoneForm:projectMilestonees"
+										resetValues="true"
+										oncomplete="PF('wizardProjectMilestoneDialogEdit').show()"
+										styleClass="editCommandButton" process="@this" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{ProjectMilestoneServiceImpl.delete(projectMilestone, ProjectServiceImpl.selectedCurrentProject)}"
+										update=":wizardProjectMilestoneADDForm, :wizardTabViewID:projectMilestoneForm:projectMilestonees"
+										styleClass="deleteCommandButton" process="@this">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuTaskType" title="Tasks Type">
+
+						<h:form id="taskTypeForm">
+							<p:dataTable reflow="true" id="taskTypes" var="taskType"
+								value="#{TaskTypeServiceImpl.taskTypes}" rowKey="#{taskType.id}"
+								selection="#{TaskTypeServiceImpl.selectedTaskType}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true" action="#{TaskTypeServiceImpl.clear()}"
+											update=":wizardTaskTypeADDForm"
+											oncomplete="PF('wizardTaskTypeDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name" sortBy="#{taskType.name}">
+									<h:outputText value="#{taskType.name}" />
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{TaskTypeServiceImpl.setSelectedTaskType(taskType)}"
+										update=":wizardTaskTypeEditForm, :wizardTabViewID:taskTypeForm:taskTypes"
+										resetValues="true"
+										oncomplete="PF('wizardTaskTypeDialogEdit').show()"
+										styleClass="editCommandButton" process="@this"
+										disabled="#{taskType.constant}" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{TaskTypeServiceImpl.delete(ProjectServiceImpl.selectedCurrentProject, taskType)}"
+										update=":wizardTaskTypeADDForm, :wizardTabViewID:taskTypeForm:taskTypes"
+										styleClass="deleteCommandButton" process="@this"
+										disabled="#{taskType.constant}">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuTaskStatus" title="Tasks Status">
+
+						<h:form id="taskStatusForm">
+							<p:dataTable reflow="true" id="taskStatuses" var="taskStatus"
+								value="#{TaskStatusServiceImpl.taskStatuses}"
+								rowKey="#{taskStatus.id}"
+								selection="#{TaskStatusServiceImpl.selectedTaskStatus}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true" action="#{TaskStatusServiceImpl.clear()}"
+											update=":wizardTaskStatusADDForm"
+											oncomplete="PF('wizardTaskStatusDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name" sortBy="#{taskStatus.name}">
+									<h:outputText value="#{taskStatus.name}" />
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{TaskStatusServiceImpl.setSelectedTaskStatus(taskStatus)}"
+										update=":wizardTaskStatusEditForm, :wizardTabViewID:taskStatusForm:taskStatuses"
+										resetValues="true"
+										oncomplete="PF('wizardTaskStatusDialogEdit').show()"
+										styleClass="editCommandButton" process="@this"
+										disabled="#{taskStatus.constant}" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{TaskStatusServiceImpl.delete(ProjectServiceImpl.selectedCurrentProject, taskStatus)}"
+										update=":wizardTaskStatusADDForm, :wizardTabViewID:taskStatusForm:taskStatuses"
+										styleClass="deleteCommandButton" process="@this"
+										disabled="#{taskStatus.constant}">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+					<p:tab id="MenuTaskPriority" title="Tasks Priority">
+
+						<h:form id="taskPriorityForm">
+							<p:dataTable reflow="true" id="taskPriorityes" var="taskPriority"
+								value="#{TaskPriorityServiceImpl.taskPriorities}"
+								rowKey="#{taskPriority.id}"
+								selection="#{TaskPriorityServiceImpl.selectedTaskPriority}"
+								rowIndexVar="rowIndex" selectionMode="single"
+								resizableColumns="true" draggableColumns="true"
+								liveResize="true" scrollable="true" styleClass="dataTableWizard"
+								scrollWidth="auto">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:left;">
+										<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+											aria-hidden="true"
+											action="#{TaskPriorityServiceImpl.clear()}"
+											update=":wizardTaskPriorityADDForm"
+											oncomplete="PF('wizardTaskPriorityDialogADD').show()"
+											resetValues="true" styleClass="ADDGreenButton"
+											process="@this" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+									filterStyle="display:none" styleClass="columnCenter">
+									<h:outputText value="#{rowIndex + 1}" />
+								</p:column>
+
+								<p:column headerText="Name" sortBy="#{taskPriority.name}">
+									<h:outputText value="#{taskPriority.name}" />
+								</p:column>
+
+								<p:column styleClass="columnSmallOperations"
+									headerText="Operations" exportable="false">
+
+									<!-- Edit -->
+									<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+										action="#{TaskPriorityServiceImpl.setSelectedTaskPriority(taskPriority)}"
+										update=":wizardTaskPriorityEditForm, :wizardTabViewID:taskPriorityForm:taskPriorityes"
+										resetValues="true"
+										oncomplete="PF('wizardTaskPriorityDialogEdit').show()"
+										styleClass="editCommandButton" process="@this"
+										disabled="#{taskPriority.constant}" />
+
+									<!-- Delete -->
+									<p:commandButton icon="fa fa-trash"
+										action="#{TaskPriorityServiceImpl.delete(ProjectServiceImpl.selectedCurrentProject, taskPriority)}"
+										update=":wizardTaskPriorityADDForm, :wizardTabViewID:taskPriorityForm:taskPriorityes"
+										styleClass="deleteCommandButton" process="@this"
+										disabled="#{taskPriority.constant}">
+										<p:confirm header="Confirmation" message="Are you sure?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes GreenButton"
+											icon="ui-icon-check fa fa-check Fs14 white" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no RedButton"
+											icon="ui-icon-close fa fa-close Fs14 white" />
+									</p:confirmDialog>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+
+					</p:tab>
+
+				</p:wizard>
+
+				<div style="float: left;">
+					<p:commandButton widgetVar="stepBackward" value="Back"
+						icon="fa fa-arrow-left fa-lg" aria-hidden="true"
+						onclick="PF('projectWizard').back()" disabled="true"
+						styleClass="myWizardButtonBack" />
+				</div>
+				<div style="float: right;">
+					<p:commandButton widgetVar="stepForward" value="Next"
+						icon="fa fa-arrow-right fa-lg" aria-hidden="true"
+						onclick="PF('projectWizard').next();" disabled="false"
+						style="align:right;" />
+					<p:commandButton widgetVar="stepFinish" value="Finish"
+						icon="fa fa-check fa-lg" aria-hidden="true"
+						onclick="PF('projectWizardDialog').hide();" disabled="true"
+						style="align:right;"
+						oncomplete="PF('stepFinish').disable(); PF('stepForward').enable(); PF('stepBackward').disable();" />
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Contract"
+			widgetVar="wizardProjectContractDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardProjectContractEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{ContractServiceImpl.selectedContract.name}"
+								required="true" title="Enter project contract name!"
+								validator="#{GlobalControllerImpl.contractCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="contractID"
+									value="#{ContractServiceImpl.selectedContract.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+							<p:outputLabel for="EditProjectContractStartDate"
+								value="Start date:" />
+							<p:calendar id="EditProjectContractStartDate"
+								value="#{ContractServiceImpl.selectedContract.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="EditProjectContractFinishDate"
+								value="Finish date:" />
+							<p:calendar id="EditProjectContractFinishDate"
+								value="#{ContractServiceImpl.selectedContract.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update="wizardProjectContractEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ContractServiceImpl.update(ContractServiceImpl.selectedContract)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardProjectContractDialogEdit').hide()"
+						update=":wizardTabViewID:projectContractForm:contracts" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardProjectContractDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Contract"
+			widgetVar="wizardProjectContractDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardProjectContractADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{ContractServiceImpl.contractADD.name}" required="true"
+								title="Enter project contract name!"
+								validator="#{GlobalControllerImpl.contractCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+							<p:outputLabel for="EditProjectContractStartDate"
+								value="Start date:" />
+							<p:calendar id="EditProjectContractStartDate"
+								value="#{ContractServiceImpl.contractADD.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="EditProjectContractFinishDate"
+								value="Finish date:" />
+							<p:calendar id="EditProjectContractFinishDate"
+								value="#{ContractServiceImpl.contractADD.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update="wizardProjectContractADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ContractServiceImpl.createProjectContract(ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardProjectContractDialogADD').hide()"
+						update=":wizardTabViewID:projectContractForm:contracts" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardProjectContractDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Contractor Organization"
+			widgetVar="wizardContractorOrganizationDialogEdit"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardContractorOrganizationEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{ContractorOrganizationServiceImpl.selectedContractorOrganization.name}"
+								required="true" title="Enter contractor organization name!"
+								validator="#{GlobalControllerImpl.contractorOrganizationCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="currentObjectId"
+									value="#{ContractorOrganizationServiceImpl.selectedContractorOrganization.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardContractorOrganizationEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ContractorOrganizationServiceImpl.update(ContractorOrganizationServiceImpl.selectedContractorOrganization, ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardContractorOrganizationDialogEdit').hide()"
+						update=":wizardTabViewID:contractorOrganizationForm:contractorOrganizations" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardContractorOrganizationDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Contractor Organization"
+			widgetVar="wizardContractorOrganizationDialogADD"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardContractorOrganizationADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{ContractorOrganizationServiceImpl.contractorOrganizationADD.name}"
+								required="true" title="Enter contractor organization name!"
+								validator="#{GlobalControllerImpl.contractorOrganizationCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardContractorOrganizationADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ContractorOrganizationServiceImpl.createProjectContractorOrganization(ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardContractorOrganizationDialogADD').hide()"
+						update=":wizardTabViewID:contractorOrganizationForm:contractorOrganizations" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardContractorOrganizationDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Customer Organization"
+			widgetVar="wizardCustomerOrganizationDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardCustomerOrganizationEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{CustomerOrganizationServiceImpl.selectedCustomerOrganization.name}"
+								required="true" title="Enter customer organization name!"
+								validator="#{GlobalControllerImpl.customerOrganizationCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="currentObjectId"
+									value="#{CustomerOrganizationServiceImpl.selectedCustomerOrganization.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardCustomerOrganizationEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{CustomerOrganizationServiceImpl.update(CustomerOrganizationServiceImpl.selectedCustomerOrganization, ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardCustomerOrganizationDialogEdit').hide()"
+						update=":wizardTabViewID:customerOrganizationForm:customerOrganizations" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardCustomerOrganizationDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Customer Organization"
+			widgetVar="wizardCustomerOrganizationDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardCustomerOrganizationADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{CustomerOrganizationServiceImpl.customerOrganizationADD.name}"
+								required="true" title="Enter customer organization name!"
+								validator="#{GlobalControllerImpl.customerOrganizationCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardCustomerOrganizationADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{CustomerOrganizationServiceImpl.createProjectCustomerOrganization(ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardCustomerOrganizationDialogADD').hide()"
+						update=":wizardTabViewID:customerOrganizationForm:customerOrganizations" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardCustomerOrganizationDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Format Time Tracking"
+			widgetVar="wizardFormatTimeTrackingDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardFormatTimeTrackingEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{FormatTimeTrackingServiceImpl.selectedFormatTimeTracking.name}"
+								required="true" title="Enter format time tracking name!"
+								validator="#{GlobalControllerImpl.formatTimeTrackingCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="currentObjectId"
+									value="#{FormatTimeTrackingServiceImpl.selectedFormatTimeTracking.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardFormatTimeTrackingEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{FormatTimeTrackingServiceImpl.update(ProjectServiceImpl.selectedCurrentProject, FormatTimeTrackingServiceImpl.selectedFormatTimeTracking)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardFormatTimeTrackingDialogEdit').hide()"
+						update=":wizardTabViewID:formatTimeTrackingForm:formatTimeTrackings" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardFormatTimeTrackingDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Format Time Tracking"
+			widgetVar="wizardFormatTimeTrackingDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardFormatTimeTrackingADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{FormatTimeTrackingServiceImpl.formatTimeTrackingADD.name}"
+								required="true" title="Enter format time tracking name!"
+								validator="#{GlobalControllerImpl.formatTimeTrackingCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardFormatTimeTrackingADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{FormatTimeTrackingServiceImpl.createFormatTimeTracking(ProjectServiceImpl.selectedCurrentProject, FormatTimeTrackingServiceImpl.formatTimeTrackingADD)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardFormatTimeTrackingDialogADD').hide()"
+						update=":wizardTabViewID:formatTimeTrackingForm:formatTimeTrackings" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardFormatTimeTrackingDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Milestone"
+			widgetVar="wizardProjectMilestoneDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardProjectMilestoneEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{ProjectMilestoneServiceImpl.selectedProjectMilestone.name}"
+								required="true" title="Enter customer organization name!"
+								validator="#{GlobalControllerImpl.projectMilestoneCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="milestoneID"
+									value="#{ProjectMilestoneServiceImpl.selectedProjectMilestone.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+							<p:outputLabel for="EditProjectMilestoneStartDate"
+								value="Start date:" />
+							<p:calendar id="EditProjectMilestoneStartDate"
+								value="#{ProjectMilestoneServiceImpl.selectedProjectMilestone.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+
+							<p:outputLabel for="EditProjectMilestoneFinishDate"
+								value="Finish date:" />
+							<p:calendar id="EditProjectMilestoneFinishDate"
+								value="#{ProjectMilestoneServiceImpl.selectedProjectMilestone.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardProjectMilestoneEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ProjectMilestoneServiceImpl.update(ProjectMilestoneServiceImpl.selectedProjectMilestone)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardProjectMilestoneDialogEdit').hide()"
+						update=":wizardTabViewID:projectMilestoneForm:projectMilestonees" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardProjectMilestoneDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Milestone"
+			widgetVar="wizardProjectMilestoneDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardProjectMilestoneADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{ProjectMilestoneServiceImpl.projectMilestoneADD.name}"
+								required="true" title="Enter task type name!"
+								validator="#{GlobalControllerImpl.projectMilestoneCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+							<p:outputLabel for="ADDProjectMilestoneStartDate"
+								value="Start date:" />
+							<p:calendar id="ADDProjectMilestoneStartDate"
+								value="#{ProjectMilestoneServiceImpl.projectMilestoneADD.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="ADDProjectMilestoneFinishDate"
+								value="Finish date:" />
+							<p:calendar id="ADDProjectMilestoneFinishDate"
+								value="#{ProjectMilestoneServiceImpl.projectMilestoneADD.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardProjectMilestoneADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ProjectMilestoneServiceImpl.createProjectMilestone(ProjectServiceImpl.selectedCurrentProject, ProjectMilestoneServiceImpl.projectMilestoneADD)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardProjectMilestoneDialogADD').hide()"
+						update=":wizardTabViewID:projectMilestoneForm:projectMilestonees" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardProjectMilestoneDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Task Type" widgetVar="wizardTaskTypeDialogEdit"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardTaskTypeEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{TaskTypeServiceImpl.selectedTaskType.name}"
+								required="true" title="Enter task type name!"
+								validator="#{GlobalControllerImpl.taskTypeCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="currentObjectId"
+									value="#{TaskTypeServiceImpl.selectedTaskType.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardTaskTypeEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{TaskTypeServiceImpl.update(ProjectServiceImpl.selectedCurrentProject, TaskTypeServiceImpl.selectedTaskType)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardTaskTypeDialogEdit').hide()"
+						update=":wizardTabViewID:taskTypeForm:taskTypes" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardTaskTypeDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Task Type" widgetVar="wizardTaskTypeDialogADD"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardTaskTypeADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{TaskTypeServiceImpl.taskTypeADD.name}" required="true"
+								title="Enter task type name!"
+								validator="#{GlobalControllerImpl.taskTypeCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardTaskTypeADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{TaskTypeServiceImpl.createTaskType(ProjectServiceImpl.selectedCurrentProject, TaskTypeServiceImpl.taskTypeADD)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardTaskTypeDialogADD').hide()"
+						update=":wizardTabViewID:taskTypeForm:taskTypes" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardTaskTypeDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Task Status"
+			widgetVar="wizardTaskStatusDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardTaskStatusEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{TaskStatusServiceImpl.selectedTaskStatus.name}"
+								required="true" title="Enter task status name!"
+								validator="#{GlobalControllerImpl.taskStatusCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="currentObjectId"
+									value="#{TaskStatusServiceImpl.selectedTaskStatus.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardTaskStatusEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{TaskStatusServiceImpl.update(ProjectServiceImpl.selectedCurrentProject, TaskStatusServiceImpl.selectedTaskStatus)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardTaskStatusDialogEdit').hide()"
+						update=":wizardTabViewID:taskStatusForm:taskStatuses" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardTaskStatusDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Task Status"
+			widgetVar="wizardTaskStatusDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardTaskStatusADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{TaskStatusServiceImpl.taskStatusADD.name}"
+								required="true" title="Enter task status name!"
+								validator="#{GlobalControllerImpl.taskStatusCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardTaskStatusADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{TaskStatusServiceImpl.createTaskStatus(ProjectServiceImpl.selectedCurrentProject, TaskStatusServiceImpl.taskStatusADD)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardTaskStatusDialogADD').hide()"
+						update=":wizardTabViewID:taskStatusForm:taskStatuses" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardTaskStatusDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Task Priority"
+			widgetVar="wizardTaskPriorityDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardTaskPriorityEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{TaskPriorityServiceImpl.selectedTaskPriority.name}"
+								required="true" title="Enter task priority name!"
+								validator="#{GlobalControllerImpl.taskPriorityCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:attribute name="currentObjectId"
+									value="#{TaskPriorityServiceImpl.selectedTaskPriority.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardTaskPriorityEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{TaskPriorityServiceImpl.update(ProjectServiceImpl.selectedCurrentProject, TaskPriorityServiceImpl.selectedTaskPriority)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardTaskPriorityDialogEdit').hide()"
+						update=":wizardTabViewID:taskPriorityForm:taskPriorityes" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardTaskPriorityDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Task Priority"
+			widgetVar="wizardTaskPriorityDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardTaskPriorityADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="Name" value="Name:" />
+							<p:inputText id="Name"
+								value="#{TaskPriorityServiceImpl.taskPriorityADD.name}"
+								required="true" title="Enter task priority name!"
+								validator="#{GlobalControllerImpl.taskPriorityCheckAvailableNameByProject}">
+								<f:attribute name="projectID"
+									value="#{ProjectServiceImpl.selectedCurrentProject.id}" />
+								<f:validateLength minimum="1" maximum="255" />
+								<p:ajax event="change" update="Name" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardTaskPriorityADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{TaskPriorityServiceImpl.createTaskPriority(ProjectServiceImpl.selectedCurrentProject, TaskPriorityServiceImpl.taskPriorityADD)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardTaskPriorityDialogADD').hide()"
+						update=":wizardTabViewID:taskPriorityForm:taskPriorityes" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardTaskPriorityDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Edit Project Cost"
+			widgetVar="wizardProjectCostSettingDialogEdit" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardProjectCostSettingEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="EditFormatTimeTracking" value="Name:" />
+							<p:selectOneMenu id="EditFormatTimeTracking"
+								value="#{ProjectCostSettingEntityServiceImpl.selectedProjectCostSetting.formatTimeTracking}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								editable="true" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems
+									value="#{FormatTimeTrackingServiceImpl.formatTimeTrackings}"
+									var="formatTimeTracking" itemLabel="#{formatTimeTracking}"
+									itemValue="#{formatTimeTracking}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditProjectCostSettingStartDate"
+								value="Start date:" />
+							<p:calendar id="EditProjectCostSettingStartDate"
+								value="#{ProjectCostSettingEntityServiceImpl.selectedProjectCostSetting.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="EditProjectCostSettingFinishDate"
+								value="Finish date:" />
+							<p:calendar id="EditProjectCostSettingFinishDate"
+								value="#{ProjectCostSettingEntityServiceImpl.selectedProjectCostSetting.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="EditProjectCostSettingCost" value="Cost:" />
+							<p:inputText id="EditProjectCostSettingCost"
+								value="#{ProjectCostSettingEntityServiceImpl.selectedProjectCostSetting.cost}"
+								required="true" style="text-align:right;">
+								<f:convertNumber pattern="#00.00" />
+								<f:validateDoubleRange minimum="0.01" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardProjectCostSettingEditForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ProjectCostSettingEntityServiceImpl.update(ProjectCostSettingEntityServiceImpl.selectedProjectCostSetting)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardProjectCostSettingDialogEdit').hide()"
+						update="wizardProjectCostSettingEditForm :wizardTabViewID:projectCostSettingForm:projectCostSettings" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardProjectCostSettingDialogEdit').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="ADD Project Cost"
+			widgetVar="wizardProjectCostSettingDialogADD" closeOnEscape="true"
+			showEffect="pop" resetValues="true" modal="true" resizable="false"
+			fitViewport="true" maximizable="false"
+			styleClass="DialogHeightLanscape">
+			<h:form id="wizardProjectCostSettingADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGrid" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="ADDFormatTimeTracking" value="Name:" />
+							<p:selectOneMenu id="ADDFormatTimeTracking"
+								value="#{ProjectCostSettingEntityServiceImpl.projectCostSettingADD.formatTimeTracking}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								editable="true" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems
+									value="#{FormatTimeTrackingServiceImpl.formatTimeTrackings}"
+									var="formatTimeTracking" itemLabel="#{formatTimeTracking}"
+									itemValue="#{formatTimeTracking}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditProjectCostSettingStartDate"
+								value="Start date:" />
+							<p:calendar id="EditProjectCostSettingStartDate"
+								value="#{ProjectCostSettingEntityServiceImpl.projectCostSettingADD.startDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="EditProjectCostSettingFinishDate"
+								value="Finish date:" />
+							<p:calendar id="EditProjectCostSettingFinishDate"
+								value="#{ProjectCostSettingEntityServiceImpl.projectCostSettingADD.finishDate}"
+								required="true" pattern="dd.MM.yyyy" mask="true">
+							</p:calendar>
+
+							<p:outputLabel for="ADDProjectCostSettingCost" value="Cost:" />
+							<p:inputText id="ADDProjectCostSettingCost"
+								value="#{ProjectCostSettingEntityServiceImpl.projectCostSettingADD.cost}"
+								required="true" style="text-align:right;">
+								<f:convertNumber pattern="#00.00" />
+								<f:validateDoubleRange minimum="0.01" />
+							</p:inputText>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":wizardProjectCostSettingADDForm:regPanelGrid" />
+					<p:remoteCommand name="good"
+						action="#{ProjectCostSettingEntityServiceImpl.createProjectCostSetting(ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						oncomplete="PF('wizardProjectCostSettingDialogADD').hide()"
+						update="wizardProjectCostSettingADDForm :wizardTabViewID:projectCostSettingForm:projectCostSettings" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('wizardProjectCostSettingDialogADD').hide()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+		<h:outputStylesheet name="css/animate.css" library="modena-layout" />
+		<h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+		<h:outputStylesheet name="css/ripple-effect.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/perfect-scrollbar.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/font-awesome.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/modena-layout.css"
+			library="modena-layout" />
+
+	</h:body>
+
+</f:view>
+</html>

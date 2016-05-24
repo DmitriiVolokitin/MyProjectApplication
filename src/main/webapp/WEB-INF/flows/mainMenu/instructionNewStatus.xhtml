@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/instruction.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Create New Task" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="pageEmptyBox"></div>
+
+			<div class="Wid100 DispBlock MarAuto TexAlCenter">
+
+				<div class="EmptyBox20"></div>
+				<div class="Wid100 Fs20">ADD New Task Status</div>
+				<div class="EmptyBox5"></div>
+
+				<div class="uk-slider-container">
+			        <ul class="uk-slider uk-slider-fullscreen">
+			            <li><img src='../instruction/instruction_New_Status.gif' width="auto" height="auto" alt=""/></li>
+			        </ul>
+			    </div>
+				
+				<div class="MarLeftPerc19 TexAlLeft Fs20">Note:</div><br/>
+				<div class="MarLeftPerc19 TexAlLeft Fs16"><b>Date and Author</b> , will be filed automatically</div>
+				<div class="MarLeftPerc19 TexAlLeft Fs16"><b>Comment</b>, length can be between 1-250 symbols</div>
+				
+				<br/>
+    			<div class="MarLeftPerc19 TexAlLeft Fs20">See also:</div>
+    			<br/>
+    			<div class="MarLeftPerc19 TexAlLeft Fs16">
+				<p:commandLink action="OpenInstructionNewTask">
+        			<h:outputText value="Task" styleClass="Fs16" />
+    			</p:commandLink>
+    			</div>
+    			<div class="MarLeftPerc19 TexAlLeft Fs16">
+    			<p:commandLink action="OpenInstructionNewTaskTimeTracking">
+        			<h:outputText value="Task Time Tracking" styleClass="Fs16" />
+    			</p:commandLink>
+    			</div>
+    			<div class="MarLeftPerc19 TexAlLeft Fs16">
+    			<p:commandLink action="OpenInstructionNewTaskFile">
+        			<h:outputText value="Task File" styleClass="Fs16" />
+    			</p:commandLink>
+    			</div>
+				<div class="EmptyBox20"></div>
+				
+			</div>
+		</h:form>
+
+		<h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+		<h:outputStylesheet name="css/animate.css" library="modena-layout" />
+		<h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+		<h:outputStylesheet name="css/ripple-effect.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/font-awesome.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/modena-layout.css"
+			library="modena-layout" />
+	</ui:define>
+
+</ui:composition>
+

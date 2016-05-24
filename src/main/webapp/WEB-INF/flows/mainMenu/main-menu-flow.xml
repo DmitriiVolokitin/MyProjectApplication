@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<secured attributes="ROLE_USER" />
+
+	<var name="uiUtils" class="com.MyProject.ui.utils.UIUtils" />
+
+	<on-start>
+		<evaluate expression="userServiceImpl.loadUserEntityByUsername(currentUser.name)"
+			result="flowScope.user" />
+		<evaluate
+			expression="GlobalControllerImpl.initAppByUser(userServiceImpl.loadUserEntityByUsername(currentUser.name))" />
+		<evaluate
+			expression="userServiceImpl.setCurrentUser(userServiceImpl.loadUserEntityByUsername(currentUser.name))" />
+	</on-start>
+	
+	<!-- Menu -->
+	<view-state id="menuTask" view="mainMenu.xhtml" model="uiUtils">
+		<transition on="MenuTask" to="menuTask">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(0)" />
+			<render fragments="projectWizardDialog">
+			</render>
+		</transition>
+		<transition on="MenuProjectFiles" to="projectFiles">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(1)" />
+		</transition>
+		<transition on="MenuUserAndRole" to="userAndRole">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(2)" />
+		</transition>
+		<transition on="MenuDirectories" to="directories">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(3)" />
+		</transition>
+		<transition on="MenuReports" to="reports">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(4)" />
+		</transition>
+		<transition on="MenuSettings" to="settings">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(5)" />
+		</transition>
+
+		<transition on="OpenInstructionNewTask" to="OpenInstructionNewTask" />
+		<transition on="OpenInstructionNewTaskTimeTracking" to="OpenInstructionNewTaskTimeTracking" />
+		<transition on="OpenInstructionNewTaskStatus" to="OpenInstructionNewTaskStatus" />
+		<transition on="OpenInstructionNewTaskFile" to="OpenInstructionNewTaskFile" />
+
+	</view-state>
+
+	<view-state id="projectFiles" view="projectFiles.xhtml"
+		model="uiUtils">
+		<transition on="MenuTask" to="menuTask">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(0)" />
+		</transition>
+		<transition on="MenuProjectFiles" to="projectFiles">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(1)" />
+		</transition>
+		<transition on="MenuUserAndRole" to="userAndRole">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(2)" />
+		</transition>
+		<transition on="MenuDirectories" to="directories">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(3)" />
+		</transition>
+		<transition on="MenuReports" to="reports">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(4)" />
+		</transition>
+		<transition on="MenuSettings" to="settings">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(5)" />
+		</transition>
+		
+		<transition on="OpenInstructionProjectFile" to="OpenInstructionProjectFile">
+		</transition>
+		
+	</view-state>
+
+	<view-state id="userAndRole" view="userAndRole.xhtml" model="uiUtils">
+		<transition on="MenuTask" to="menuTask">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(0)" />
+		</transition>
+		<transition on="MenuProjectFiles" to="projectFiles">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(1)" />
+		</transition>
+		<transition on="MenuUserAndRole" to="userAndRole">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(2)" />
+		</transition>
+		<transition on="MenuDirectories" to="directories">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(3)" />
+		</transition>
+		<transition on="MenuReports" to="reports">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(4)" />
+		</transition>
+		<transition on="MenuSettings" to="settings">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(5)" />
+		</transition>
+		
+		<transition on="OpenInstructionUserAndRole" to="OpenInstructionUserAndRole">
+		</transition>
+		
+	</view-state>
+
+	<view-state id="directories" view="directories.xhtml" model="uiUtils">
+		<transition on="MenuTask" to="menuTask">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(0)" />
+		</transition>
+		<transition on="MenuProjectFiles" to="projectFiles">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(1)" />
+		</transition>
+		<transition on="MenuUserAndRole" to="userAndRole">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(2)" />
+		</transition>
+		<transition on="MenuDirectories" to="directories">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(3)" />
+		</transition>
+		<transition on="MenuReports" to="reports">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(4)" />
+		</transition>
+		<transition on="MenuSettings" to="settings">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(5)" />
+		</transition>
+		
+		<transition on="OpenInstructionContract" to="OpenInstructionContract">
+		</transition>
+		
+		<transition on="OpenInstructionContractorOrganization" to="OpenInstructionContractorOrganization">
+		</transition>
+		
+		<transition on="OpenInstructionCustomerOrganization" to="OpenInstructionCustomerOrganization">
+		</transition>
+		
+		<transition on="OpenInstructionFormatTimeTracking" to="OpenInstructionFormatTimeTracking">
+		</transition>
+		
+		<transition on="OpenInstructionProjectMilestone" to="OpenInstructionProjectMilestone">
+		</transition>
+		
+		<transition on="OpenInstructionType" to="OpenInstructionType">
+		</transition>
+		
+		<transition on="OpenInstructionStatus" to="OpenInstructionStatus">
+		</transition>
+		
+		<transition on="OpenInstructionPriority" to="OpenInstructionPriority">
+		</transition>
+
+	</view-state>
+
+	<view-state id="reports" view="reports.xhtml" model="uiUtils">
+		<transition on="MenuTask" to="menuTask">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(0)" />
+		</transition>
+		<transition on="MenuProjectFiles" to="projectFiles">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(1)" />
+		</transition>
+		<transition on="MenuUserAndRole" to="userAndRole">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(2)" />
+		</transition>
+		<transition on="MenuDirectories" to="directories">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(3)" />
+		</transition>
+		<transition on="MenuReports" to="reports">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(4)" />
+		</transition>
+		<transition on="MenuSettings" to="settings">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(5)" />
+		</transition>
+	</view-state>
+
+	<view-state id="settings" view="settings.xhtml" model="uiUtils">
+		<transition on="MenuTask" to="menuTask">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(0)" />
+		</transition>
+		<transition on="MenuProjectFiles" to="projectFiles">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(1)" />
+		</transition>
+		<transition on="MenuUserAndRole" to="userAndRole">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(2)" />
+		</transition>
+		<transition on="MenuDirectories" to="directories">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(3)" />
+		</transition>
+		<transition on="MenuReports" to="reports">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(4)" />
+		</transition>
+		<transition on="MenuSettings" to="settings">
+			<evaluate expression="GlobalControllerImpl.setMenuIndex(5)" />
+		</transition>
+		
+		<transition on="OpenInstructionProjectCostSetting" to="OpenInstructionProjectCostSetting">
+		</transition>
+		
+	</view-state>
+
+	<!-- Instruction -->
+	<view-state id="OpenInstructionNewTask" view="instructionNewTask.xhtml">
+		<transition on="OpenInstructionNewTaskTimeTracking" to="OpenInstructionNewTaskTimeTracking" />
+		<transition on="OpenInstructionNewTaskStatus" to="OpenInstructionNewTaskStatus" />
+		<transition on="OpenInstructionNewTaskFile" to="OpenInstructionNewTaskFile" />
+		
+		<transition on="OpenInstructionProjectMilestone" to="OpenInstructionProjectMilestone" />
+		<transition on="OpenInstructionType" to="OpenInstructionType" />
+		<transition on="OpenInstructionPriority" to="OpenInstructionPriority" />
+		<transition on="OpenInstructionStatus" to="OpenInstructionStatus" />
+		<transition on="OpenInstructionUserAndRole" to="OpenInstructionUserAndRole" />
+		
+	</view-state>
+
+	<view-state id="OpenInstructionNewTaskTimeTracking" view="instructionNewTaskTimeTraking.xhtml">
+		<transition on="OpenInstructionNewTask" to="OpenInstructionNewTask"/>
+		<transition on="OpenInstructionNewTaskStatus" to="OpenInstructionNewTaskStatus" />
+		<transition on="OpenInstructionNewTaskFile" to="OpenInstructionNewTaskFile" />
+		<transition on="OpenInstructionFormatTimeTracking" to="OpenInstructionFormatTimeTracking" />
+		<transition on="OpenInstructionUserAndRole" to="OpenInstructionUserAndRole" />
+	</view-state>
+	
+	<view-state id="OpenInstructionNewTaskStatus" view="instructionNewTaskStatus.xhtml">
+		<transition on="OpenInstructionNewTask" to="OpenInstructionNewTask"/>
+		<transition on="OpenInstructionNewTaskTimeTracking" to="OpenInstructionNewTaskTimeTracking" />
+		<transition on="OpenInstructionNewTaskFile" to="OpenInstructionNewTaskFile" />
+	</view-state>
+	
+	<view-state id="OpenInstructionNewTaskFile" view="instructionNewFiles.xhtml">
+		<transition on="OpenInstructionNewTask" to="instructionNewTask"/>
+		<transition on="OpenInstructionNewTaskTimeTracking" to="OpenInstructionNewTaskTimeTracking" />
+		<transition on="OpenInstructionNewTaskStatus" to="OpenInstructionNewTaskStatus" />
+	</view-state>
+	
+	<view-state id="OpenInstructionProjectFile" view="instructionProjectFiles.xhtml">
+		<transition on="OpenInstructionNewTask" to="instructionNewTask"/>
+		<transition on="OpenInstructionNewTaskTimeTracking" to="OpenInstructionNewTaskTimeTracking" />
+		<transition on="OpenInstructionNewTaskStatus" to="OpenInstructionNewTaskStatus" />
+	</view-state>
+	
+	<view-state id="OpenInstructionUserAndRole" view="instructionNewUserAndRole.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionContract" view="instructionNewContract.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionContractorOrganization" view="instructionNewContractorOrganization.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionCustomerOrganization" view="instructionNewCustomerOrganization.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionFormatTimeTracking" view="instructionNewFormatTimeTracking.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionProjectCostSetting" view="instructionNewProjectCostSetting.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionProjectMilestone" view="instructionNewProjectMilestone.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionType" view="instructionNewType.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionPriority" view="instructionNewPriority.xhtml">
+	</view-state>
+	
+	<view-state id="OpenInstructionStatus" view="instructionNewPriority.xhtml">
+	</view-state>
+	
+</flow>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
+	default-init-method="init" default-destroy-method="destroy">
+
+	<import resource="datasource-config.xml" />
+	<import resource="webflow-config.xml" />
+	<import resource="security-config.xml" />
+	
+	<aop:aspectj-autoproxy/>
+	
+	<!-- Error -->
+	<!-- <bean id="pfExceptionHandler" class="com.company.module.error.ExceptionHandlerView" /> -->
+	
+	<!-- DAO declarations -->
+
+	<!-- User -->
+	<bean id="userDao" class="com.MyProject.dao.UserJpaDao" />
+
+	<bean id="userServiceImpl" class="com.MyProject.services.impl.UserServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="userDao" ref="userDao" />
+	</bean>
+
+	<!-- UserRole -->
+	<bean id="userRoleDao" class="com.MyProject.dao.UserRoleJpaDao" />
+
+	<bean id="UserRoleServiceImpl" class="com.MyProject.services.impl.UserRoleServiceImpl" >
+		<property name="userRoleDao" ref="userRoleDao" />
+	</bean>
+
+	<!-- UserSetting -->
+	<bean id="userSettingDao" class="com.MyProject.dao.UserSettingJpaDao" />
+
+	<bean id="UserSettingServiceImpl" class="com.MyProject.services.impl.UserSettingServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="userSettingDao" ref="userSettingDao" />
+	</bean>
+
+	<!-- TaskFile -->
+	<bean id="taskFileDao" class="com.MyProject.dao.TaskFileJpaDao" />
+
+	<bean id="TaskFileServiceImpl" class="com.MyProject.services.impl.TaskFileServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskFileDao" ref="taskFileDao" />
+	</bean>
+
+	<!-- TaskType -->
+	<bean id="taskTypeDao" class="com.MyProject.dao.TaskTypeJpaDao" />
+
+	<bean id="TaskTypeServiceImpl" class="com.MyProject.services.impl.TaskTypeServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskTypeDao" ref="taskTypeDao" />
+	</bean>
+
+	<!-- TaskStatus -->
+	<bean id="taskStatusDao" class="com.MyProject.dao.TaskStatusJpaDao" />
+
+	<bean id="TaskStatusServiceImpl" class="com.MyProject.services.impl.TaskStatusServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskStatusDao" ref="taskStatusDao" />
+	</bean>
+
+	<!-- TaskPriority -->
+	<bean id="taskPriorityDao" class="com.MyProject.dao.TaskPriorityJpaDao" />
+
+	<bean id="TaskPriorityServiceImpl" class="com.MyProject.services.impl.TaskPriorityServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskPriorityDao" ref="taskPriorityDao" />
+	</bean>
+
+	<!-- TaskHistory -->
+	<bean id="taskHistoryDao" class="com.MyProject.dao.TaskHistoryJpaDao" />
+
+	<bean id="TaskHistoryServiceImpl" class="com.MyProject.services.impl.TaskHistoryServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskHistoryDao" ref="taskHistoryDao" />
+	</bean>
+
+	<!-- TaskStatusHistory -->
+	<bean id="taskStatusHistoryDao" class="com.MyProject.dao.TaskStatusHistoryJpaDao" />
+
+	<bean id="TaskStatusHistoryServiceImpl"
+		class="com.MyProject.services.impl.TaskStatusHistoryServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskStatusHistoryDao" ref="taskStatusHistoryDao" />
+	</bean>
+
+	<!-- TaskTimeTracking -->
+	<bean id="taskTimeTrackingDao" class="com.MyProject.dao.TaskTimeTrackingJpaDao" />
+
+	<bean id="TaskTimeTrackingServiceImpl" class="com.MyProject.services.impl.TaskTimeTrackingServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskTimeTrackingDao" ref="taskTimeTrackingDao" />
+		<property name="userSettingDao" ref="userSettingDao" />
+	</bean>
+
+	<!-- Task -->
+	<bean id="taskDao" class="com.MyProject.dao.TaskJpaDao" />
+
+	<bean id="TaskServiceImpl" class="com.MyProject.services.impl.TaskServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="taskDao" ref="taskDao" />
+	</bean>
+
+	<!-- Project -->
+	<bean id="projectDao" class="com.MyProject.dao.ProjectJpaDao" />
+
+	<bean id="ProjectServiceImpl" class="com.MyProject.services.impl.ProjectServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="projectDao" ref="projectDao" />
+		<property name="userDao" ref="userDao" />
+		<!-- <aop:scoped-proxy proxy-target-class="false" /> -->
+	</bean>
+
+	<!-- ProjectFile -->
+	<bean id="projectFileDao" class="com.MyProject.dao.ProjectFileJpaDao" />
+
+	<bean id="ProjectFileServiceImpl" class="com.MyProject.services.impl.ProjectFileServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="projectFileDao" ref="projectFileDao" />
+	</bean>
+
+	<!-- ProjectMilestone -->
+	<bean id="projectMilestoneDao" class="com.MyProject.dao.ProjectMilestoneJpaDao" />
+
+	<bean id="ProjectMilestoneServiceImpl" class="com.MyProject.services.impl.ProjectMilestoneServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="projectMilestoneDao" ref="projectMilestoneDao" />
+		<property name="projectDao" ref="projectDao" />
+	</bean>
+
+	<!-- FormatTimeTracking -->
+	<bean id="formatTimeTrackingDao" class="com.MyProject.dao.FormatTimeTrackingJpaDao" />
+
+	<bean id="FormatTimeTrackingServiceImpl"
+		class="com.MyProject.services.impl.FormatTimeTrackingServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="formatTimeTrackingDao" ref="formatTimeTrackingDao" />
+	</bean>
+
+	<!-- Contract -->
+	<bean id="contractDao" class="com.MyProject.dao.ContractJpaDao" />
+
+	<bean id="ContractServiceImpl" class="com.MyProject.services.impl.ContractServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="contractDao" ref="contractDao" />
+	</bean>
+
+	<!-- CustomerOrganization -->
+	<bean id="customerOrganizationDao" class="com.MyProject.dao.CustomerOrganizationJpaDao" />
+
+	<bean id="CustomerOrganizationServiceImpl"
+		class="com.MyProject.services.impl.CustomerOrganizationServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="customerOrganizationDao" ref="customerOrganizationDao" />
+	</bean>
+
+	<!-- ContractorOrganization -->
+	<bean id="contractorOrganizationDao" class="com.MyProject.dao.ContractorOrganizationJpaDao" />
+
+	<bean id="ContractorOrganizationServiceImpl"
+		class="com.MyProject.services.impl.ContractorOrganizationServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="contractorOrganizationDao" ref="contractorOrganizationDao" />
+	</bean>
+
+	<!-- UserAuthenticationProvider -->
+	<bean id="userAuthenticationProviderService"
+		class="com.MyProject.services.impl.UserAuthenticationProviderServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
+	<!-- ProjectCostSetting -->
+	<bean id="projectCostSettingDao" class="com.MyProject.dao.ProjectCostSettingJpaDao" />
+
+	<bean id="ProjectCostSettingEntityServiceImpl"
+		class="com.MyProject.services.impl.ProjectCostSettingEntityServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="projectCostSettingDao" ref="projectCostSettingDao" />
+		<property name="formatTimeTrackingDao" ref="formatTimeTrackingDao" />
+	</bean>
+
+	<!-- ProjectUserRole -->
+	<bean id="projectUserRoleDao" class="com.MyProject.dao.ProjectUserRoleJpaDao" />
+
+	<bean id="ProjectUserRoleServiceImpl" class="com.MyProject.services.impl.ProjectUserRoleServiceImpl" scope="session">
+    	<aop:scoped-proxy/>
+		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
+		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
+		<property name="userDao" ref="userDao" />
+		<property name="userRoleDao" ref="userRoleDao" />
+	</bean>
+
+	<bean id="projectsByUserJasperReportsBean"
+		class="com.company.module.bean.report.ProjectsByUserJasperReportsBean">
+		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
+		<property name="userServiceImpl" ref="userServiceImpl" />
+	</bean>
+
+	<bean id="usersByProjectJasperReportsBean"
+		class="com.company.module.bean.report.UsersByProjectJasperReportsBean">
+		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
+		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
+	</bean>
+
+	<bean id="timeTrackingJasperReportsBean"
+		class="com.company.module.bean.report.TimeTrackingJasperReportsBean">
+		<property name="taskTimeTrackingDao" ref="taskTimeTrackingDao" />
+		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
+	</bean>
+
+	<!-- GlobalControllerImpl -->
+	<bean id="GlobalControllerImpl" class="com.MyProject.services.impl.GlobalControllerImpl" scope="session">
+    	<aop:scoped-proxy/>
+
+		<property name="taskServiceImpl" ref="TaskServiceImpl" />
+		<property name="taskTimeTrackingServiceImpl" ref="TaskTimeTrackingServiceImpl" />
+		<property name="taskHistoryServiceImpl" ref="TaskHistoryServiceImpl" />
+		<property name="taskStatusHistoryServiceImpl" ref="TaskStatusHistoryServiceImpl" />
+		<property name="taskFileServiceImpl" ref="TaskFileServiceImpl" />
+		<property name="taskTypeServiceImpl" ref="TaskTypeServiceImpl" />
+		<property name="taskStatusServiceImpl" ref="TaskStatusServiceImpl" />
+		<property name="taskPriorityServiceImpl" ref="TaskPriorityServiceImpl" />
+
+		<property name="userServiceImpl" ref="userServiceImpl" />
+		<property name="userRoleServiceImpl" ref="UserRoleServiceImpl" />
+		<property name="userSettingServiceImpl" ref="UserSettingServiceImpl" />
+		<property name="contractServiceImpl" ref="ContractServiceImpl" />
+		<property name="contractorOrganizationServiceImpl" ref="ContractorOrganizationServiceImpl" />
+		<property name="customerOrganizationServiceImpl" ref="CustomerOrganizationServiceImpl" />
+		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
+		<property name="projectFileServiceImpl" ref="ProjectFileServiceImpl" />
+		<property name="projectMilestoneServiceImpl" ref="ProjectMilestoneServiceImpl" />
+		<property name="projectCostSettingEntityServiceImpl" ref="ProjectCostSettingEntityServiceImpl" />
+		<property name="projectUserRoleServiceImpl" ref="ProjectUserRoleServiceImpl" />
+		<property name="formatTimeTrackingServiceImpl" ref="FormatTimeTrackingServiceImpl" />
+
+		<property name="projectDao" ref="projectDao" />
+		<property name="formatTimeTrackingDao" ref="formatTimeTrackingDao" />
+
+		<property name="userDao" ref="userDao" />
+		<property name="userRoleDao" ref="userRoleDao" />
+		<property name="userSettingDao" ref="userSettingDao" />
+		<property name="taskDao" ref="taskDao" />
+		<property name="taskFileDao" ref="taskFileDao" />
+		<property name="taskStatusHistoryDao" ref="taskStatusHistoryDao" />
+		<property name="taskTimeTrackingDao" ref="taskTimeTrackingDao" />
+		<property name="taskHistoryDao" ref="taskHistoryDao" />
+		<property name="taskStatusDao" ref="taskStatusDao" />
+		<property name="taskTypeDao" ref="taskTypeDao" />
+		<property name="taskPriorityDao" ref="taskPriorityDao" />
+		<property name="contractDao" ref="contractDao" />
+		<property name="contractorOrganizationDao" ref="contractorOrganizationDao" />
+		<property name="customerOrganizationDao" ref="customerOrganizationDao" />
+		<property name="projectFileDao" ref="projectFileDao" />
+		<property name="projectMilestoneDao" ref="projectMilestoneDao" />
+		<property name="projectCostSettingDao" ref="projectCostSettingDao" />
+		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
+
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+
+</beans>

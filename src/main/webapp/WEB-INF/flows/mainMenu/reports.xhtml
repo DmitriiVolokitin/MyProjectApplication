@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pm="http://primefaces.org/modena"
+	template="/WEB-INF/templates/mainMenu.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Reports" />
+	</ui:define>
+
+	<ui:define name="head">
+		<script type="text/javascript">
+            // Blue : #3E98D3  |  Red : #EF3F61  |  Green : #2BB673  |  Orange : #F15732
+
+            function skinChart() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#3E98D3', '#EF3F61', '#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    borderColor: '#ffffff',
+                    background: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinBar() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    renderer: $.jqplot.BarRenderer,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinHorizantalBar() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77',
+                        shadow: false
+                    }
+                }
+                this.cfg.seriesDefaults = {
+                        shadow: false,
+                        lineWidth: 1,
+                        renderer: $.jqplot.BarRenderer,
+                        markerOptions: {
+                            shadow: false,
+                            size: 7,
+                            style: 'circle'
+                        },
+                		rendererOptions: {
+                    		barDirection: 'horizontal'
+                		}
+                    }
+            }
+
+            function skinArea() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#EF3F61', '#2BB673'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinBubble() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    renderer: $.jqplot.BubbleRenderer,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinZoom() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinPie() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#3E98D3', '#EF3F61', '#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77',
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    renderer: $.jqplot.PieRenderer,
+                    shadow: false,
+                    lineWidth: 1,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinDonut() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#3E98D3', '#EF3F61', '#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77',
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    renderer: $.jqplot.DonutRenderer,
+                    shadow: false,
+                    lineWidth: 1,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinBarAndLine() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#3E98D3', '#EF3F61'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 5,
+                    renderer: $.jqplot.BarRenderer,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+            function skinMeterGauge() {
+                this.cfg.title = '';
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 5,
+                    renderer: $.jqplot.MeterGaugeRenderer,
+                    rendererOptions: {
+                        shadow: false,
+                        min: 100,
+                        max: 800,
+                        intervals: [200, 300, 400, 500, 600, 700, 800],
+                        intervalColors: ['#3E98D3', '#EF3F61', '#2BB673', '#F15732', '#3E98D3', '#EF3F61', '#2BB673']
+                    }
+                }
+            }
+
+            function skinMultiAxis() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#2BB673', '#F15732'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth:1,
+                    renderer: $.jqplot.BarRenderer,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+
+        </script>
+		<style type="text/css">
+.jqplot-target, .jqplot-axis {
+	color: #546E7A;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="header">
+
+		<!-- TOPBAR START -->
+
+		<div id="layout-topbar">
+			<a id="mobile-menu-button"> <span class="ButtonLine"
+				id="ButtonLine1"></span> <span class="ButtonLine" id="ButtonLine2"></span>
+				<span class="ButtonLine" id="ButtonLine3"></span>
+			</a>
+			<!-- <i class="Fs15 Fleft icon-security Fs40"></i>-->
+			<a id="show-top-menu" class="ShowOnMobile ripplelink"><i
+				class="icon-more_horizontal" id="active"></i><i
+				class="icon-close DispNone" id="passive"></i></a>
+
+			<div align="center">
+				<h:form id="currentProjectHeaderForm">
+					<p:selectOneMenu id="projectHeader"
+						value="#{ProjectServiceImpl.selectedCurrentProject}" effect="fold"
+						converter="omnifaces.SelectItemsConverter" editable="false"
+						styleClass="selectHeaderOneMenuMobileProject">
+						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
+							var="project" itemLabel="#{project}" itemValue="#{project}" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}" />
+					</p:selectOneMenu>
+				</h:form>
+			</div>
+
+			<!-- Project -->
+			<ul id="top-menu">
+
+				<h:form id="currentProjectForm" style="display: inline;">
+					<p:selectOneMenu id="project"
+						value="#{ProjectServiceImpl.selectedCurrentProject}" effect="fold"
+						converter="omnifaces.SelectItemsConverter" editable="false"
+						styleClass="selectOneMenuMobileProject">
+						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
+							var="project" itemLabel="#{project}" itemValue="#{project}" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}" />
+					</p:selectOneMenu>
+				</h:form>
+				<!-- Edit -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-pencil fa-lg" aria-hidden="true"
+							update=":projectEditForm" resetValues="true"
+							oncomplete="PF('projectDialogEdit').show()"
+							styleClass="ShowOnDesktop editProjectCommandButton projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+
+						<p:commandButton value="Edit" icon="fa fa-pencil fa-lg"
+							aria-hidden="true" update=":projectEditForm" resetValues="true"
+							oncomplete="PF('projectDialogEdit').show()"
+							styleClass="ShowOnMobile projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+
+					</h:form></li>
+				<!-- ADD -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-plus fa-lg" aria-hidden="true"
+							action="#{ProjectServiceImpl.clear()}" update="projectADDForm"
+							resetValues="true" oncomplete="PF('projectDialogADD').show()"
+							styleClass="ShowOnDesktop ADDGreenButton headerButton projectCommandButton" />
+						<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+							aria-hidden="true" action="#{ProjectServiceImpl.clear()}"
+							update="projectADDForm" resetValues="true"
+							oncomplete="PF('projectDialogADD').show()"
+							styleClass="ShowOnMobile ADDGreenButton headerButton projectCommandButton" />
+					</h:form></li>
+
+				<!-- Wizard -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-magic fa-lg" aria-hidden="true"
+							resetValues="true" oncomplete="PF('projectWizardDialog').show()"
+							styleClass="ShowOnDesktop projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+						<p:commandButton value="Wizard" icon="fa fa-magic fa-lg"
+							aria-hidden="true" resetValues="true"
+							oncomplete="PF('projectWizardDialog').show()"
+							styleClass="ShowOnMobile projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+					</h:form></li>
+
+				<!-- Delete -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-trash fa-lg" aria-hidden="true fa-2x"
+							action="#{GlobalControllerImpl.deleteProject(ProjectServiceImpl.selectedCurrentProject)}"
+							update=":currentProjectForm:project" resetValues="true"
+							styleClass="ShowOnDesktop DeleteRedButton headerButton projectCommandButton"
+							disabled="#{!GlobalControllerImpl.checkAvailableProjectToDelete(ProjectServiceImpl.selectedCurrentProject, user)}"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+							<p:confirm header="Confirmation" message="Are you REALLY SURE?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes GreenButton"
+								icon="ui-icon-check fa fa-check Fs14 white" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no RedButton"
+								icon="ui-icon-close fa fa-close Fs14 white" />
+						</p:confirmDialog>
+
+						<p:commandButton value="Delete" icon="fa fa-trash fa-lg"
+							aria-hidden="true fa-2x"
+							action="#{GlobalControllerImpl.deleteProject(ProjectServiceImpl.selectedCurrentProject)}"
+							update=":currentProjectForm:project" resetValues="true"
+							styleClass="ShowOnMobile DeleteRedButton headerButton projectCommandButton"
+							disabled="#{!GlobalControllerImpl.checkAvailableProjectToDelete(ProjectServiceImpl.selectedCurrentProject, user)}"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+							<p:confirm header="Confirmation" message="Are you REALLY SURE?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes GreenButton"
+								icon="ui-icon-check fa fa-check Fs14 white" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no RedButton"
+								icon="ui-icon-close fa fa-close Fs14 white" />
+						</p:confirmDialog>
+
+					</h:form></li>
+
+				<li><p:button icon="fa fa-sign-out fa-lg"
+						href="#{request.contextPath}/app/logout" value="Log Out"
+						styleClass="projectCommandButton" style="float: right !important;" /></li>
+			</ul>
+		</div>
+
+		<!-- TOPBAR END -->
+
+		<div class="Animated05" id="layout-menu-cover">
+
+			<h:form id="menuform">
+
+				<h:form id="tabMenuForm">
+					<p:tabMenu activeIndex="#{GlobalControllerImpl.menuIndex}"
+						styleClass="tabMenuOnMobile"
+						style="margin:0.5px !important; color: #ffffff !important;">
+					</p:tabMenu>
+				</h:form>
+
+				<pm:menu>
+					<p:menuitem value="Tasks" action="MenuTask" icon="fa fa-tasks">
+					</p:menuitem>
+					<p:menuitem value="Files" action="MenuProjectFiles" ajax="false"
+						icon="fa fa-files-o">
+					</p:menuitem>
+					<p:menuitem value="Employees and Roles" action="MenuUserAndRole"
+						ajax="false" icon="fa fa-stack-overflow"
+						rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+					</p:menuitem>
+					<p:menuitem value="Directories" action="MenuDirectories"
+						ajax="false" icon="fa fa-sitemap"
+						rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+					</p:menuitem>
+					<p:menuitem value="Reports" action="MenuReports" ajax="false"
+						icon="fa fa-file-pdf-o">
+					</p:menuitem>
+					<p:menuitem value="Settings" action="MenuSettings" ajax="false"
+						icon="fa fa-cogs">
+					</p:menuitem>
+					<p:separator />
+				</pm:menu>
+			</h:form>
+		</div>
+
+	</ui:define>
+
+	<ui:define name="content">
+
+		<div class="EmptyBox60"></div>
+
+		<h:form id="tabMenuForm">
+			<p:tabMenu activeIndex="#{GlobalControllerImpl.menuIndex}"
+				styleClass="tabMenuOnMobile"
+				style="margin:0.5px !important; color: #ffffff !important;">
+				<p:menuitem value="Tasks" action="MenuTask" ajax="false"
+					icon="fa fa-tasks">
+				</p:menuitem>
+				<p:menuitem value="Files" action="MenuProjectFiles" ajax="false"
+					icon="fa fa-files-o">
+				</p:menuitem>
+				<p:menuitem value="Employees and Roles" action="MenuUserAndRole"
+					ajax="false" icon="fa fa-stack-overflow"
+					rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+				</p:menuitem>
+				<p:menuitem value="Directories" action="MenuDirectories"
+					ajax="false" icon="fa fa-sitemap"
+					rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+				</p:menuitem>
+				<p:menuitem value="Reports" action="MenuReports" ajax="false"
+					icon="fa fa-file-pdf-o">
+				</p:menuitem>
+				<p:menuitem value="Settings" action="MenuSettings" ajax="false"
+					icon="fa fa-cogs">
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+
+		<h:form>
+			<div class="Container25 Responsive100 NoIndent">
+				<div class="ContainerIndent" align="center">
+					<p:outputLabel for="reportType" value="Type:" />
+					<p:selectOneMenu id="reportType"
+						value="#{GlobalControllerImpl.reportType}" effect="fold"
+						editable="false" style="width:37%;">
+						<f:selectItem itemLabel="Cost and Time" itemValue="Cost and Time" />
+						<f:selectItem itemLabel="Task Type" itemValue="Task Type" />
+						<f:selectItem itemLabel="Task Deadline" itemValue="Task Deadline" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.reportUpdate}" />
+					</p:selectOneMenu>
+				</div>
+			</div>
+
+			<div class="Container25 Responsive100 NoIndent">
+				<div class="ContainerIndent" align="center">
+					<p:outputLabel for="reportUser" value="User(s):" />
+					<p:selectCheckboxMenu id="reportUser" widgetVar="reportUserWget"
+						value="#{GlobalControllerImpl.selectedReportUsers}"
+						label="#{GlobalControllerImpl.selectedValuesReportUsersDisplayString}"
+						effect="fold" editable="false" style="width:37%;"
+						converter="omnifaces.SelectItemsConverter"
+						onHide="executeOnOnhide();">
+						<f:selectItems value="#{GlobalControllerImpl.reportUsers}" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.updateSelectedValuesReportUsersDisplayString()}" />
+					</p:selectCheckboxMenu>
+					<p:remoteCommand name="executeOnOnhide"
+						update="@widgetVar(reportUserWget)" />
+				</div>
+			</div>
+
+			<div class="Container15 Responsive100 NoIndent">
+				<div class="ContainerIndent" align="center">
+					<p:outputLabel for="reportDateStart" value="Date start:" />
+					<p:calendar id="reportDateStart"
+						value="#{GlobalControllerImpl.reportDataStart}"
+						pattern="dd.MM.yyyy" mask="true" style="text-align: right;">
+					</p:calendar>
+				</div>
+			</div>
+			<div class="Container15 Responsive100 NoIndent">
+				<div class="ContainerIndent" align="center">
+					<p:outputLabel for="reportDateFinish" value="Date finish:" />
+					<p:calendar id="reportDateFinish"
+						value="#{GlobalControllerImpl.reportDataFinish}"
+						pattern="dd.MM.yyyy" mask="true" style="text-align: right;">
+					</p:calendar>
+				</div>
+			</div>
+			<div class="Container10 Responsive100 NoIndent">
+				<div class="ContainerIndent" align="center">
+					<p:commandButton value="Update" icon="fa fa-refresh"
+						aria-hidden="true" styleClass="projectCommandButtonBlue"
+						action="#{GlobalControllerImpl.reportUpdate}" />
+				</div>
+			</div>
+			<div class="Container10 Responsive100 NoIndent">
+				<div class="ContainerIndent" align="center">
+					<p:commandButton value="Print" icon="fa fa-print"
+						aria-hidden="true" styleClass="projectCommandButtonBlue"
+						onclick="print();" />
+				</div>
+			</div>
+		</h:form>
+
+		<h:form id="CostAndHours"
+			rendered="#{GlobalControllerImpl.reportType =='Cost and Time'}">
+			
+			<h:form>
+				<div class="Container100 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Cost</div>
+							<p:chart id="barHours" type="bar" widgetVar="widgetBarHoursCost"
+								model="#{GlobalControllerImpl.createHorizontalBarModel('Cost', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Time</div>
+							<p:chart id="barHours" type="bar" widgetVar="widgetBarHoursTime"
+								model="#{GlobalControllerImpl.createHorizontalBarModel('Time', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Cost by Time</div>
+							<p:chart id="pieHours" type="pie" widgetVar="widgetPieHoursCostByTime"
+								model="#{GlobalControllerImpl.createPieModel('Cost', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Cost Accepted</div>
+							<p:chart id="pieCostFormatTimeTracking" type="pie" widgetVar="widgetPieCostFormatTimeTrackingCostAccepted"
+								model="#{GlobalControllerImpl.createPieModel('CostFormatTimeTrackingAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Cost NOT
+								Accepted</div>
+							<p:chart id="pieCostFormatTimeTracking" type="pie" widgetVar="widgetPieCostFormatTimeTrackingCostNotAccepted"
+								model="#{GlobalControllerImpl.createPieModel('CostFormatTimeTrackingNotAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Time Accepted</div>
+							<p:chart id="pieTimeFormatTimeTracking" type="pie" widgetVar="widgetPieTimeFormatTimeTrackingTimeAccepted"
+								model="#{GlobalControllerImpl.createPieModel('TimeFormatTimeTrackingAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Time NOT
+								Accepted</div>
+							<p:chart id="pieTimeFormatTimeTracking" type="pie" widgetVar="widgetPieTimeFormatTimeTrackingTimeNotAccepted"
+								model="#{GlobalControllerImpl.createPieModel('TimeFormatTimeTrackingNotAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+		</h:form>
+
+		<h:form id="TaskType"
+			rendered="#{GlobalControllerImpl.reportType=='Task Type'}">
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Time</div>
+							<p:chart id="pieFormatTimeTracking" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('FormatTimeTracking', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Type</div>
+							<p:chart id="pieTaskType" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('TaskType', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Status</div>
+							<p:chart id="pieTaskStatus" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('TaskStatus', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Priority</div>
+							<p:chart id="pieTaskStatus" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('TaskPriority', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+		</h:form>
+
+		<h:form id="TaskDeadline"
+			rendered="#{GlobalControllerImpl.reportType=='Task Deadline'}">
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Deadline</div>
+							<p:chart id="barTaskDeadline" type="bar"
+								model="#{GlobalControllerImpl.createHorizontalBarModel('TaskDeadline', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Deadline
+								Priority</div>
+							<p:chart id="pieTaskStatus" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('TaskDeadlinePriority', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Deadline
+								Status</div>
+							<p:chart id="pieTaskStatus" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('TaskDeadlineStatus', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container50 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Task Deadline
+								Type</div>
+							<p:chart id="pieTaskType" type="pie"
+								model="#{GlobalControllerImpl.createPieModel('TaskDeadlineType', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form>
+				<div class="Container100 Responsive100 NoIndent">
+					<div class="ContainerIndent">
+						<div class="Card ShadowEffect">
+							<div class="Card CardBigTopic TexAlCenter">Project Activity</div>
+							<p:chart id="lineProjectActivity" type="line"
+								model="#{GlobalControllerImpl.initLinearModel('LinearModel', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								responsive="true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

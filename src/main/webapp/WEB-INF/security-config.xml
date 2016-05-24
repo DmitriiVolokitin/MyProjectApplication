@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:security="http://www.springframework.org/schema/security"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="
+	   		http://www.springframework.org/schema/beans
+	   		http://www.springframework.org/schema/beans/spring-beans.xsd
+	   		http://www.springframework.org/schema/security
+	   		http://www.springframework.org/schema/security/spring-security.xsd
+	   		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	   		
+	<!-- <aop:aspectj-autoproxy/> -->
+    <!-- <context:component-scan base-package="com.MyProject" /> -->
+	<security:http auto-config='true'>
+	<security:logout logout-url="/app/logout" logout-success-url="/app/main" />
+		<security:form-login login-page="/app/main" default-target-url="/app/mainMenu" />
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userServiceImpl">
+			<security:password-encoder hash="md5" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<aop:aspectj-autoproxy/>
+	
+	<bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userServiceImpl" />
+		<property name="hideUserNotFoundExceptions" value="false" />
+	</bean>
+	
+	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<constructor-arg>
+			<ref local="daoAuthenticationProvider" />
+		</constructor-arg>
+	</bean>
+	
+</beans>

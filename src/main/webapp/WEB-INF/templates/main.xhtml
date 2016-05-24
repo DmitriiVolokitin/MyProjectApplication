@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title" /></title>
+		<link rel="stylesheet" type="text/css"
+			href="${request.contextPath}/resources/css/style.css" />
+		<link rel="stylesheet" type="text/css"
+			href="${request.contextPath}/resources/resources/css/uikit.css" />
+		<link rel="stylesheet" type="text/css"
+			href="${request.contextPath}/resources/resources/css/components/slidenav.css" />
+		<link rel="stylesheet" type="text/css"
+			href="${request.contextPath}/resources/resources/css/components/slideshow.css" />
+
+		<link rel="shortcut icon"
+			href="${request.contextPath}/resources/css/images/Logo.jpg" />
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+		</f:facet>
+
+		<script src="../resources/resources/js/core/core.js"></script>
+		<script src="../resources/resources/js/components/slideshow.js"></script>
+		<script src="../resources/resources/js/components/slideshow-fx.js"></script>
+
+		<h:outputScript name="js/ripple-effect.js" library="modena-layout" />
+		<h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
+		<h:outputScript name="js/layout.js" library="modena-layout" />
+
+		<script type="text/javascript">
+
+		$(document).ready(function() {
+
+			  function setSize() {
+
+				  	windowHeight = $(window).outerHeight();
+		    		windowWight  = $(window).outerWidth();
+
+					var wightBar						= 20;
+					var heightBar						= 160;
+					var wightSize 			 			= windowWight - wightBar;
+					var heightSize 			 			= windowHeight - heightBar;
+					var windowNormalWight 	 			= 500;
+					var windowNormalWightBar 	 		= windowNormalWight - wightBar;
+
+					var DialogByIDStyleClass = document.getElementsByClassName("ui-dialog-content ui-widget-content");
+					var i;
+					var currentWigth;
+					for (i = 0; i &lt; DialogByIDStyleClass.length; i++) {
+		    			if (windowWight &lt; windowNormalWight){
+		    				DialogByIDStyleClass[i].style.width = (wightSize) +"px! important;";
+				    		DialogByIDStyleClass[i].style.maxHeight = (heightSize) +"px! important;";
+				    		DialogByIDStyleClass[i].setAttribute("style", "width:" + (wightSize) +"px! important;" + "max-height:" + (heightSize) +"px! important;")
+						}
+		    			else {
+		    				DialogByIDStyleClass[i].style.width = (windowNormalWightBar) +"px! important;";
+				    		DialogByIDStyleClass[i].style.maxHeight = (heightSize) +"px! important;";
+				    		DialogByIDStyleClass[i].setAttribute("style", "width:" + (windowNormalWightBar) +"px! important;" + "max-height:" + (heightSize) +"px! important;")
+				    	}
+					}
+
+					var ConfirmDialogStyleClass = document.getElementsByClassName("ui-confirm-dialog");
+					var i;
+					for (i = 0; i &lt; ConfirmDialogStyleClass.length; i++) {
+						DialogByIDStyleClass = ConfirmDialogStyleClass[i].getElementsByClassName("ui-dialog-content ui-widget-content");
+						DialogByIDStyleClass[0].style.width = "auto ! important;";
+    			 		DialogByIDStyleClass[0].style.height = "auto ! important;";
+    			 		DialogByIDStyleClass[0].setAttribute("style", "width: auto ! important;" + "height: auto ! important;");
+				    }
+
+					DialogGreetingProcess = document.getElementById("greetingProcess");
+					DialogByIDStyleClass = DialogGreetingProcess.getElementsByClassName("ui-dialog-content ui-widget-content");
+					DialogByIDStyleClass[0].style.width = "auto ! important;";
+			 		DialogByIDStyleClass[0].style.height = "auto ! important;";
+			 		DialogByIDStyleClass[0].setAttribute("style", "width: auto ! important;" + "height: auto ! important;");
+				    
+			  };
+
+			  $(window).resize(function() {
+				  setSize();
+			  });
+
+			  $(window).load(function() {
+				  setSize();
+			  });
+
+			});
+		</script>
+
+		<ui:insert name="head" />
+	</h:head>
+
+	<h:body styleClass="BlueModena">
+		
+		<script>(function(d, s, id) {
+ 			var js, fjs = d.getElementsByTagName(s)[0];
+  			if (d.getElementById(id)) return;
+  			js = d.createElement(s); js.id = id;
+  			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.0";
+  			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		</script>
+	
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog id="greetingProcess" widgetVar="statusDialog"
+			showHeader="false" draggable="true" closable="false"
+			resizable="false" appendTo="@(body)"
+			style="background: transparent; border: none;
+			background-color: transparent; background-image: none;
+			box-shadow:none!important;">
+			<i class="fa fa-spinner fa-pulse fa-4x" style="color: #87afc1;"></i>
+		</p:dialog>
+
+		<p:growl id="growlMessages" showDetail="false" sticky="false"
+			life="13000" />
+
+		<div id="container">
+			<!-- <div id="header">
+				<h1><ui:insert name="header" /></h1>
+			</div>
+			<div id="line" /> -->
+			<div id="content">
+				<ui:insert name="content" />
+			</div>
+			<!-- <div id="footer">
+				<ui:insert name="footer" />
+			</div> -->
+		</div>
+
+		<h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+		<h:outputStylesheet name="css/animate.css" library="modena-layout" />
+		<h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+		<h:outputStylesheet name="css/ripple-effect.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/perfect-scrollbar.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/font-awesome.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/modena-layout.css"
+			library="modena-layout" />
+	</h:body>
+
+</f:view>
+</html>

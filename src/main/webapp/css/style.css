@@ -1,0 +1,470 @@
+.headerButton.ui-button.ui-button-icon-only .ui-button-text {
+	/* padding: 10px 0px !important;
+	vertical-align:bottom"; */
+}
+
+.ui-noborder.ui-panelgrid {
+	border: none !important;
+	border-color: none !important;
+	border-style: none !important;
+}
+
+#greeting {
+	font-size: 10px;
+}
+
+#greetingProcess {
+	font-size: 8px !important;
+}
+
+#greeting a img {
+	border: none;
+	width: 25px;
+	margin-bottom: -7px;
+}
+
+.ui-growl-item {
+	font-size: 10px;
+}
+
+.ui-growl {
+	top: 90px;
+	right: 40px;
+}
+
+.deleteCommandButton {
+	background-color: #d75452;
+	min-width: 20px;
+	max-width: 26px;
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	max-height: 26px;
+	padding: none;
+	margin: none;
+}
+
+.deleteCommandButton.ui-state-hover, .deleteCommandButton.ui-state-focus
+	{
+	background-color: #F44336;
+}
+
+.deleteCommandButton.ui-state-active {
+	background-color: #D32F2F;
+}
+
+.editCommandButton {
+	background-color: #eeac57;
+	min-width: 20px;
+	max-width: 26px;
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	max-height: 26px;
+	padding: none;
+	margin: none;
+}
+
+.editCommandButton.ui-state-hover, .editCommandButton.ui-state-focus {
+	background-color: #FF9800;
+}
+
+.editCommandButton.ui-state-active {
+	background-color: #F57C00;
+}
+
+.ADDGreenButton {
+	background-color: #66b077;
+}
+
+.ADDGreenButton.ui-state-hover, .ADDGreenButton.ui-state-focus {
+	background-color: #81C784;
+}
+
+.ADDGreenButton.ui-state-active {
+	background-color: #4CAF50;
+}
+
+.DeleteRedButton {
+	background-color: #d75452;
+}
+
+.DeleteRedButton.ui-state-hover, .DeleteRedButton.ui-state-focus {
+	background-color: #F44336;
+}
+
+.DeleteRedButton.ui-state-active {
+	background-color: #D32F2F;
+}
+
+.projectCommandButton {
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	padding: none !important;
+}
+
+.projectCommandButtonBlue {
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	padding: none !important;
+	margin: none !important;
+}
+
+.tabsIconCommandButton {
+	background-color: #1483c2;
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	padding: none !important;
+	margin: none !important;
+	
+}
+
+.tabsIconOperationsCommandButton {
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	padding: none !important;
+	margin: none !important;
+	color: #546e7a !important;
+	background-color: white !important;
+	font-size: 14px !important;
+}
+
+.tabsIconInfoCommandButton {
+	background-color: #60c0dc;
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	padding: none !important;
+	margin: none !important;
+}
+
+.editProjectCommandButton {
+	background-color: #eeac57;
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	padding: none;
+	margin: none;
+}
+
+.editProjectCommandButton.ui-state-hover, .editProjectCommandButton.ui-state-focus
+	{
+	background-color: #FF9800;
+}
+
+.editProjectCommandButton.ui-state-active {
+	background-color: #F57C00;
+}
+
+.viewCommandButton {
+	background-color: #60c0dc;
+	min-width: 20px;
+	max-width: 26px;
+	border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	max-height: 26px;
+	padding: none;
+	margin: none;
+}
+
+.viewCommandButton.ui-state-hover, .viewCommandButton.ui-state-focus {
+	background-color: #26C6DA;
+}
+
+.viewCommandButton.ui-state-active {
+	background-color: #60c0dc;
+}
+
+.searchGlobalFilter {
+	width: -webkit-calc(100% - 294px)!important;
+	width: -moz-calc(100% - 294px) !important;
+	width: calc(100% - 294px) !important;
+}
+
+#top-menu {
+	width: 95%;
+}
+
+
+.selectOneMenuMobileProject {
+	/* max-width:1000px !important;
+	min-width:579px !important;
+	width: auto !important; */
+	width: -webkit-calc(100% - 315px)!important;
+	width: -moz-calc(100% - 315px)!important;
+	width: calc(100% - 315px)!important;
+	float: left;
+}
+
+.selectHeaderOneMenuMobileProject {
+	display: none;
+	width: -webkit-calc(100% - 120px)!important;
+	width: -moz-calc(100% - 120px) !important;
+	width: calc(100% - 120px) !important;
+}
+
+.ui-button.GreenButton {
+	color: #ffffff;
+	background: #66b077;
+	background-image: none;
+	text-shadow: none;
+}
+
+.ui-button.backToSignInCommandButton {
+	color: #ffffff;
+	background: #5fb760;
+	background-image: none;
+	text-shadow: none;
+}
+
+.ui-button.confirmSignUpCommandButton {
+	color: #ffffff;
+	background: #5fb760;
+	background-image: none;
+	text-shadow: none;
+}
+
+.ui-button.confirmSignInCommandButton {
+	color: #ffffff;
+	background: #1483c2;
+	background-color: #1483c2;
+	background-image: none;
+	text-shadow: none;
+}
+
+.ui-button.newUserCommandButton {
+	color: #ffffff;
+	background: #5fb760;
+	background-image: none;
+	text-shadow: none;
+}
+
+.ui-button.searchCommandButton {
+	color: #ffffff;
+	background: #1483c2;
+	background-image: none;
+	text-shadow: none;
+}
+
+.columnCenter {
+	text-align: center;
+}
+
+.columnOperations {
+	text-align: center;
+	width: 110px;
+}
+
+.columnSmallOperations {
+	text-align: center;
+	width: 60px;
+}
+
+.columnView {
+	text-align: center;
+	width: 30px;
+}
+
+.columnDelete {
+	text-align: center;
+	width: 30px;
+}
+
+.dataTableWizard .ui-datatable-scrollable-body {
+	height: 165px;
+}
+
+/* .dataTable40 .ui-datatable-scrollable-body {
+	height: -webkit-calc(40% + 1px)!important;
+	height: -moz-calc(40% + 1px) !important;
+	height: calc(40% + 1px) + 'px! important;';
+} */
+
+.ui-datatable th {
+	font-size: 10px !important;
+}
+
+.ui-tabmenu-nav.ui-widget-header {
+	font-size: 10px;
+}
+
+.ui-tabmenu-nav.ui-widget {
+	font-size: 10px;
+}
+
+/* Work */
+.ui-tabmenuitem.ui-state-default {
+	background: #ffffff;
+	padding: 0px 0px;
+}
+
+/* Work */
+.ui-widget-header {
+	background-color: #ffffff !important;
+	background: #ffffff;
+}
+
+.ui-outputpanel {
+	background-color: #ffffff !important;
+	background: #ffffff;
+}
+
+/* Work */
+.ui-tabmenu {
+	padding: 0px 0px;
+	margin: none !important;
+	box-shadow: none !important;
+	border: none;
+	display: block;
+}
+
+.ui-message-error, .ui-messages-warn, .ui-messages-error,
+	.ui-message-error, .ui-messages-fatal, .ui-message-fatal {
+	background: none;
+	border: none;
+	background-color: none;
+	background-image: none;
+	box-shadow: none !important;
+}
+
+.ui-messages-warn-icon, .ui-messages-error-icon, .ui-messages-fatal-icon,
+	.ui-message-warn-icon, .ui-message-error-icon, .ui-message-fatal-icon {
+	background: none;
+	border: none;
+	background-color: none;
+	background-image: none;
+	box-shadow: none !important;
+}
+
+.ui-messages-warn-icon:before, .ui-message-warn-icon:before,
+	.ui-messages-fatal-icon:before, .ui-message-fatal-icon:before,
+	.ui-messages-error-icon:before, .ui-message-error-icon:before {
+	/* font-family: FontAwesome;
+	color: #d75452;
+	content: "\f06a"; */
+	
+}
+
+.ui-messages-info, .ui-message-info {
+	background: none;
+	border: none;
+	background-color: none;
+	background-image: none;
+	box-shadow: none !important;
+}
+
+.ui-messages-info-icon, .ui-message-info-icon {
+	background: none;
+	border: none;
+	background-color: none;
+	background-image: none;
+	box-shadow: none !important;
+}
+
+.ui-messages-info-icon:before, .ui-message-info-icon:before {
+	font-family: FontAwesome;
+	color: #5fb760;
+	/* content: "\f06a"; */
+}
+
+.ui-widget {
+	font-size: 12px;
+}
+
+.ui-widget-header {
+	font-size: 14px;
+}
+
+.startFirstPageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 130px;
+	overflow: hidden;
+}
+
+.finishFirstPageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 130px;
+	overflow: hidden;
+}
+
+.pageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 2px;
+	overflow: hidden;
+}
+
+.startSecondPageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 20px;
+	overflow: hidden;
+}
+
+.finishSecondPageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 20px;
+	overflow: hidden;
+}
+
+.startThirdPageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 20px;
+	overflow: hidden;
+}
+
+.finishThirdPageEmptyBox {
+	display: block;
+	width: 100%;
+	height: 20px;
+	overflow: hidden;
+}
+
+.ui-grid-col-6 {
+	width: 83.333%;
+}
+
+/* .DialogTask.ui-dialog .ui-dialog-content {
+	width: auto;
+}
+
+.dialogWizard.ui-dialog .ui-dialog-content {
+	width: auto;
+}
+
+.DialogHeightLanscape.ui-dialog .ui-dialog-content {
+	width: auto;
+}
+
+.longHightDialog.ui-dialog .ui-dialog-content {
+	width: auto;
+} */
+
+.wizard.ui-dialog {
+	width: 100% !important;
+}
+
+.projectWizardButton {
+	height: 320px;
+}
+
+.viewPanelGrid30.ui-panelgrid-cell {
+	width: 30% ! important;
+}
+.viewPanelGrid70.ui-panelgrid-cell {
+	width: 70% ! important;
+}
+
+.togglerTasks .ui-menuitem-text {
+	margin-left: 5px !important;
+}
+

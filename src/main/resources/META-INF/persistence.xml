@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+		http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+		
+	<persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+		
+		<class>com.MyProject.domain.commons.ContractEntity</class>
+		<class>com.MyProject.domain.commons.ContractorOrganizationEntity</class>
+		<class>com.MyProject.domain.commons.CustomerOrganizationEntity</class>
+		<class>com.MyProject.domain.commons.FormatTimeTrackingEntity</class>
+		
+		<class>com.MyProject.domain.project.ProjectEntity</class>
+		<class>com.MyProject.domain.project.ProjectFileEntity</class>
+		<class>com.MyProject.domain.project.ProjectMilestoneEntity</class>
+		<class>com.MyProject.domain.project.ProjectCostSettingEntity</class>
+		
+		<class>com.MyProject.domain.task.TaskEntity</class>
+		<class>com.MyProject.domain.task.TaskPriorityEntity</class>
+		<class>com.MyProject.domain.task.TaskStatusEntity</class>
+		<class>com.MyProject.domain.task.TaskFileEntity</class>
+		<class>com.MyProject.domain.task.TaskHistoryEntity</class>
+		<class>com.MyProject.domain.task.TaskStatusHistoryEntity</class>
+		<class>com.MyProject.domain.task.TaskTimeTrackingEntity</class>
+		<class>com.MyProject.domain.task.TaskTypeEntity</class>
+		
+		<class>com.MyProject.domain.user.UserEntity</class>
+		<class>com.MyProject.domain.user.UserRoleEntity</class>
+		<class>com.MyProject.domain.user.UserSettingEntity</class>
+		
+		<class>com.MyProject.domain.commons.ProjectUserRoleEntity</class>
+		
+		<properties>
+			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>

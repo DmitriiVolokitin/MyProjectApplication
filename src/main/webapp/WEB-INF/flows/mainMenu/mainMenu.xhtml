@@ -1,0 +1,2050 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pm="http://primefaces.org/modena"
+	template="/WEB-INF/templates/mainMenu.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Tasks" />
+	</ui:define>
+
+	<ui:define name="header">
+
+		<!-- TOPBAR START -->
+
+		<div id="layout-topbar">
+			<a id="mobile-menu-button"> <span class="ButtonLine"
+				id="ButtonLine1"></span> <span class="ButtonLine" id="ButtonLine2"></span>
+				<span class="ButtonLine" id="ButtonLine3"></span>
+			</a> <a id="show-top-menu" class="ShowOnMobile ripplelink"><i
+				class="icon-more_horizontal" id="active"></i><i
+				class="icon-close DispNone" id="passive"></i></a>
+
+			<div align="center">
+				<h:form id="currentProjectHeaderForm">
+					<p:selectOneMenu id="projectHeader"
+						value="#{ProjectServiceImpl.selectedCurrentProject}" effect="fold"
+						converter="omnifaces.SelectItemsConverter" editable="false"
+						styleClass="selectHeaderOneMenuMobileProject">
+						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
+							var="project" itemLabel="#{project}" itemValue="#{project}" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}"
+							update=":mainTaskForm:tasks 
+							:tabViewID:taskFileForm:files
+							:tabViewID:taskStatusHistoryForm:statusHistories
+							:tabViewID:taskTimeTrackingForm:timeTrackings
+							:tabViewID:taskHistoryForm:taskHistories
+							:mainTaskForm:tasks:TextFullContent"
+							oncomplete="PF('tasksTable').filter()" />
+					</p:selectOneMenu>
+				</h:form>
+			</div>
+
+			<!-- Project -->
+			<ul id="top-menu">
+
+				<h:form id="currentProjectForm" style="display: inline;">
+					<p:selectOneMenu id="project"
+						value="#{ProjectServiceImpl.selectedCurrentProject}" effect="fold"
+						converter="omnifaces.SelectItemsConverter" editable="false"
+						styleClass="selectOneMenuMobileProject">
+						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
+							var="project" itemLabel="#{project}" itemValue="#{project}" />
+						<p:ajax event="change"
+							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}"
+							update=":mainTaskForm:tasks 
+							:tabViewID:taskFileForm:files
+							:tabViewID:taskStatusHistoryForm:statusHistories
+							:tabViewID:taskTimeTrackingForm:timeTrackings
+							:tabViewID:taskHistoryForm:taskHistories
+							:mainTaskForm:tasks:TextFullContent"
+							oncomplete="PF('tasksTable').filter()" />
+					</p:selectOneMenu>
+				</h:form>
+				<!-- Edit -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-pencil fa-lg" aria-hidden="true"
+							update=":projectEditForm" resetValues="true"
+							oncomplete="PF('projectDialogEdit').show()"
+							styleClass="ShowOnDesktop editProjectCommandButton projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+
+						<p:commandButton value="Edit" icon="fa fa-pencil fa-lg"
+							aria-hidden="true" update=":projectEditForm" resetValues="true"
+							oncomplete="PF('projectDialogEdit').show()"
+							styleClass="ShowOnMobile projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+
+					</h:form></li>
+				<!-- ADD -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-plus fa-lg" aria-hidden="true"
+							action="#{ProjectServiceImpl.clear()}" update="projectADDForm"
+							resetValues="true" oncomplete="PF('projectDialogADD').show()"
+							styleClass="ShowOnDesktop ADDGreenButton headerButton projectCommandButton" />
+						<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+							aria-hidden="true" action="#{ProjectServiceImpl.clear()}"
+							update="projectADDForm" resetValues="true"
+							oncomplete="PF('projectDialogADD').show()"
+							styleClass="ShowOnMobile ADDGreenButton headerButton projectCommandButton" />
+					</h:form></li>
+
+				<!-- Wizard -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-magic fa-lg" aria-hidden="true"
+							resetValues="true" oncomplete="PF('projectWizardDialog').show()"
+							styleClass="ShowOnDesktop projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+						<p:commandButton value="Wizard" icon="fa fa-magic fa-lg"
+							aria-hidden="true" resetValues="true"
+							oncomplete="PF('projectWizardDialog').show()"
+							styleClass="ShowOnMobile projectCommandButton"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}" />
+					</h:form></li>
+
+				<!-- Delete -->
+				<li><h:form>
+						<p:commandButton icon="fa fa-trash fa-lg" aria-hidden="true fa-2x"
+							action="#{GlobalControllerImpl.deleteProject(ProjectServiceImpl.selectedCurrentProject)}"
+							update=":currentProjectForm:project" resetValues="true"
+							styleClass="ShowOnDesktop DeleteRedButton headerButton projectCommandButton"
+							disabled="#{!GlobalControllerImpl.checkAvailableProjectToDelete(ProjectServiceImpl.selectedCurrentProject, user)}"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+							<p:confirm header="Confirmation" message="Are you REALLY SURE?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes GreenButton"
+								icon="ui-icon-check fa fa-check Fs14 white" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no RedButton"
+								icon="ui-icon-close fa fa-close Fs14 white" />
+						</p:confirmDialog>
+
+						<p:commandButton value="Delete" icon="fa fa-trash fa-lg"
+							aria-hidden="true fa-2x"
+							action="#{GlobalControllerImpl.deleteProject(ProjectServiceImpl.selectedCurrentProject)}"
+							update=":currentProjectForm:project" resetValues="true"
+							styleClass="ShowOnMobile DeleteRedButton headerButton projectCommandButton"
+							disabled="#{!GlobalControllerImpl.checkAvailableProjectToDelete(ProjectServiceImpl.selectedCurrentProject, user)}"
+							rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+							<p:confirm header="Confirmation" message="Are you REALLY SURE?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes GreenButton"
+								icon="ui-icon-check fa fa-check Fs14 white" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no RedButton"
+								icon="ui-icon-close fa fa-close Fs14 white" />
+						</p:confirmDialog>
+
+					</h:form></li>
+
+				<li><p:button icon="fa fa-sign-out fa-lg"
+						href="#{request.contextPath}/app/logout" value="Log Out"
+						styleClass="projectCommandButton" style="float: right !important;" /></li>
+			</ul>
+		</div>
+
+		<!-- TOPBAR END -->
+
+		<div class="Animated05" id="layout-menu-cover">
+
+			<h:form id="menuform">
+
+				<h:form id="tabMenuForm">
+					<p:tabMenu activeIndex="#{GlobalControllerImpl.menuIndex}"
+						styleClass="tabMenuOnMobile"
+						style="margin:0.5px !important; color: #ffffff !important;">
+					</p:tabMenu>
+				</h:form>
+
+				<pm:menu>
+					<p:menuitem value="Tasks" action="MenuTask" icon="fa fa-tasks">
+					</p:menuitem>
+					<p:menuitem value="Files" action="MenuProjectFiles" ajax="false"
+						icon="fa fa-files-o">
+					</p:menuitem>
+					<p:menuitem value="Employees and Roles" action="MenuUserAndRole"
+						ajax="false" icon="fa fa-stack-overflow"
+						rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+					</p:menuitem>
+					<p:menuitem value="Directories" action="MenuDirectories"
+						ajax="false" icon="fa fa-sitemap"
+						rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+					</p:menuitem>
+					<p:menuitem value="Reports" action="MenuReports" ajax="false"
+						icon="fa fa-file-pdf-o">
+					</p:menuitem>
+					<p:menuitem value="Settings" action="MenuSettings" ajax="false"
+						icon="fa fa-cogs">
+					</p:menuitem>
+					<p:separator />
+				</pm:menu>
+			</h:form>
+		</div>
+
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:event type="postAddToView" listener="#{uiUtils.greetOnViewLoad}"
+				update="growlMessages" />
+			<f:attribute name="firstName" value="#{user.firstName}" />
+			<f:attribute name="lastName" value="#{user.lastName}" />
+		</f:metadata>
+
+		<div class="EmptyBox60"></div>
+
+		<h:form id="tabMenuForm">
+			<p:tabMenu activeIndex="#{GlobalControllerImpl.menuIndex}"
+				styleClass="tabMenuOnMobile"
+				style="margin:0.5px !important; color: #ffffff !important;">
+				<p:menuitem value="Tasks" action="MenuTask" icon="fa fa-tasks">
+				</p:menuitem>
+				<p:menuitem value="Files" action="MenuProjectFiles" ajax="false"
+					icon="fa fa-files-o">
+				</p:menuitem>
+				<p:menuitem value="Employees and Roles" action="MenuUserAndRole"
+					ajax="false" icon="fa fa-stack-overflow"
+					rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+				</p:menuitem>
+				<p:menuitem value="Directories" action="MenuDirectories"
+					ajax="false" icon="fa fa-sitemap"
+					rendered="#{GlobalControllerImpl.checkAvailableProjectManager(ProjectServiceImpl.selectedCurrentProject, user)}">
+				</p:menuitem>
+				<p:menuitem value="Reports" action="MenuReports" ajax="false"
+					icon="fa fa-file-pdf-o">
+				</p:menuitem>
+				<p:menuitem value="Settings" action="MenuSettings" ajax="false"
+					icon="fa fa-cogs">
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+
+		<h:form id="mainTaskForm">
+
+			<p:contextMenu for="tasks">
+				<p:menuitem value="View" update=":taskViewForm" icon="fa fa-search"
+					oncomplete="PF('taskDialogView').show()" />
+				<p:menuitem value="Edit" update=":taskEditForm" icon="fa fa-pencil"
+					aria-hidden="true" oncomplete="PF('taskDialogEdit').show()" />
+			</p:contextMenu>
+
+			<p:dataTable reflow="true" id="tasks" var="task"
+				value="#{TaskServiceImpl.tasks}" rowKey="#{task.id}"
+				selection="#{TaskServiceImpl.selectedTask}" selectionMode="single"
+				rowIndexVar="rowIndex"
+				emptyMessage="No task found with given criteria"
+				filteredValue="#{TaskServiceImpl.filteredTask}"
+				widgetVar="tasksTable" draggableColumns="true"
+				resizableColumns="true" liveResize="true" scrollable="true"
+				scrollHeight="auto" scrollWidth="auto">
+
+				<p:ajax event="rowSelect"
+					listener="#{GlobalControllerImpl.afterTaskSelect()}"
+					update=":tabViewID:taskFileForm:files
+					:tabViewID:taskStatusHistoryForm:statusHistories
+					:tabViewID:taskTimeTrackingForm:timeTrackings
+					:tabViewID:taskHistoryForm:taskHistories
+					:mainTaskForm:tasks:TextFullContent" />
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right;">
+						<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+							aria-hidden="true"
+							action="#{TaskServiceImpl.beforeCreateTask(user)}"
+							update=":taskADDForm" oncomplete="PF('taskDialogADD').show()"
+							resetValues="true" styleClass="ADDGreenButton" style="float:left" />
+
+						<p:inputText id="globalFilter" onkeyup="PF('tasksTable').filter()"
+							placeholder="Search..." styleClass="searchGlobalFilter" />
+
+						<p:commandButton icon="fa fa-refresh fa-lg"
+							styleClass="tabsIconCommandButton"
+							action="#{GlobalControllerImpl.initByProject(ProjectServiceImpl.selectedCurrentProject)}"
+							update=":mainTaskForm:tasks 
+							:tabViewID:taskFileForm:files
+							:tabViewID:taskStatusHistoryForm:statusHistories
+							:tabViewID:taskTimeTrackingForm:timeTrackings
+							:tabViewID:taskHistoryForm:taskHistories
+							:mainTaskForm:tasks:TextFullContent"
+							oncomplete="PF('tasksTable').filter()" />
+						
+						<!-- <p:menuButton icon="fa fa-filter aria-hidden=true" value="" styleClass="tabsIconCommandButton">
+							<p:menuitem ajax="false" value="Show only my Task"
+								style="margin: 15px 0;">
+							</p:menuitem>
+						</p:menuButton> -->
+						
+						<p:commandButton icon="fa fa-filter aria-hidden=true"
+							styleClass="tabsIconCommandButton" ajax="false" />
+
+						<p:menuButton value="Options">
+							<p:menuitem ajax="false" value="Excel"
+								icon="fa fa-file-excel-o fa-lg" style="margin: 15px 0;">
+								<p:dataExporter type="xls" target="tasks" fileName="TasksExcel"
+									preProcessor="#{GlobalControllerImpl.preProcessXLS}"
+									postProcessor="#{GlobalControllerImpl.postProcessXLS}" />
+							</p:menuitem>
+							<p:menuitem ajax="false" value="PDF"
+								icon="fa fa-file-pdf-o fa-lg" style="margin: 15px 0;">
+								<p:dataExporter type="pdf" target="tasks" fileName="TasksPDF" />
+							</p:menuitem>
+							<p:menuitem ajax="false" value="Help" icon="fa fa-info fa-lg"
+								style="margin: 15px 0;" action="OpenInstructionNewTask"
+								target="_blank">
+							</p:menuitem>
+						</p:menuButton>
+					</p:outputPanel>
+				</f:facet>
+
+				<f:facet name="footer">
+					<p:inputTextarea id="TextFullContent" rows="3"
+						style="width: 99.9%; background-color: #ffffff; border: 1px!important; border-color: #f5f5f5"
+						value="#{TaskServiceImpl.selectedTask.fullContent}"
+						readonly="true" autoResize="false" maxlength="250" />
+				</f:facet>
+
+				<p:column headerText="#" width="3%" filterStyle="display:none"
+					styleClass="columnCenter">
+					<h:outputText value="#{rowIndex + 1}" />
+				</p:column>
+
+				<p:column headerText="Task #" width="6%" filterBy="#{task.id}"
+					filterStyle="display:none" sortBy="#{task.id}"
+					styleClass="columnCenter">
+					<h:outputText value="#{task.id}" />
+				</p:column>
+
+				<p:column headerText="Name" filterBy="#{task.shortContent}"
+					filterStyle="display:none" sortBy="#{task.shortContent}">
+					<h:outputText id="contentName" value="#{task.shortContent}" />
+					<p:tooltip id="tooltipName" for="contentName"
+						value="#{task.shortContent}" />
+				</p:column>
+
+				<p:column headerText="Status" filterBy="#{task.taskStatus}"
+					filterStyle="display:none" sortBy="#{task.taskStatus.name}">
+					<h:outputText id="contentStatus" value="#{task.taskStatus}" />
+					<p:tooltip id="toolContentStatus" for="contentStatus"
+						value="#{task.taskStatus}" />
+				</p:column>
+
+				<p:column headerText="Priority" filterBy="#{task.taskPriority}"
+					filterStyle="display:none" sortBy="#{task.taskPriority.name}">
+					<h:outputText id="contentPriority" value="#{task.taskPriority}" />
+					<p:tooltip id="toolPriority" for="contentPriority"
+						value="#{task.taskPriority}" />
+				</p:column>
+
+				<p:column headerText="Type" filterBy="#{task.taskType}"
+					filterStyle="display:none" sortBy="#{task.taskType.name}">
+					<h:outputText id="contentType" value="#{task.taskType}" />
+					<p:tooltip id="toolType" for="contentType" value="#{task.taskType}" />
+				</p:column>
+
+				<p:column headerText="Initiator" filterBy="#{task.userInitiator}"
+					filterStyle="display:none"
+					sortBy="#{task.userInitiator.displayName}">
+					<h:outputText id="contentInitiator" value="#{task.userInitiator}" />
+					<p:tooltip id="toolInitiator" for="contentInitiator"
+						value="#{task.userInitiator}" />
+				</p:column>
+
+				<p:column headerText="Executor"
+					filterBy="#{task.usercurrentExecutor}" filterStyle="display:none"
+					sortBy="#{task.usercurrentExecutor.displayName}">
+					<h:outputText id="contentExecutor"
+						value="#{task.usercurrentExecutor}" />
+					<p:tooltip id="toolExecutor" for="contentExecutor"
+						value="#{task.usercurrentExecutor}" />
+				</p:column>
+
+				<p:column headerText="Responsible"
+					filterBy="#{task.userResponsible}" filterStyle="display:none"
+					sortBy="#{task.userResponsible.displayName}">
+					<h:outputText id="contentResponsible"
+						value="#{task.userResponsible}" />
+					<p:tooltip id="toolResponsible" for="contentResponsible"
+						value="#{task.userResponsible}" />
+				</p:column>
+
+				<p:column headerText="Plan Time" filterBy="#{task.planTime}"
+					filterStyle="display:none" sortBy="#{task.planTime}"
+					styleClass="columnCenter">
+					<h:outputText value="#{task.planTime}">
+						<f:convertNumber pattern="#00.00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Actual Time" filterBy="#{task.actualTime}"
+					filterStyle="display:none" sortBy="#{task.actualTime}"
+					styleClass="columnCenter">
+					<h:outputText value="#{task.actualTime}">
+						<f:convertNumber pattern="#00.00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="% Done" filterBy="#{task.executionPercentage}"
+					filterStyle="display:none" sortBy="#{task.executionPercentage}"
+					styleClass="columnCenter">
+					<h:outputText value="#{task.executionPercentage}">
+						<f:convertNumber pattern="#00.00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="DeadLine" filterBy="#{task.deadLine}"
+					filterStyle="display:none" sortBy="#{task.deadLine}"
+					styleClass="columnCenter">
+					<h:outputText value="#{task.deadLine}">
+						<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Milestone" filterBy="#{task.milestone}"
+					filterStyle="display:none" sortBy="#{task.milestone.name}">
+					<h:outputText id="contentMilestone" value="#{task.milestone}" />
+					<p:tooltip id="toolMilestone" for="contentMilestone"
+						value="#{task.milestone}" />
+				</p:column>
+
+				<p:column styleClass="columnOperations" headerText="Operations"
+					exportable="false" toggleable="false">
+
+					<!-- View -->
+					<p:commandButton icon="fa fa-search"
+						action="#{GlobalControllerImpl.beforeTaskSelect(task)}"
+						update=":taskViewForm :mainTaskForm:tasks :tabViewID:taskFileForm:files :tabViewID:taskStatusHistoryForm:statusHistories, 
+					:tabViewID:taskTimeTrackingForm:timeTrackings :mainTaskForm:tasks:TextFullContent"
+						oncomplete="PF('taskDialogView').show(), PF('tasksTable').filter()"
+						styleClass="viewCommandButton" />
+
+					<!-- Edit -->
+					<p:commandButton icon="fa fa-pencil fa-lg" aria-hidden="true"
+						action="#{GlobalControllerImpl.beforeTaskSelect(task)}"
+						update=":taskEditForm :mainTaskForm:tasks 
+						:tabViewID:taskFileForm:files 
+						:tabViewID:taskStatusHistoryForm:statusHistories 
+						:tabViewID:taskTimeTrackingForm:timeTrackings
+						:tabViewID:taskHistoryForm:taskHistories 
+						:mainTaskForm:tasks:TextFullContent"
+						resetValues="true" oncomplete="PF('taskDialogEdit').show()"
+						styleClass="editCommandButton" />
+
+					<!-- Delete -->
+					<p:remoteCommand name="update"
+						update=":mainTaskForm:tasks 
+						:mainTaskForm:tasks:TextFullContent 
+						:tabViewID:taskFileForm:files 
+						:tabViewID:taskStatusHistoryForm:statusHistories
+						:tabViewID:taskHistoryForm:taskHistories 
+						:tabViewID:taskTimeTrackingForm:timeTrackings" />
+					<p:commandButton icon="fa fa-trash"
+						action="#{GlobalControllerImpl.deleteProjectTask(task)}"
+						oncomplete="{update()}" styleClass="deleteCommandButton">
+						<p:confirm header="Confirmation" message="Are you sure?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes GreenButton"
+							icon="ui-icon-check fa fa-check Fs14 white" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no RedButton"
+							icon="ui-icon-close fa fa-close Fs14 white" />
+					</p:confirmDialog>
+
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog header="View Task" widgetVar="taskDialogView"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false">
+			<h:form id="taskViewForm">
+				<p:messages />
+				<p:focus />
+				<p:outputPanel id="fileView" style="text-align:right;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty TaskServiceImpl.selectedTask}"
+						columnClasses="viewPanelGrid30, viewPanelGrid70"
+						style="width: 100% ! important;text-align:right;">
+
+						<h:outputText value="Task #:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.id}" />
+
+						<h:outputText value="Name:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.shortContent}" />
+
+						<h:outputText value="Priority:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.taskPriority}" />
+
+						<h:outputText value="Type:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.taskType}" />
+
+						<h:outputText value="Initiator:" />
+						<h:outputText
+							value="#{TaskServiceImpl.selectedTask.userInitiator}" />
+
+						<h:outputText value="Executor:" />
+						<h:outputText
+							value="#{TaskServiceImpl.selectedTask.usercurrentExecutor}" />
+
+						<h:outputText value="Responsible:" />
+						<h:outputText
+							value="#{TaskServiceImpl.selectedTask.userResponsible}" />
+
+						<h:outputText value="Deadline:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.deadLine}">
+							<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+						</h:outputText>
+
+						<h:outputText value="Plan Time:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.planTime}">
+							<f:convertNumber pattern="#00.00" />
+						</h:outputText>
+
+						<h:outputText value="Actual Time:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.actualTime}">
+							<f:convertNumber pattern="#00.00" />
+						</h:outputText>
+
+						<h:outputText value="% Done:" />
+						<h:outputText
+							value="#{TaskServiceImpl.selectedTask.executionPercentage}">
+							<f:convertNumber pattern="#00.00" />
+						</h:outputText>
+						<h:outputText value="Milestone:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.milestone}" />
+
+						<h:outputText value="Description:" />
+						<h:outputText value="#{TaskServiceImpl.selectedTask.fullContent}" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="taskDialogEdit" header="Edit Task"
+			widgetVar="taskDialogEdit" closeOnEscape="true" showEffect="pop"
+			resetValues="true" modal="true" resizable="false" fitViewport="true"
+			maximizable="false" styleClass="longHightDialog">
+			<h:form id="taskEditForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGridName" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="EditShortContent" value="Name:" />
+							<p:inputText id="EditShortContent"
+								value="#{TaskServiceImpl.selectedTask.shortContent}"
+								required="true" title="Enter task Name!">
+								<f:validateLength maximum="100" />
+							</p:inputText>
+
+						</p:panelGrid>
+
+						<p:panelGrid id="regPanelGrid" columns="4"
+							columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="EditTaskPriority" value="Priority:" />
+							<p:selectOneMenu id="EditTaskPriority"
+								value="#{TaskServiceImpl.selectedTask.taskPriority}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{TaskPriorityServiceImpl.taskPriorities}"
+									var="type" itemLabel="#{type}" itemValue="#{type}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditTaskType" value="Type:" />
+							<p:selectOneMenu id="EditTaskType"
+								value="#{TaskServiceImpl.selectedTask.taskType}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{TaskTypeServiceImpl.taskTypes}"
+									var="type" itemLabel="#{type}" itemValue="#{type}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditTaskStatus" value="Status:" />
+							<p:selectOneMenu id="EditTaskStatus"
+								value="#{TaskServiceImpl.selectedTask.taskStatus}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true"
+								disabled="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{TaskStatusServiceImpl.taskStatuses}"
+									var="status" itemLabel="#{status}" itemValue="#{status}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditProjectUsersResponsible"
+								value="Responsible:" />
+							<p:selectOneMenu id="EditProjectUsersResponsible"
+								value="#{TaskServiceImpl.selectedTask.userResponsible}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{userServiceImpl.users}"
+									var="projectUser" itemLabel="#{projectUser}"
+									itemValue="#{projectUser}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditProjectUsersInitiator" value="Initiator:" />
+							<p:selectOneMenu id="EditProjectUsersInitiator"
+								value="#{TaskServiceImpl.selectedTask.userInitiator}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{userServiceImpl.users}"
+									var="projectUser" itemLabel="#{projectUser}"
+									itemValue="#{projectUser}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditProjectUsersCurrentExecutor"
+								value="Executor:" />
+							<p:selectOneMenu id="EditProjectUsersCurrentExecutor"
+								value="#{TaskServiceImpl.selectedTask.usercurrentExecutor}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								required="true" disabled="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{userServiceImpl.users}"
+									var="projectUser" itemLabel="#{projectUser}"
+									itemValue="#{projectUser}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditprojectDeadLine" value="Deadline:" />
+							<p:calendar id="EditprojectDeadLine"
+								value="#{TaskServiceImpl.selectedTask.deadLine}" required="true"
+								pattern="dd.MM.yyyy" mask="true" style="text-align: right;">
+							</p:calendar>
+
+							<p:outputLabel for="EditPlanTime" value="Plan Time:" />
+							<p:inputText id="EditPlanTime"
+								value="#{TaskServiceImpl.selectedTask.planTime}"
+								style="text-align: right;"
+								title="Enter task Plan Time Percentage!">
+								<pe:keyFilter regEx="/[\d\.]/" />
+								<f:convertNumber pattern="#00.00" type="number" />
+								<f:validateDoubleRange minimum="0.00" />
+							</p:inputText>
+
+							<p:outputLabel for="EditExecutionPercentage" value="% Done:" />
+							<p:inputText id="EditExecutionPercentage"
+								value="#{TaskServiceImpl.selectedTask.executionPercentage}"
+								style="text-align: right;"
+								title="Enter task Execution Percentage!">
+								<pe:keyFilter regEx="/[\d\.]/" />
+								<f:convertNumber pattern="#00.00" type="number" />
+								<f:validateDoubleRange minimum="0.00" />
+							</p:inputText>
+
+							<p:outputLabel for="EditActualTime" value="Actual Time:" />
+							<p:inputText id="EditActualTime"
+								value="#{TaskServiceImpl.selectedTask.actualTime}"
+								readonly="true" style="text-align: right;">
+								<f:convertNumber pattern="#00.00" />
+								<p:tooltip id="toolEditactualTime" for="EditActualTime"
+									value="Actual Time will be filed automatically after you have changed Task Time Tracking!" />
+							</p:inputText>
+
+						</p:panelGrid>
+
+						<p:panelGrid id="regPanelGridDescription" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="EditprojectMilestone" value="Milestone:" />
+							<p:selectOneMenu id="EditprojectMilestone"
+								value="#{TaskServiceImpl.selectedTask.milestone}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems
+									value="#{ProjectMilestoneServiceImpl.projectMilestones}"
+									var="projectMilestone" itemLabel="#{projectMilestone}"
+									itemValue="#{projectMilestone}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="EditfullContent" value="Description:" />
+							<p:inputTextarea id="EditfullContent" label="fullContent"
+								rows="3" value="#{TaskServiceImpl.selectedTask.fullContent}"
+								title="Enter task Description!" readonly="false"
+								autoResize="false" maxlength="250">
+								<f:validateLength maximum="255" />
+							</p:inputTextarea>
+
+						</p:panelGrid>
+					</div>
+				</div>
+
+				<br />
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":taskEditForm:regPanelGrid 
+					:taskEditForm:regPanelGridName :taskEditForm:regPanelGridDescription" />
+					<p:remoteCommand name="good"
+						update=":mainTaskForm:tasks :tabViewID:taskHistoryForm:taskHistories 
+						:mainTaskForm:tasks:TextFullContent"
+						action="#{GlobalControllerImpl.updateProjectTask(TaskServiceImpl.selectedTask, ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="PF('taskDialogEdit').hide(), PF('tasksTable').filter()" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('taskDialogEdit').hide(), PF('tasksTable').filter()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="taskDialogADD" header="ADD Task"
+			widgetVar="taskDialogADD" closeOnEscape="true" showEffect="pop"
+			resetValues="true" modal="true" resizable="false" fitViewport="true"
+			maximizable="false" styleClass="longHightDialog">
+			<h:form id="taskADDForm"
+				style="width: 0 auto; margin: 0 auto; text-align: right">
+				<p:focus />
+				<div class="Container100 ui-fluid">
+					<div class="ContainerIndent">
+
+						<p:panelGrid id="regPanelGridName" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="ADDshortContent" value="Name:" />
+							<p:inputText id="ADDshortContent"
+								value="#{TaskServiceImpl.taskADD.shortContent}" required="true"
+								title="Enter task Name!">
+								<f:validateLength maximum="100" />
+							</p:inputText>
+
+						</p:panelGrid>
+
+						<p:panelGrid id="regPanelGrid" columns="4"
+							columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="ADDTaskPriority" value="Priority:" />
+							<p:selectOneMenu id="ADDTaskPriority"
+								value="#{TaskServiceImpl.taskADD.taskPriority}" effect="fold"
+								converter="omnifaces.SelectItemsConverter"
+								styleClass="Responsive100" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{TaskPriorityServiceImpl.taskPriorities}"
+									var="type" itemLabel="#{type}" itemValue="#{type}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDTaskType" value="Type:" />
+							<p:selectOneMenu id="ADDTaskType"
+								value="#{TaskServiceImpl.taskADD.taskType}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{TaskTypeServiceImpl.taskTypes}"
+									var="type" itemLabel="#{type}" itemValue="#{type}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDTaskStatus" value="Status:" />
+							<p:selectOneMenu id="ADDTaskStatus"
+								value="#{TaskServiceImpl.taskADD.taskStatus}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{TaskStatusServiceImpl.taskStatuses}"
+									var="status" itemLabel="#{status}" itemValue="#{status}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDProjectUsersResponsible"
+								value="Responsible:" />
+							<p:selectOneMenu id="ADDProjectUsersResponsible"
+								value="#{TaskServiceImpl.taskADD.userResponsible}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{userServiceImpl.users}"
+									var="projectUser" itemLabel="#{projectUser}"
+									itemValue="#{projectUser}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDProjectUsersInitiator" value="Initiator:" />
+							<p:selectOneMenu id="ADDProjectUsersInitiator"
+								value="#{TaskServiceImpl.taskADD.userInitiator}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{userServiceImpl.users}"
+									var="projectUser" itemLabel="#{projectUser}"
+									itemValue="#{projectUser}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDProjectUsersCurrentExecutor"
+								value="Executor:" />
+							<p:selectOneMenu id="ADDProjectUsersCurrentExecutor"
+								value="#{TaskServiceImpl.taskADD.usercurrentExecutor}"
+								effect="fold" converter="omnifaces.SelectItemsConverter"
+								required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems value="#{userServiceImpl.users}"
+									var="projectUser" itemLabel="#{projectUser}"
+									itemValue="#{projectUser}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDprojectDeadLine" value="Deadline:" />
+							<p:calendar id="ADDprojectDeadLine"
+								value="#{TaskServiceImpl.taskADD.deadLine}" required="true"
+								pattern="dd.MM.yyyy" mask="true" style="text-align: right;">
+							</p:calendar>
+
+							<p:outputLabel for="ADDPlanTime" value="Plan Time:" />
+							<p:inputText id="ADDPlanTime"
+								value="#{TaskServiceImpl.taskADD.planTime}"
+								style="text-align: right;"
+								title="Enter task Plan Time Percentage!">
+								<pe:keyFilter regEx="/[\d\.]/" />
+								<f:convertNumber pattern="#00.00" type="number" />
+								<f:validateDoubleRange minimum="0.00" />
+							</p:inputText>
+
+
+							<p:outputLabel for="ADDExecutionPercentage" value="% Done:" />
+							<p:inputText id="ADDExecutionPercentage"
+								value="#{TaskServiceImpl.taskADD.executionPercentage}"
+								style="text-align: right;"
+								title="Enter task Execution Percentage!">
+								<pe:keyFilter regEx="/[\d\.]/" />
+								<f:convertNumber pattern="#00.00" type="number" />
+								<f:validateDoubleRange minimum="0.00" />
+							</p:inputText>
+
+							<p:outputLabel for="ADDActualTime" value="Actual Time:" />
+							<p:inputText id="ADDActualTime"
+								value="#{TaskServiceImpl.taskADD.actualTime}"
+								style="text-align: right;" readonly="true">
+								<f:convertNumber pattern="#00.00" />
+								<p:tooltip id="toolADDactualTime" for="ADDActualTime"
+									value="Actual Time will be filed automatically after you have changed Task Time Tracking!" />
+							</p:inputText>
+
+						</p:panelGrid>
+
+						<p:panelGrid id="regPanelGridDescription" columns="2"
+							columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+							styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:outputLabel for="ADDprojectMilestone" value="Milestone:" />
+							<p:selectOneMenu id="ADDprojectMilestone"
+								value="#{TaskServiceImpl.taskADD.milestone}" effect="fold"
+								converter="omnifaces.SelectItemsConverter" required="true">
+								<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+								<f:selectItems
+									value="#{ProjectMilestoneServiceImpl.projectMilestones}"
+									var="projectMilestone" itemLabel="#{projectMilestone}"
+									itemValue="#{projectMilestone}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="ADDfullContent" value="Description:" />
+							<p:inputTextarea id="ADDfullContent" label="fullContent" rows="3"
+								value="#{TaskServiceImpl.taskADD.fullContent}"
+								title="Enter task Description!" readonly="false"
+								autoResize="false" maxlength="255">
+								<f:validateLength maximum="255" />
+							</p:inputTextarea>
+
+						</p:panelGrid>
+					</div>
+				</div>
+				<p:outputPanel style="text-align:right;">
+					<p:remoteCommand name="bad"
+						update=":taskADDForm:regPanelGrid 
+					:taskADDForm:regPanelGridName :taskADDForm:regPanelGridDescription" />
+					<p:remoteCommand name="good"
+						action="#{GlobalControllerImpl.createProjectTask(ProjectServiceImpl.selectedCurrentProject)}"
+						oncomplete="{update()}" />
+					<p:remoteCommand name="update"
+						update=":mainTaskForm:tasks 
+						:mainTaskForm:tasks:TextFullContent 
+						:tabViewID:taskStatusHistoryForm:statusHistories 
+						:tabViewID:taskFileForm:files
+						:tabViewID:taskHistoryForm:taskHistories 
+						:tabViewID:taskTimeTrackingForm:timeTrackings"
+						oncomplete="PF('taskDialogADD').hide(), PF('tasksTable').filter()" />
+					<p:commandButton value="Save"
+						oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+					<p:commandButton value="Close"
+						oncomplete="PF('taskDialogADD').hide(), PF('tasksTable').filter()" />
+				</p:outputPanel>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+		<p:tabView id="tabViewID" scrollable="true"
+			activeIndex="#{GlobalControllerImpl.taskTabView}">
+
+			<p:ajax event="tabChange"
+				listener="#{GlobalControllerImpl.onTaskTabViewChange}" />
+
+			<p:tab id="MenuTimeTrackingID" title="Time Tracking">
+
+				<h:form id="taskTimeTrackingForm">
+					<p:contextMenu for="timeTrackings">
+						<p:menuitem value="View" update=":tabViewID:timeTrackingViewForm"
+							icon="fa fa-search"
+							oncomplete="PF('timeTrackingDialogView').show()" />
+					</p:contextMenu>
+
+					<p:dataTable reflow="true" id="timeTrackings" var="timeTracking"
+						value="#{TaskTimeTrackingServiceImpl.timeTrackings}"
+						rowKey="#{timeTracking.id}" rowIndexVar="rowIndex"
+						selection="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking}"
+						selectionMode="single" resizableColumns="true"
+						draggableColumns="true" liveResize="true" scrollable="true"
+						scrollHeight="auto" scrollWidth="auto">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left;">
+								<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+									aria-hidden="true"
+									action="#{TaskTimeTrackingServiceImpl.beforeCreateTaskTimeTracking(user)}"
+									update=":tabViewID:taskTimeTrackingADDForm :tabViewID:taskHistoryForm:taskHistories"
+									oncomplete="PF('taskTimeTrackingDialogADD').show()"
+									resetValues="true" styleClass="ADDGreenButton"
+									disabled="#{!GlobalControllerImpl.checkSelectedProjectTask()}" />
+
+								<p:commandButton icon="fa fa-refresh fa-lg"
+									styleClass="tabsIconCommandButton"
+									action="#{TaskTimeTrackingServiceImpl.setTimeTrackings(TaskServiceImpl.selectedTask)}"
+									update=":tabViewID:taskTimeTrackingForm:timeTrackings"
+									oncomplete="PF('tasksTable').filter()" />
+
+								<p:commandButton icon="fa fa-file-excel-o fa-lg"
+									styleClass="tabsIconCommandButton" ajax="false">
+									<p:dataExporter type="xls" target="timeTrackings"
+										fileName="TaskTimeTrackingsExcel"
+										preProcessor="#{GlobalControllerImpl.preProcessXLS}"
+										postProcessor="#{GlobalControllerImpl.postProcessXLS}" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-file-pdf-o fa-lg"
+									styleClass="tabsIconCommandButton" ajax="false">
+									<p:dataExporter type="pdf" target="timeTrackings"
+										fileName="TaskTimeTrackingsPDF" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-info fa-lg"
+									action="OpenInstructionNewTaskTimeTracking" ajax="false"
+									onclick="form.target='_blank'"
+									styleClass="tabsIconInfoCommandButton">
+								</p:commandButton>
+
+							</p:outputPanel>
+						</f:facet>
+
+						<!-- <p:ajax event="rowSelect"
+							listener="#{TaskTimeTrackingServiceImpl.onRowSelect}"
+							update="growlMessages" /> -->
+
+						<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+							filterStyle="display:none" styleClass="columnCenter">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+
+						<p:column headerText="Date" sortBy="#{timeTracking.date}"
+							styleClass="columnCenter">
+							<h:outputText value="#{timeTracking.date}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Format Time"
+							sortBy="#{timeTracking.formatTimeTracking.name}">
+							<h:outputText value="#{timeTracking.formatTimeTracking}" />
+						</p:column>
+
+						<p:column headerText="Author"
+							sortBy="#{timeTracking.userAuthor.displayName}">
+							<h:outputText value="#{timeTracking.userAuthor}" />
+						</p:column>
+
+						<p:column headerText="Start Time"
+							sortBy="#{timeTracking.startTime}" styleClass="columnCenter">
+							<h:outputText value="#{timeTracking.startTime}">
+								<f:convertNumber pattern="#00.00" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Finish Time"
+							sortBy="#{timeTracking.finishTime}" styleClass="columnCenter">
+							<h:outputText value="#{timeTracking.finishTime}">
+								<f:convertNumber pattern="#00.00" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Actual Time"
+							sortBy="#{timeTracking.actualTime}" styleClass="columnCenter">
+							<h:outputText value="#{timeTracking.actualTime}">
+								<f:convertNumber pattern="#00.00" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Description"
+							sortBy="#{timeTracking.description}">
+							<h:outputText id="contentDescription"
+								value="#{timeTracking.description}" />
+							<p:tooltip id="toolDescription" for="contentDescription"
+								value="#{timeTracking.description}" />
+						</p:column>
+
+						<p:column headerText="Accepted" width="67"
+							sortBy="#{timeTracking.accepted}" styleClass="columnCenter">
+							<p:selectBooleanCheckbox value="#{timeTracking.accepted}"
+								disabled="true" />
+						</p:column>
+
+						<p:column headerText="Date Accepted"
+							sortBy="#{timeTracking.dateAccepted}" styleClass="columnCenter">
+							<h:outputText value="#{timeTracking.dateAccepted}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="User Accepted"
+							sortBy="#{timeTracking.userAccepted.displayName}">
+							<h:outputText value="#{timeTracking.userAccepted}" />
+						</p:column>
+
+						<p:column styleClass="columnOperations" headerText="Operations"
+							exportable="false">
+
+							<!-- View -->
+							<p:commandButton icon="fa fa-search"
+								update=":tabViewID:timeTrackingViewForm :tabViewID:taskTimeTrackingForm:timeTrackings"
+								action="#{TaskTimeTrackingServiceImpl.setSelectedTaskTimeTracking(timeTracking)}"
+								oncomplete="PF('timeTrackingDialogView').show()"
+								styleClass="viewCommandButton" />
+
+							<!-- Edit -->
+							<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+								disabled="#{!GlobalControllerImpl.checkAvailableAcceptanceTask(ProjectServiceImpl.selectedCurrentProject, timeTracking, user)}"
+								action="#{TaskTimeTrackingServiceImpl.setSelectedTaskTimeTracking(timeTracking)}"
+								update=":tabViewID:timeTrackingEditForm,:tabViewID:taskTimeTrackingForm:timeTrackings"
+								resetValues="true"
+								oncomplete="PF('taskTimeTrackingDialogEdit').show()"
+								styleClass="editCommandButton" />
+
+							<!-- Delete -->
+							<p:commandButton icon="fa fa-trash"
+								disabled="#{!GlobalControllerImpl.checkAvailableAcceptanceTask(ProjectServiceImpl.selectedCurrentProject, timeTracking, user)}"
+								action="#{GlobalControllerImpl.deleteTaskTimeTracking(TaskTimeTrackingServiceImpl.selectedTaskTimeTracking, TaskServiceImpl.selectedTask, user)}"
+								update=":tabViewID:taskTimeTrackingForm:timeTrackings 
+								:mainTaskForm:tasks 
+								:tabViewID:taskHistoryForm:taskHistories"
+								oncomplete="PF('tasksTable').filter()"
+								styleClass="deleteCommandButton">
+								<p:confirm header="Confirmation" message="Are you sure?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Yes" type="button"
+									styleClass="ui-confirmdialog-yes GreenButton"
+									icon="ui-icon-check fa fa-check Fs14 white" />
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirmdialog-no RedButton"
+									icon="ui-icon-close fa fa-close Fs14 white" />
+							</p:confirmDialog>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+
+				<p:dialog header="View Time Tracking"
+					widgetVar="timeTrackingDialogView" closeOnEscape="true"
+					showEffect="pop" resetValues="true" modal="true" resizable="false">
+					<h:form id="timeTrackingViewForm">
+						<p:messages />
+						<p:focus />
+						<p:panelGrid columns="2"
+							rendered="#{not empty TaskTimeTrackingServiceImpl.selectedTaskTimeTracking}"
+							columnClasses="viewPanelGrid30, viewPanelGrid70"
+							style="width: 100% ! important;text-align:right;">
+
+							<h:outputText value="Date" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.date}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+
+							<h:outputText value="Format Time Tracking:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.formatTimeTracking}" />
+
+							<h:outputText value="Author:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.userAuthor}" />
+
+							<h:outputText value="Start Time:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.startTime}">
+								<f:convertNumber pattern="#00.00" />
+							</h:outputText>
+
+							<h:outputText value="Finish Time:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.finishTime}">
+								<f:convertNumber pattern="#00.00" />
+							</h:outputText>
+
+							<h:outputText value="Actual Time:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.actualTime}">
+								<f:convertNumber pattern="#00.00" />
+							</h:outputText>
+
+							<h:outputText value="Description:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.description}" />
+
+							<h:outputText value="Accepted:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.accepted}" />
+
+							<h:outputText value="Date Accepted:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.dateAccepted}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+
+							<h:outputText value="User Accepted:" />
+							<h:outputText
+								value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.userAccepted}" />
+
+						</p:panelGrid>
+					</h:form>
+				</p:dialog>
+
+				<p:dialog id="taskTimeTrackingDialogEdit"
+					header="Edit Time Tracking" widgetVar="taskTimeTrackingDialogEdit"
+					closeOnEscape="true" showEffect="pop" resetValues="true"
+					modal="true" resizable="false" fitViewport="true"
+					maximizable="false" styleClass="longHightDialog">
+					<h:form id="timeTrackingEditForm"
+						style="width: 0 auto; margin: 0 auto; text-align: right">
+						<p:focus />
+						<div class="Container100 ui-fluid">
+							<div class="ContainerIndent">
+
+								<p:panelGrid id="regPanelGrid" columns="2"
+									columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+									styleClass="ui-panelgrid-blank"
+									style="border:0px none; background-color:transparent;">
+
+									<p:outputLabel for="EditTaskTimeTrackingDate" value="Date:" />
+									<p:calendar id="EditTaskTimeTrackingDate"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.date}"
+										required="true" pattern="dd.MM.yyyy" mask="true"
+										style="text-align: right;">
+									</p:calendar>
+
+									<p:outputLabel for="EditTaskTimeTrackingFormatTime"
+										value="Format time :" />
+									<p:selectOneMenu id="EditTaskTimeTrackingFormatTime"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.formatTimeTracking}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems
+											value="#{FormatTimeTrackingServiceImpl.formatTimeTrackings}"
+											var="formatTimeTracking" itemLabel="#{formatTimeTracking}"
+											itemValue="#{formatTimeTracking}" />
+									</p:selectOneMenu>
+
+									<p:outputLabel for="EditTaskTimeTrackingUserAuthor"
+										value="Author:" />
+									<p:selectOneMenu id="EditTaskTimeTrackingUserAuthor"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.userAuthor}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems value="#{userServiceImpl.users}"
+											var="projectUser" itemLabel="#{projectUser}"
+											itemValue="#{projectUser}" />
+									</p:selectOneMenu>
+
+									<p:outputLabel for="EditTaskTimeTrackingStartTime"
+										value="Start Time:" />
+									<p:inputText id="EditTaskTimeTrackingStartTime"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.startTime}"
+										required="true" style="text-align: right;">
+										<pe:keyFilter regEx="/[\d\.]/" />
+										<f:convertNumber pattern="#00.00" type="number" />
+										<f:validateDoubleRange minimum="0.01" />
+										<p:ajax event="change" update="EditTaskTimeTrackingactualTime"
+											listener="#{TaskTimeTrackingServiceImpl.changeTime(TaskTimeTrackingServiceImpl.selectedTaskTimeTracking)}" />
+									</p:inputText>
+
+									<p:outputLabel for="EditTaskTimeTrackingFinishTime"
+										value="Finish Time:" />
+									<p:inputText id="EditTaskTimeTrackingFinishTime"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.finishTime}"
+										required="true" style="text-align: right;">
+										<pe:keyFilter regEx="/[\d\.]/" />
+										<f:convertNumber pattern="#00.00" type="number" />
+										<f:validateDoubleRange minimum="0.01" />
+										<p:ajax event="change" update="EditTaskTimeTrackingactualTime"
+											listener="#{TaskTimeTrackingServiceImpl.changeTime(TaskTimeTrackingServiceImpl.selectedTaskTimeTracking)}" />
+									</p:inputText>
+
+									<p:outputLabel for="EditTaskTimeTrackingactualTime"
+										value="Actual Time:" />
+									<p:inputText id="EditTaskTimeTrackingactualTime"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.actualTime}"
+										required="true" style="text-align: right;">
+										<pe:keyFilter regEx="/[\d\.]/" />
+										<f:convertNumber pattern="#00.00" type="number" />
+										<f:validateDoubleRange minimum="0.01" />
+									</p:inputText>
+
+									<p:outputLabel for="EdiTaskTimeTrackingDescription"
+										value="Description:" />
+									<p:inputText id="EdiTaskTimeTrackingDescription"
+										label="Description"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.description}"
+										required="true" title="Enter time tracking Description!">
+										<f:validateLength minimum="1" />
+									</p:inputText>
+
+									<p:outputLabel for="EditTaskTimeTrackingAccepted"
+										value="Accepted:" />
+									<p:selectBooleanCheckbox id="EditTaskTimeTrackingAccepted"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.accepted}"
+										disabled="#{!GlobalControllerImpl.checkAvailableAcceptanceTask(ProjectServiceImpl.selectedCurrentProject, user)}">
+										<p:ajax
+											update=":tabViewID:timeTrackingEditForm:EditTaskTimeTrackingDateAccepted
+										:tabViewID:timeTrackingEditForm:EditTaskTimeTrackingUserAccepted"
+											listener="#{TaskTimeTrackingServiceImpl.setAccepted(TaskTimeTrackingServiceImpl.selectedTaskTimeTracking, user)}" />
+									</p:selectBooleanCheckbox>
+
+									<p:outputLabel for="EditTaskTimeTrackingDateAccepted"
+										value="Date Accepted:" />
+									<p:calendar id="EditTaskTimeTrackingDateAccepted"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.dateAccepted}"
+										pattern="dd.MM.yyyy" mask="true" style="text-align: right;"
+										disabled="true" />
+
+
+									<p:outputLabel for="EditTaskTimeTrackingUserAccepted"
+										value="User Accepted:" />
+									<p:selectOneMenu id="EditTaskTimeTrackingUserAccepted"
+										value="#{TaskTimeTrackingServiceImpl.selectedTaskTimeTracking.userAccepted}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										disabled="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems value="#{userServiceImpl.users}"
+											var="projectUser" itemLabel="#{projectUser}"
+											itemValue="#{projectUser}" />
+									</p:selectOneMenu>
+
+								</p:panelGrid>
+							</div>
+						</div>
+
+						<br />
+						<p:outputPanel style="text-align:right;">
+							<p:remoteCommand name="bad"
+								update=":tabViewID:timeTrackingEditForm:regPanelGrid" />
+							<p:remoteCommand name="good"
+								action="#{GlobalControllerImpl.updateTaskTimeTracking(TaskTimeTrackingServiceImpl.selectedTaskTimeTracking)}"
+								oncomplete="{update()}" />
+							<p:remoteCommand name="update"
+								oncomplete="PF('taskTimeTrackingDialogEdit').hide(), PF('tasksTable').filter()"
+								update=":mainTaskForm:tasks 
+								:tabViewID:taskTimeTrackingForm:timeTrackings
+								:tabViewID:taskHistoryForm:taskHistories" />
+							<p:commandButton value="Save"
+								oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+							<p:commandButton value="Close"
+								oncomplete="PF('taskTimeTrackingDialogEdit').hide(), PF('tasksTable').filter()" />
+						</p:outputPanel>
+						<br />
+
+					</h:form>
+				</p:dialog>
+
+				<p:dialog id="taskTimeTrackingDialogADD" header="ADD Time Tracking"
+					widgetVar="taskTimeTrackingDialogADD" closeOnEscape="true"
+					showEffect="pop" resetValues="true" modal="true" resizable="false"
+					fitViewport="true" maximizable="false" styleClass="longHightDialog">
+					<h:form id="taskTimeTrackingADDForm"
+						style="width: 0 auto; margin: 0 auto; text-align: right">
+						<p:focus />
+						<div class="Container100 ui-fluid">
+							<div class="ContainerIndent">
+
+								<p:panelGrid id="regPanelGrid" columns="2"
+									columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+									styleClass="ui-panelgrid-blank"
+									style="border:0px none; background-color:transparent;">
+
+									<p:outputLabel for="ADDTaskTimeTrackingDate" value="Date:" />
+									<p:calendar id="ADDTaskTimeTrackingDate"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.date}"
+										required="true" pattern="dd.MM.yyyy" mask="true"
+										style="text-align: right;">
+									</p:calendar>
+
+									<p:outputLabel for="ADDTaskTimeTrackingFormatTime"
+										value="Format time:" />
+									<p:selectOneMenu id="ADDTaskTimeTrackingFormatTime"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.formatTimeTracking}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems
+											value="#{FormatTimeTrackingServiceImpl.formatTimeTrackings}"
+											var="formatTimeTracking" itemLabel="#{formatTimeTracking}"
+											itemValue="#{formatTimeTracking}" />
+									</p:selectOneMenu>
+
+									<p:outputLabel for="ADDTaskTimeTrackingUserAuthor"
+										value="Author:" />
+									<p:selectOneMenu id="ADDTaskTimeTrackingUserAuthor"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.userAuthor}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems value="#{userServiceImpl.users}"
+											var="projectUser" itemLabel="#{projectUser}"
+											itemValue="#{projectUser}" />
+									</p:selectOneMenu>
+
+
+									<p:outputLabel for="ADDTaskTimeTrackingStartTime"
+										value="Start Time:" />
+									<p:inputText id="ADDTaskTimeTrackingStartTime"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.startTime}"
+										required="true" style="text-align: right;">
+										<pe:keyFilter regEx="/[\d\.]/" />
+										<f:convertNumber pattern="#00.00" type="number" />
+										<f:validateDoubleRange minimum="0.01" />
+										<p:ajax event="change" update="ADDTaskTimeTrackingactualTime"
+											listener="#{TaskTimeTrackingServiceImpl.changeTime(TaskTimeTrackingServiceImpl.timeTrackingADD)}" />
+									</p:inputText>
+
+									<p:outputLabel for="ADDTaskTimeTrackingFinishTime"
+										value="Finish Time:" />
+									<p:inputText id="ADDTaskTimeTrackingFinishTime"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.finishTime}"
+										required="true" style="text-align: right;">
+										<pe:keyFilter regEx="/[\d\.]/" />
+										<f:convertNumber pattern="#00.00" type="number" />
+										<f:validateDoubleRange minimum="0.01" />
+										<p:ajax event="change" update="ADDTaskTimeTrackingactualTime"
+											listener="#{TaskTimeTrackingServiceImpl.changeTime(TaskTimeTrackingServiceImpl.timeTrackingADD)}" />
+									</p:inputText>
+
+									<p:outputLabel for="ADDTaskTimeTrackingactualTime"
+										value="Actual Time:" />
+									<p:inputText id="ADDTaskTimeTrackingactualTime"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.actualTime}"
+										required="true" style="text-align: right;">
+										<pe:keyFilter regEx="/[\d\.]/" />
+										<f:convertNumber pattern="#00.00" type="number" />
+										<f:validateDoubleRange minimum="0.01" />
+									</p:inputText>
+
+									<p:outputLabel for="ADDTaskTimeTrackingDescription"
+										value="Description:" />
+									<p:inputText id="ADDTaskTimeTrackingDescription"
+										label="ADDDescription"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.description}"
+										required="true" title="Enter time tracking Description!">
+										<f:validateLength minimum="1" />
+									</p:inputText>
+
+									<p:outputLabel for="ADDTaskTimeTrackingAccepted"
+										value="Accepted:" />
+									<p:selectBooleanCheckbox id="ADDTaskTimeTrackingAccepted"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.accepted}"
+										disabled="#{!GlobalControllerImpl.checkAvailableAcceptanceTask(ProjectServiceImpl.selectedCurrentProject, user)}">
+										<p:ajax
+											update=":tabViewID:taskTimeTrackingADDForm:ADDTaskTimeTrackingDateAccepted 
+										:tabViewID:taskTimeTrackingADDForm:ADDTaskTimeTrackingUserAccepted"
+											listener="#{TaskTimeTrackingServiceImpl.setAccepted(TaskTimeTrackingServiceImpl.timeTrackingADD, user)}" />
+									</p:selectBooleanCheckbox>
+
+									<p:outputLabel for="ADDTaskTimeTrackingDateAccepted"
+										value="Date Accepted:" />
+									<p:calendar id="ADDTaskTimeTrackingDateAccepted"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.dateAccepted}"
+										pattern="dd.MM.yyyy" mask="true" style="text-align: right;"
+										disabled="true" />
+
+									<p:outputLabel for="ADDTaskTimeTrackingUserAccepted"
+										value="User Accepted:" />
+									<p:selectOneMenu id="ADDTaskTimeTrackingUserAccepted"
+										value="#{TaskTimeTrackingServiceImpl.timeTrackingADD.userAccepted}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										disabled="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems value="#{userServiceImpl.users}"
+											var="projectUser" itemLabel="#{projectUser}"
+											itemValue="#{projectUser}" />
+									</p:selectOneMenu>
+
+								</p:panelGrid>
+							</div>
+						</div>
+						<br />
+						<p:outputPanel style="text-align:right;">
+							<p:remoteCommand name="bad"
+								update=":tabViewID:taskTimeTrackingADDForm:regPanelGrid" />
+							<p:remoteCommand name="good"
+								action="#{GlobalControllerImpl.createTaskTimeTracking(TaskServiceImpl.selectedTask)}"
+								oncomplete="{update()}" />
+							<p:remoteCommand name="update"
+								update=":tabViewID:taskTimeTrackingForm:timeTrackings 
+								:mainTaskForm:tasks
+								:tabViewID:taskHistoryForm:taskHistories"
+								oncomplete="PF('taskTimeTrackingDialogADD').hide(), PF('tasksTable').filter()" />
+							<p:commandButton value="Save"
+								oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+							<p:commandButton value="Close"
+								oncomplete="PF('taskTimeTrackingDialogADD').hide(), PF('tasksTable').filter()" />
+						</p:outputPanel>
+						<br />
+
+					</h:form>
+				</p:dialog>
+
+			</p:tab>
+
+			<p:tab id="MenuTaskStatusHistoryID" title="Statys">
+
+				<h:form id="taskStatusHistoryForm">
+					<p:contextMenu for="statusHistories">
+						<p:menuitem value="View" update=":tabViewID:statusHistoryViewForm"
+							icon="fa fa-search"
+							oncomplete="PF('statusHistoryDialogView').show()" />
+					</p:contextMenu>
+
+					<p:dataTable reflow="true" id="statusHistories" var="statusHistory"
+						value="#{TaskStatusHistoryServiceImpl.statusHistories}"
+						rowKey="#{statusHistory.id}"
+						selection="#{TaskStatusHistoryServiceImpl.selectedTaskStatusHistory}"
+						rowIndexVar="rowIndex" selectionMode="single"
+						resizableColumns="true" draggableColumns="true" liveResize="true"
+						scrollable="true" scrollHeight="auto" scrollWidth="auto">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left;">
+								<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+									aria-hidden="true"
+									action="#{TaskStatusHistoryServiceImpl.beforeCreateTaskStatusHistory(user)}"
+									update=":tabViewID:statusHistoryADDForm"
+									oncomplete="PF('statusHistoryDialogADD').show()"
+									resetValues="true" styleClass="ADDGreenButton"
+									disabled="#{!GlobalControllerImpl.checkSelectedProjectTask()}" />
+
+								<p:commandButton icon="fa fa-refresh fa-lg"
+									styleClass="tabsIconCommandButton"
+									action="#{TaskStatusHistoryServiceImpl.setStatusHistories(TaskServiceImpl.selectedTask)}"
+									update=":tabViewID:taskStatusHistoryForm:statusHistories"
+									oncomplete="PF('tasksTable').filter()" />
+
+								<p:commandButton icon="fa fa-file-excel-o fa-lg"
+									styleClass="tabsIconCommandButton" ajax="false">
+									<p:dataExporter type="xls" target="statusHistories"
+										fileName="TaskStatusHistoriesExcel"
+										preProcessor="#{GlobalControllerImpl.preProcessXLS}"
+										postProcessor="#{GlobalControllerImpl.postProcessXLS}" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-file-pdf-o fa-lg"
+									styleClass="tabsIconCommandButton" ajax="false">
+									<p:dataExporter type="pdf" target="statusHistories"
+										fileName="TaskStatusHistoriesPDF" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-info fa-lg"
+									action="OpenInstructionNewTaskStatus" ajax="false"
+									onclick="form.target='_blank'"
+									styleClass="tabsIconInfoCommandButton">
+								</p:commandButton>
+							</p:outputPanel>
+
+						</f:facet>
+
+						<!-- <p:ajax event="rowSelect"
+							listener="#{TaskStatusHistoryServiceImpl.onRowSelect}"
+							update="growlMessages" /> -->
+
+						<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+							filterStyle="display:none" styleClass="columnCenter">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+
+						<p:column headerText="Date" sortBy="#{statusHistory.date}"
+							styleClass="columnCenter">
+							<h:outputText value="#{statusHistory.date}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Author"
+							sortBy="#{statusHistory.userAuthor.displayName}">
+							<h:outputText value="#{statusHistory.userAuthor}" />
+						</p:column>
+
+						<p:column headerText="Status"
+							sortBy="#{statusHistory.status.name}">
+							<h:outputText value="#{statusHistory.status}" />
+						</p:column>
+
+						<p:column headerText="Executor"
+							sortBy="#{statusHistory.userExecutor.displayName}">
+							<h:outputText value="#{statusHistory.userExecutor}" />
+						</p:column>
+
+						<p:column headerText="Comment" sortBy="#{statusHistory.comment}">
+							<h:outputText value="#{statusHistory.comment}" />
+						</p:column>
+
+						<p:column styleClass="columnView" headerText="View"
+							exportable="false">
+
+							<!-- View -->
+							<p:commandButton icon="fa fa-search"
+								action="#{TaskStatusHistoryServiceImpl.setSelectedTaskStatusHistory(statusHistory)}"
+								update=":tabViewID:statusHistoryViewForm :tabViewID:taskStatusHistoryForm:statusHistories"
+								oncomplete="PF('statusHistoryDialogView').show()"
+								styleClass="viewCommandButton" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+
+				<p:dialog header="View Status" widgetVar="statusHistoryDialogView"
+					closeOnEscape="true" showEffect="pop" resetValues="true"
+					modal="true" resizable="false">
+					<h:form id="statusHistoryViewForm">
+						<p:messages />
+						<p:focus />
+						<p:outputPanel id="statusHistoryView" style="text-align:right;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty TaskStatusHistoryServiceImpl.selectedTaskStatusHistory}"
+								columnClasses="viewPanelGrid30, viewPanelGrid70"
+								style="width: 100% ! important;text-align:right;">
+
+								<h:outputText value="Date:" />
+								<h:outputText
+									value="#{TaskStatusHistoryServiceImpl.selectedTaskStatusHistory.date}">
+									<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+								</h:outputText>
+
+								<h:outputText value="Author:" />
+								<h:outputText
+									value="#{TaskStatusHistoryServiceImpl.selectedTaskStatusHistory.userAuthor}" />
+
+								<h:outputText value="Status:" />
+								<h:outputText
+									value="#{TaskStatusHistoryServiceImpl.selectedTaskStatusHistory.status}" />
+
+								<h:outputText value="Executor:" />
+								<h:outputText
+									value="#{TaskStatusHistoryServiceImpl.selectedTaskStatusHistory.userExecutor}" />
+
+								<h:outputText value="Comment:" />
+								<h:outputText
+									value="#{TaskStatusHistoryServiceImpl.selectedTaskStatusHistory.comment}" />
+
+							</p:panelGrid>
+						</p:outputPanel>
+					</h:form>
+				</p:dialog>
+
+				<p:dialog header="ADD Status" widgetVar="statusHistoryDialogADD"
+					closeOnEscape="true" showEffect="pop" resetValues="true"
+					modal="true" resizable="false" fitViewport="true"
+					maximizable="false" styleClass="DialogHeightLanscape">
+					<h:form id="statusHistoryADDForm"
+						style="width: 0 auto; margin: 0 auto; text-align: right">
+						<p:focus />
+						<div class="Container100 ui-fluid">
+							<div class="ContainerIndent">
+
+								<p:panelGrid id="regPanelGrid" columns="2"
+									columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+									styleClass="ui-panelgrid-blank"
+									style="border:0px none; background-color:transparent;">
+
+									<p:outputLabel for="ADDTaskStatusHistoryDate" value="Date:" />
+									<p:calendar id="ADDTaskStatusHistoryDate"
+										value="#{TaskStatusHistoryServiceImpl.statusHistoryADD.date}"
+										required="true" pattern="dd.MM.yyyy" mask="true"
+										style="text-align: right;" disabled="true" readonly="true">
+									</p:calendar>
+
+									<p:outputLabel for="ADDTaskStatusHistoryUserAuthor"
+										value="Author:" />
+									<p:selectOneMenu id="ADDTaskStatusHistoryUserAuthor"
+										value="#{TaskStatusHistoryServiceImpl.statusHistoryADD.userAuthor}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true" disabled="true">
+									</p:selectOneMenu>
+
+									<p:outputLabel for="ADDTaskStatus" value="Status:" />
+									<p:selectOneMenu id="ADDTaskStatus"
+										value="#{TaskStatusHistoryServiceImpl.statusHistoryADD.status}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems value="#{TaskStatusServiceImpl.taskStatuses}"
+											var="status" itemLabel="#{status}" itemValue="#{status}" />
+									</p:selectOneMenu>
+
+									<p:outputLabel for="ADDProjectUsersCurrentExecutor"
+										value="Executor:" />
+									<p:selectOneMenu id="ADDProjectUsersCurrentExecutor"
+										value="#{TaskStatusHistoryServiceImpl.statusHistoryADD.userExecutor}"
+										effect="fold" converter="omnifaces.SelectItemsConverter"
+										required="true">
+										<f:selectItem itemLabel="Choose item" noSelectionOption="true" />
+										<f:selectItems value="#{userServiceImpl.users}"
+											var="projectUser" itemLabel="#{projectUser}"
+											itemValue="#{projectUser}" />
+									</p:selectOneMenu>
+
+									<p:outputLabel for="Comment" value="Comment:" />
+									<p:inputText id="Comment"
+										value="#{TaskStatusHistoryServiceImpl.statusHistoryADD.comment}"
+										required="true" title="Enter status comment!">
+										<f:validateLength maximum="255" />
+									</p:inputText>
+								</p:panelGrid>
+							</div>
+						</div>
+
+						<br />
+						<p:outputPanel style="text-align:right;">
+							<p:remoteCommand name="bad"
+								update=":tabViewID:statusHistoryADDForm:regPanelGrid" />
+							<p:remoteCommand name="good"
+								action="#{GlobalControllerImpl.createTaskStatusHistory(TaskServiceImpl.selectedTask)}"
+								oncomplete="{update()}" />
+							<p:remoteCommand name="update"
+								update="statusHistoryADDForm 
+								:tabViewID:taskStatusHistoryForm:statusHistories 
+								:mainTaskForm:tasks
+								:tabViewID:taskHistoryForm:taskHistories"
+								oncomplete="PF('statusHistoryDialogADD').hide(), PF('tasksTable').filter()" />
+							<p:commandButton value="Save"
+								oncomplete="if (args.validationFailed) {bad()} else {good()}" />
+							<p:commandButton value="Close"
+								oncomplete="PF('statusHistoryDialogADD').hide(), PF('tasksTable').filter()" />
+						</p:outputPanel>
+						<br />
+
+					</h:form>
+				</p:dialog>
+
+			</p:tab>
+
+			<p:tab id="MenuFileID" title="Files">
+
+				<h:form id="taskFileForm">
+					<p:contextMenu for="files">
+						<p:menuitem value="Edit" update=":tabViewID:fileEditForm"
+							icon="fa fa-pencil" aria-hidden="true"
+							oncomplete="PF('fileDialogEdit').show()" />
+					</p:contextMenu>
+
+					<p:dataTable reflow="true" id="files" var="file"
+						value="#{TaskFileServiceImpl.files}" rowKey="#{file.id}"
+						selection="#{TaskFileServiceImpl.selectedTaskFile}"
+						rowIndexVar="rowIndex" selectionMode="single"
+						resizableColumns="true" draggableColumns="true" liveResize="true"
+						scrollable="true" scrollHeight="auto" scrollWidth="auto">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left;">
+								<p:commandButton value="ADD" icon="fa fa-plus fa-lg"
+									aria-hidden="true" action="#{TaskFileServiceImpl.clear()}"
+									update=":tabViewID:fileADDForm"
+									oncomplete="PF('fileDialogADD').show()" resetValues="true"
+									styleClass="ADDGreenButton"
+									disabled="#{!GlobalControllerImpl.checkSelectedProjectTask()}" />
+
+								<p:commandButton icon="fa fa-refresh fa-lg"
+									styleClass="tabsIconCommandButton"
+									action="#{TaskFileServiceImpl.setFiles(TaskServiceImpl.selectedTask)}"
+									update=":tabViewID:taskFileForm:files"
+									oncomplete="PF('tasksTable').filter()" />
+
+								<p:commandButton icon="fa fa-file-excel-o fa-lg"
+									styleClass="tabsIconCommandButton" ajax="false">
+									<p:dataExporter type="xls" target="files"
+										fileName="TaskFilesExcel"
+										preProcessor="#{GlobalControllerImpl.preProcessXLS}"
+										postProcessor="#{GlobalControllerImpl.postProcessXLS}" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-file-pdf-o fa-lg"
+									styleClass="tabsIconCommandButton" ajax="false">
+									<p:dataExporter type="pdf" target="files"
+										fileName="TaskFilesPDF" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-info fa-lg"
+									action="OpenInstructionNewTaskFile" ajax="false"
+									onclick="form.target='_blank'"
+									styleClass="tabsIconInfoCommandButton">
+								</p:commandButton>
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+							filterStyle="display:none" styleClass="columnCenter">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+
+						<p:column headerText="Name" sortBy="#{file.name}">
+							<h:outputText value="#{file.name}" />
+						</p:column>
+
+						<p:column headerText="Type" sortBy="#{file.type}">
+							<h:outputText value="#{file.type}" />
+						</p:column>
+
+						<p:column headerText="Comment" sortBy="#{file.comment}">
+							<h:outputText value="#{file.comment}" />
+						</p:column>
+
+						<p:column styleClass="columnOperations" headerText="Operations"
+							exportable="false">
+
+							<!-- Download -->
+							<p:commandButton ajax="false" icon="fa fa-download"
+								action="#{TaskFileServiceImpl.setSelectedTaskFile(file)}"
+								update=":tabViewID:taskFileForm:files"
+								styleClass="viewCommandButton">
+								<p:fileDownload
+									value="#{TaskFileServiceImpl.getFileToDownload(file)}" />
+							</p:commandButton>
+
+							<!-- Edit -->
+							<p:commandButton icon="fa fa-pencil" aria-hidden="true"
+								action="#{TaskFileServiceImpl.setSelectedTaskFile(file)}"
+								update=":tabViewID:fileEditForm :tabViewID:taskFileForm:files"
+								resetValues="true" oncomplete="PF('fileDialogEdit').show()"
+								styleClass="editCommandButton" />
+
+							<!-- Delete -->
+							<p:commandButton icon="fa fa-trash"
+								action="#{GlobalControllerImpl.deleteTaskFile(file, TaskServiceImpl.selectedTask)}"
+								update=":tabViewID:taskFileForm:files
+								:tabViewID:taskHistoryForm:taskHistories"
+								styleClass="deleteCommandButton">
+								<p:confirm header="Confirmation" message="Are you sure?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Yes" type="button"
+									styleClass="ui-confirmdialog-yes GreenButton"
+									icon="ui-icon-check fa fa-check Fs14 white" />
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirmdialog-no RedButton"
+									icon="ui-icon-close fa fa-close Fs14 white" />
+							</p:confirmDialog>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+
+				<p:dialog header="View File" widgetVar="fileDialogView"
+					closeOnEscape="true" showEffect="pop" resetValues="true"
+					modal="true" resizable="false">
+					<h:form id="fileViewForm">
+						<p:messages />
+						<p:focus />
+						<p:outputPanel id="fileView" style="text-align:right;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty TaskFileServiceImpl.selectedTaskFile}"
+								columnClasses="viewPanelGrid30, viewPanelGrid70"
+								style="width: 100% ! important;text-align:right;">
+
+								<h:outputText value="Name" />
+								<h:outputText
+									value="#{TaskFileServiceImpl.selectedTaskFile.name}" />
+
+								<h:outputText value="Type:" />
+								<h:outputText
+									value="#{TaskFileServiceImpl.selectedTaskFile.type}" />
+
+								<h:outputText value="Comment:" />
+								<h:outputText
+									value="#{TaskFileServiceImpl.selectedTaskFile.comment}" />
+
+							</p:panelGrid>
+						</p:outputPanel>
+					</h:form>
+				</p:dialog>
+
+
+				<p:dialog header="Edit File" widgetVar="fileDialogEdit"
+					closeOnEscape="true" showEffect="pop" resetValues="true"
+					modal="true" resizable="false" fitViewport="true"
+					maximizable="false" styleClass="DialogHeightLanscape">
+					<h:form id="fileEditForm"
+						style="width: 0 auto; margin: 0 auto; text-align: right">
+						<p:focus />
+						<div class="Container100 ui-fluid">
+							<div class="ContainerIndent">
+
+								<p:panelGrid id="regPanelGrid" columns="2"
+									columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+									styleClass="ui-panelgrid-blank"
+									style="border:0px none; background-color:transparent;">
+
+									<p:outputLabel for="Name" value="Name:" />
+									<p:inputText id="Name"
+										value="#{TaskFileServiceImpl.selectedTaskFile.name}"
+										readonly="true" required="true"
+										title="File name will be load automatically after chossen file!">
+									</p:inputText>
+
+									<p:outputLabel for="Type" value="Type:" />
+									<p:inputText id="Type" label="Type"
+										value="#{TaskFileServiceImpl.selectedTaskFile.type}"
+										readonly="true" required="true"
+										title="File type will be load automatically after chossen file!">
+									</p:inputText>
+
+									<p:outputLabel for="Comment" value="Comment:" />
+									<p:inputText id="Comment"
+										value="#{TaskFileServiceImpl.selectedTaskFile.comment}"
+										title="Enter comment!">
+										<f:validateLength maximum="255" />
+									</p:inputText>
+
+								</p:panelGrid>
+							</div>
+						</div>
+
+						<br />
+						<p:outputPanel style="text-align:right;">
+							<p:remoteCommand name="bad"
+								update=":tabViewID:fileEditForm:regPanelGrid" />
+							<p:remoteCommand name="good"
+								action="#{GlobalControllerImpl.updateTaskFile(TaskFileServiceImpl.selectedTaskFile)}"
+								oncomplete="{update()}" />
+							<p:remoteCommand name="update"
+								update=":tabViewID:taskFileForm:files 
+								:tabViewID:taskHistoryForm:taskHistories"
+								oncomplete="PF('fileDialogEdit').hide()" />
+							<p:commandButton value="Save"
+								oncomplete="if (#{!TaskFileServiceImpl.selectedTaskFile.equals(null)}) {
+								if (#{!GlobalControllerImpl.fileChossen(TaskFileServiceImpl.selectedTaskFile)}) {bad()} else {good()}" />
+							<p:commandButton value="Close"
+								oncomplete="PF('fileDialogEdit').hide()" />
+						</p:outputPanel>
+						<br />
+
+					</h:form>
+				</p:dialog>
+
+				<p:dialog header="ADD File" widgetVar="fileDialogADD"
+					closeOnEscape="true" showEffect="pop" resetValues="true"
+					modal="true" resizable="false" fitViewport="true"
+					maximizable="false" styleClass="DialogHeightLanscape">
+
+					<h:form>
+						<p:fileUpload
+							fileUploadListener="#{TaskFileServiceImpl.handleFileUpload}"
+							mode="advanced" update=":tabViewID:fileADDForm" auto="true"
+							sizeLimit="5242880"
+							allowTypes="/(\.|\/)(xhtml|html|xml|rtf|gif|zip|rar|pdf|doc?x|exel?x|xls|jpe?g|png)$/" />
+					</h:form>
+
+					<h:form id="fileADDForm"
+						style="width: 0 auto; margin: 0 auto; text-align: right">
+						<p:focus />
+						<div class="Container100 ui-fluid">
+							<div class="ContainerIndent">
+
+								<p:panelGrid id="regPanelGrid" columns="2"
+									columnClasses="ui-grid-col-2, ui-grid-col-6" layout="grid"
+									styleClass="ui-panelgrid-blank"
+									style="border:0px none; background-color:transparent;">
+
+
+									<p:outputLabel for="Name" value="Name:" />
+									<p:inputText id="Name"
+										value="#{TaskFileServiceImpl.fileADD.name}" required="true"
+										readonly="true"
+										title="File name will be load automatically after chossen file!">
+									</p:inputText>
+
+
+									<p:outputLabel for="Type" value="Type:" />
+									<p:inputText id="Type"
+										value="#{TaskFileServiceImpl.fileADD.type}" required="true"
+										readonly="true"
+										title="File type will be load automatically after chossen file!">
+									</p:inputText>
+
+
+									<p:outputLabel for="Comment" value="Comment:" />
+									<p:inputText id="Comment"
+										value="#{TaskFileServiceImpl.fileADD.comment}"
+										title="Enter comment!">
+										<f:validateLength maximum="255" />
+									</p:inputText>
+
+								</p:panelGrid>
+							</div>
+						</div>
+
+						<br />
+						<p:outputPanel style="text-align:right;">
+							<p:remoteCommand name="bad"
+								update=":tabViewID:fileADDForm:regPanelGrid" />
+							<p:remoteCommand name="good"
+								action="#{GlobalControllerImpl.createTaskFile(TaskServiceImpl.selectedTask)}"
+								oncomplete="{update()}" />
+							<p:remoteCommand name="update"
+								update=":tabViewID:taskFileForm:files 
+								:tabViewID:taskHistoryForm:taskHistories"
+								oncomplete="PF('fileDialogADD').hide()" />
+							<p:commandButton value="Save"
+								oncomplete="if (#{!GlobalControllerImpl.fileChossen(TaskFileServiceImpl.fileADD)}) {bad()} else {good()}" />
+							<p:commandButton value="Close"
+								oncomplete="PF('fileDialogADD').hide()" />
+						</p:outputPanel>
+						<br />
+
+					</h:form>
+				</p:dialog>
+
+			</p:tab>
+
+			<p:tab id="MenuTaskHistory" title="History">
+
+				<h:form id="taskHistoryForm">
+					<p:contextMenu for="taskHistories">
+						<p:menuitem value="View" update=":tabViewID:taskHistoryViewForm"
+							icon="fa fa-search"
+							oncomplete="PF('taskHistoryDialogView').show()" />
+					</p:contextMenu>
+
+					<p:dataTable reflow="true" id="taskHistories" var="taskHistory"
+						value="#{TaskHistoryServiceImpl.taskHistories}"
+						rowKey="#{taskHistory.id}" rowIndexVar="rowIndex"
+						selection="#{TaskHistoryServiceImpl.selectedTaskHistory}"
+						selectionMode="single" resizableColumns="true"
+						draggableColumns="true" liveResize="true" scrollable="true"
+						scrollHeight="auto" scrollWidth="auto">
+
+						<f:facet name="header">
+						</f:facet>
+
+						<p:column headerText="#" width="3%" filterBy="#{rowIndex}"
+							filterStyle="display:none" styleClass="columnCenter">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+
+						<p:column headerText="Author" filterBy="taskHistory.changeAuthor"
+							filterStyle="display:none"
+							sortBy="#{taskHistory.changeAuthor.displayName}">
+							<h:outputText value="#{taskHistory.changeAuthor}" />
+						</p:column>
+
+						<p:column headerText="Date" sortBy="#{taskHistory.changeDate}"
+							styleClass="columnCenter">
+							<h:outputText value="#{taskHistory.changeDate}">
+								<f:convertDateTime type="both" pattern="dd-MM-yyyy HH:mm:ss" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Change Event"
+							filterBy="#{taskHistory.changeEvent}" filterStyle="display:none"
+							sortBy="#{taskHistory.changeEvent}">
+							<h:outputText id="contentFade" value="#{taskHistory.changeEvent}" />
+							<p:tooltip id="toolContentFade" for="contentFade"
+								value="#{taskHistory.changeEvent}" />
+						</p:column>
+
+						<p:column styleClass="columnView" headerText="View"
+							exportable="false">
+
+							<!-- View -->
+							<p:commandButton icon="fa fa-search"
+								update=":tabViewID:taskHistoryViewForm :tabViewID:taskHistoryForm:taskHistories"
+								action="#{TaskHistoryServiceImpl.setSelectedTaskHistory(taskHistory)}"
+								oncomplete="PF('taskHistoryDialogView').show()"
+								styleClass="viewCommandButton" />
+
+						</p:column>
+
+					</p:dataTable>
+				</h:form>
+
+				<p:dialog header="View Task History"
+					widgetVar="taskHistoryDialogView" closeOnEscape="true"
+					showEffect="pop" resetValues="true" modal="true" resizable="false">
+					<h:form id="taskHistoryViewForm">
+						<p:messages />
+						<p:focus />
+						<p:outputPanel id="taskHistoryView" style="text-align:right;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty TaskTimeTrackingServiceImpl.selectedTaskTimeTracking}"
+								columnClasses="viewPanelGrid30, viewPanelGrid70"
+								style="width: 100% ! important;text-align:right;">
+
+								<h:outputText value="Author:" />
+								<h:outputText
+									value="#{TaskHistoryServiceImpl.selectedTaskHistory.changeAuthor}" />
+
+								<h:outputText value="Date:" />
+								<h:outputText
+									value="#{TaskHistoryServiceImpl.selectedTaskHistory.changeDate}">
+									<f:convertDateTime type="both" pattern="dd-MM-yyyy HH:mm:ss" />
+								</h:outputText>
+
+								<h:outputText value="Change Event:" />
+								<h:outputText
+									value="#{TaskHistoryServiceImpl.selectedTaskHistory.changeEvent}">
+								</h:outputText>
+
+							</p:panelGrid>
+						</p:outputPanel>
+					</h:form>
+				</p:dialog>
+
+			</p:tab>
+
+		</p:tabView>
+
+	</ui:define>
+</ui:composition>

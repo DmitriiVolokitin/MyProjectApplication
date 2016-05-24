@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>en_US</supported-locale>
+    	</locale-config>
+        <message-bundle>
+            com.myNewMessages.messages
+        </message-bundle>
+        
+        
+        <action-listener>
+    org.primefaces.application.DialogActionListener
+  </action-listener>
+  <navigation-handler>
+    org.primefaces.application.DialogNavigationHandler
+  </navigation-handler>
+  <view-handler>
+    org.primefaces.application.DialogViewHandler
+  </view-handler>
+  
+   <el-resolver>
+        org.springframework.web.jsf.el.SpringBeanFacesELResolver
+    </el-resolver>
+    
+	</application>
+	
+    <component>
+        <component-type>org.primefaces.component.ModenaMenu</component-type>
+        <component-class>org.primefaces.modena.component.menu.ModenaMenu</component-class>
+    </component>
+    
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.ModenaMenuRenderer</renderer-type>
+            <renderer-class>org.primefaces.modena.component.menu.ModenaMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+	
+ 	<factory>
+   		<exception-handler-factory>
+    	 	org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory
+   		</exception-handler-factory>
+ 	</factory>
+ 	
+ 	
+ 	
+	<!-- <managed-bean> <description>Holder of all component bindings.</description> 
+		<managed-bean-name>components</managed-bean-name> <managed-bean-class>java.util.HashMap</managed-bean-class> 
+		<managed-bean-scope>request</managed-bean-scope> </managed-bean> -->
+
+	<!-- <managed-bean> <managed-bean-name>TaskServiceImpl</managed-bean-name> 
+		<managed-bean-class>com.MyProject.services.impl.TaskServiceImpl</managed-bean-class> 
+		<managed-bean-scope>view</managed-bean-scope> </managed-bean> -->
+	<!-- <managed-bean> <managed-bean-name>TaskDao</managed-bean-name> <managed-bean-class>com.MyProject.dao.TaskDao</managed-bean-class> 
+		<managed-bean-scope>application</managed-bean-scope> </managed-bean> -->
+
+	<!-- <managed-bean> <managed-bean-name>CarService</managed-bean-name> <managed-bean-class>org.primefaces.showcase.service.CarService</managed-bean-class> 
+		<managed-bean-scope>application</managed-bean-scope> </managed-bean> eager="true" 
+		<managed-bean > <managed-bean-name>dtContextMenuView</managed-bean-name> 
+		<managed-bean-class>org.primefaces.showcase.view.data.datatable.ContextMenuView</managed-bean-class> 
+		<managed-bean-scope>view</managed-bean-scope> <managed-property> <property-name>service</property-name> 
+		<property-class>org.primefaces.showcase.service.CarService</property-class> 
+		<value>#{CarService}</value> </managed-property> </managed-bean> -->
+
+	<!-- <managed-bean> <managed-bean-name>FileJspDao</managed-bean-name> <managed-bean-class>com.MyProject.dao.FileJpaDao</managed-bean-class> 
+		<managed-bean-scope>application</managed-bean-scope> </managed-bean> eager="true" 
+		<managed-bean > <managed-bean-name>FileServiceImpl</managed-bean-name> <managed-bean-class>com.MyProject.services.impl.FileServiceImpl</managed-bean-class> 
+		<managed-bean-scope>view</managed-bean-scope> <managed-property> <property-name>fileDao</property-name> 
+		<property-class>com.MyProject.dao.FileJpaDao</property-class> <value>#{FileJspDao}</value> 
+		</managed-property> </managed-bean> -->
+
+</faces-config>

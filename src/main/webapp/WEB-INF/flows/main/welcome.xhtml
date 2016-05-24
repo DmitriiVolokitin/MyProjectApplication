@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/main.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="MyProject Application" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="Wid100 DispBlock MarAuto TexAlCenter">
+				<div class="Card">
+					<div class="Fs15 Fleft">
+						<img src="../css/images/QR.png" style="height: 38px !important"/>
+					</div>
+					<div class="Fright">
+						<p:commandButton id="submitButton" value="Log In"
+							styleClass="ADDGreenButton Fs16 White Fright "
+							oncomplete="PF('logInDialog').show()" />
+						<p:commandButton id="newUserButton"
+							value="Get started for FREE  Sign Up"
+							styleClass="BlueButton Fs16 White Fright"
+							oncomplete="PF('signUpDialog').show()" />
+
+						<p:defaultCommand target="submitButton" />
+					</div>
+				</div>
+
+				<div class="MyThemeFirstPage Wid100 MarAuto TexAlCenter">
+
+					<div class="startFirstPageEmptyBox"></div>
+					<div class="Wid100  Fs30 White">Going on to success</div>
+					<div class="EmptyBox10"></div>
+					<div class="Wid100 OvHidden Fs18 White">MyProject Application is the
+						simplest way to get result on your projects.</div>
+					<div class="EmptyBox30"></div>
+					<div class="OvHidden" align="center">
+						<p:commandButton id="newUserButton2" value="Get started for FREE"
+							styleClass="BlueButton Fs16 White FloatNoneOnMobile"
+							oncomplete="PF('signUpDialog').show()" />
+					</div>
+					<div class="finishFirstPageEmptyBox"></div>
+
+				</div>
+			</div>
+
+			<div class="pageEmptyBox"></div>
+
+			<div class="Wid100 MyThemeSecondPage DispBlock MarAuto TexAlCenter">
+
+				<div class="startSecondPageEmptyBox"></div>
+				<div class="Wid100  Fs20 White">We have answer for your
+					question</div>
+				<!-- <div class="Wid100 OvHidden Fs15 White">your projects from
+					start to finish</div> -->
+				<div class="EmptyBox20"></div>
+
+				<div class="uk-slidenav-position"
+					data-uk-slideshow="{kenburns:'15s', autoplay:true}">
+					<ul class="uk-slideshow" style="height: 200px;">
+						<li aria-hidden="false" class="uk-active"
+							style="animation-duration: 10ms; height: auto;"><div
+								class="uk-cover-background uk-position-cover uk-animation-scale uk-animation-reverse"
+								style="animation-duration: 10s; background-image: url('../slideShow/MyProjectApplication_slideShow_1_1.png');"></div>
+							<canvas width="auto" height="auto"
+								style="width: 90%; height: auto; opacity: 0;"></canvas></li>
+						<li aria-hidden="true"
+							style="animation-duration: 10ms; height: auto;" class=""><div
+								class="uk-cover-background uk-position-cover uk-animation-scale uk-animation-reverse "
+								style="animation-duration: 10s; background-image: url('../slideShow/MyProjectApplication_slideShow_1_1.png');"></div>
+							<canvas width="auto" height="auto"
+								style="width: 90%; height: auto; opacity: 0;"></canvas></li>
+					</ul>
+					<a href="" class="uk-slidenav uk-slidenav-previous"
+						data-uk-slideshow-item="previous" style="color: #556e79;"> </a> <a
+						href="" class="uk-slidenav uk-slidenav-next"
+						data-uk-slideshow-item="next" style="color: #556e79;"> </a>
+
+				</div>
+
+				<div class="finishSecondPageEmptyBox"></div>
+			</div>
+
+			<div class="pageEmptyBox"></div>
+
+			<div class="Wid100 MyThemeThirdPage DispBlock MarAuto TexAlCenter">
+				<div class="startThirdPageEmptyBox"></div>
+				<div class="Wid100  Fs20 White">Get started today</div>
+				<!-- <div class="Wid100 OvHidden Fs15 White">If you can make a list
+					or send an email, you can use MyProject. Starting a team is really
+					that simple.</div> -->
+				<div class="EmptyBox20"></div>
+
+				<div class="uk-slidenav-position"
+					data-uk-slideshow="{kenburns:'15s', autoplay:true}">
+					<ul class="uk-slideshow" style="height: 200px;">
+						<li aria-hidden="false" class="uk-active"
+							style="animation-duration: 10ms; height: auto;"><div
+								class="uk-cover-background uk-position-cover uk-animation-scale uk-animation-reverse"
+								style="animation-duration: 10s; background-image: url('../slideShow/MyProjectApplication_slideShow_2_1.png');"></div>
+							<canvas width="auto" height="auto"
+								style="width: 99%; height: auto; opacity: 0;"></canvas></li>
+						<li aria-hidden="true"
+							style="animation-duration: 10ms; height: auto;" class=""><div
+								class="uk-cover-background uk-position-cover uk-animation-scale uk-animation-reverse"
+								style="animation-duration: 10s; background-image: url('../slideShow/MyProjectApplication_slideShow_2_1.png');"></div>
+							<canvas width="auto" height="auto"
+								style="width: 99%; height: auto; opacity: 0;"></canvas></li>
+					</ul>
+					<a href="" class="uk-slidenav uk-slidenav-previous"
+						data-uk-slideshow-item="previous" style="color: #556e79;"> </a> <a
+						href="" class="uk-slidenav uk-slidenav-next"
+						data-uk-slideshow-item="next" style="color: #556e79;"> </a>
+
+				</div>
+
+				<div class="finishThirdPageEmptyBox"></div>
+			</div>
+
+			<!-- FOOTER  -->
+			<div class="Container100">
+				<div class="ContainerIndent">
+					<div class="Card">
+						<div class="Container100" style="" id="footerlinks">
+							<!-- <a href="#"
+								class="DispInlBlock FontSourceSansLight Blue Fs12 Fleft HoverEffect">GUIDE
+								LINES</a> -->
+							<img src="../css/images/QR.png" style="height: 38px !important"/>
+							<span
+								class="DispInlBlock FontSourceSansLight BoldGray Fs12 Fright HoverEffect TexAlRight FloatNoneOnMobile">
+								MyProject Application</span>
+						</div>
+
+						<div class="EmptyBox10"></div>
+
+						<div class="Container50 Responsive100">
+							<!-- <img src="../css/images/QR.png" style="height: 38px !important"/> -->
+							<span
+								class="DispBlock Wid100 FontSourceSansLight BoldGray Fs12 HoverEffect">
+								MyProjectApplicationInfo@gmail.com
+							</span>
+						</div>
+						<div class="Container50 Responsive100">
+							<div class="DispInlBlock Fright">
+								<a href="#layout-footer" class="Blue Fs30"><i
+									class="fa fa-facebook-square"></i></a> <a href="#layout-footer"
+									class="Blue Fs30"><i class="fa fa-twitter-square"></i></a> <a
+									href="#layout-footer" class="Blue Fs30"><i
+									class="fa fa-linkedin-square"></i></a> <a href="#layout-footer"
+									class="Blue Fs30"><i class="fa fa-google-plus-square"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+		<p:dialog widgetVar="logInDialog" showHeader="true"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false" fitViewport="true">
+			<h:form id="loginForm">
+				<p:focus />
+				<p:messages id="messages" globalOnly="true" />
+
+				<div class="Container100 MarTopPerc5 ui-fluid">
+					<div class="ContainerIndent">
+						<div class="Wid100 TexAlCenter OvHidden BigTopic Fs30">
+							<!-- <i class="icon-security Fs60 DispBlock"></i> -->
+							Log In
+						</div>
+						<p:panelGrid id="regPanelGrid" columns="1" columnClasses=""
+							layout="grid" styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:inputText id="userName" value="#{user.userName}"
+								required="true" label="User Name" placeholder="User Name"
+								styleClass="TexAlCenter Fs18">
+							</p:inputText>
+
+							<p:password id="pass" value="#{user.password}" required="true"
+								label="Password" placeholder="Password"
+								styleClass="TexAlCenter Fs18">
+							</p:password>
+
+							<p:commandButton id="submitButton" action="confirmSignIn"
+								icon="fa fa-sign-in" value="Log In"
+								update="messages regPanelGrid"
+								styleClass="Fs18 White RaisedButton FloatNoneOnMobile"
+								style="width:100%;" />
+							<p:defaultCommand target="submitButton" />
+							
+							<a href="#" onclick="FB.login(function(response){},{perms:'email,publish_stream'});"/>
+							
+							<div class="fb-login-button" data-max-rows="1" data-size="medium" 
+							data-show-faces="false" data-auto-logout-link="false"></div>
+
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="EmptyBox10"></div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="signUpDialog" widgetVar="signUpDialog" showHeader="true"
+			closeOnEscape="true" showEffect="pop" resetValues="true" modal="true"
+			resizable="false">
+			<h:form id="signUpForm">
+				<p:focus />
+				<p:messages id="messages" globalOnly="true" />
+				<div class="Container100 MarTopPerc5 ui-fluid">
+					<div class="ContainerIndent">
+						<div class="Wid100 TexAlCenter OvHidden BigTopic Fs30">
+							<!-- <i class="icon-security Fs60 DispBlock"></i> -->
+							Sign Up
+						</div>
+						<p:panelGrid id="regPanelGrid" columns="1" columnClasses=""
+							layout="grid" styleClass="ui-panelgrid-blank"
+							style="border:0px none; background-color:transparent;">
+
+							<p:inputText id="firstName" label="First Name"
+								value="#{user.firstName}" required="true"
+								placeholder="First Name" styleClass="TexAlCenter Fs18">
+								<f:validateLength minimum="2" />
+							</p:inputText>
+
+							<p:inputText id="lastName" label="Last Name"
+								value="#{user.lastName}" required="true" placeholder="Last Name"
+								styleClass="TexAlCenter Fs18">
+								<f:validateLength minimum="2" />
+							</p:inputText>
+
+							<p:inputText id="userName" value="#{user.userName}"
+								required="true" label="User Name" placeholder="User Name"
+								styleClass="TexAlCenter Fs18"
+								validator="#{userServiceImpl.validateUserNameFromBean}">
+								<f:validateLength minimum="2" />
+								<p:ajax event="change" update="userName" />
+							</p:inputText>
+
+							<p:inputText id="userEmail" value="#{user.email}" required="true"
+								label="Email" placeholder="Email" styleClass="TexAlCenter Fs18"
+								validator="#{userServiceImpl.validateEmailFromBean}">
+								<p:ajax event="change" update="userEmail" />
+							</p:inputText>
+
+							<p:password id="pass1" value="#{user.password}" required="true"
+								label="Password" placeholder="Password" feedback="true"
+								match="pass2" styleClass="TexAlCenter Fs18">
+								<f:validateLength minimum="2" />
+							</p:password>
+
+							<p:password id="pass2" required="true" label="Password"
+								placeholder="Repeat Password" styleClass="TexAlCenter Fs18" />
+
+							<p:commandButton id="submitButton" action="confirmSignUp"
+								update="regPanelGrid" icon="fa fa-sign-in"
+								value="Create and Log In"
+								styleClass="Fs18 White RaisedButton FloatNoneOnMobile"
+								style="width:100%;" />
+							<p:defaultCommand target="submitButton" />
+
+						</p:panelGrid>
+						<div class="EmptyBox10"></div>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+		<h:outputStylesheet name="css/animate.css" library="modena-layout" />
+		<h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+		<h:outputStylesheet name="css/ripple-effect.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/font-awesome.css"
+			library="modena-layout" />
+		<h:outputStylesheet name="css/modena-layout.css"
+			library="modena-layout" />
+	</ui:define>
+</ui:composition>
+
