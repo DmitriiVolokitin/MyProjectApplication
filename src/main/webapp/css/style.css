@@ -181,9 +181,10 @@
 }
 
 .searchGlobalFilter {
-	width: -webkit-calc(100% - 294px)!important;
-	width: -moz-calc(100% - 294px) !important;
-	width: calc(100% - 294px) !important;
+	width: -webkit-calc(100% - 301px)!important;
+	width: -moz-calc(100% - 301px) !important;
+	width: calc(100% - 301px) !important;
+	margin-right: 3px;
 }
 
 #top-menu {
