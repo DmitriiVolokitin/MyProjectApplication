@@ -257,7 +257,7 @@
 	<view-state id="OpenInstructionPriority" view="instructionNewPriority.xhtml">
 	</view-state>
 	
-	<view-state id="OpenInstructionStatus" view="instructionNewPriority.xhtml">
+	<view-state id="OpenInstructionStatus" view="instructionNewStatus.xhtml">
 	</view-state>
 	
 </flow>
