@@ -156,11 +156,11 @@ public class GlobalControllerImpl implements Serializable {
 	}
 
 	public void initImages() {
-		images = new ArrayList<String>();
-		for (int i = 1; i <= 12; i++) {
-
-			images.add("nature" + i + ".jpg");
-		}
+//		images = new ArrayList<String>();
+//		for (int i = 1; i <= 12; i++) {
+//
+//			images.add("nature" + i + ".jpg");
+//		}
 	}
 
 	public void projectMilestoneCheckAvailableNameByProject(FacesContext arg0, UIComponent arg1, Object val)
