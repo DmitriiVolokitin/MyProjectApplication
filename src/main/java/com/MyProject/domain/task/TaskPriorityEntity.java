@@ -35,7 +35,7 @@ public class TaskPriorityEntity implements Serializable {
 	@JoinColumn(name="project_ID")
 	private ProjectEntity project;
 	
-	@Column(name="task_priority_Name", length = 150, nullable = false)
+	@Column(name="task_priority_Name", length = 255, nullable = false)
 	private String name;
 	
 	@Column(name="task_priority_Constant", nullable = false)

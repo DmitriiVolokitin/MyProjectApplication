@@ -339,7 +339,7 @@
 						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
 							var="project" itemLabel="#{project}" itemValue="#{project}" />
 						<p:ajax event="change"
-							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}" />
+							listener="#{GlobalBarReportControllerImpl.changeListenerCurrentProjectChange}" />
 					</p:selectOneMenu>
 				</h:form>
 			</div>
@@ -355,7 +355,7 @@
 						<f:selectItems value="#{ProjectUserRoleServiceImpl.projects}"
 							var="project" itemLabel="#{project}" itemValue="#{project}" />
 						<p:ajax event="change"
-							listener="#{GlobalControllerImpl.changeListenerCurrentProjectChange}" />
+							listener="#{GlobalBarReportControllerImpl.changeListenerCurrentProjectChange}" />
 					</p:selectOneMenu>
 				</h:form>
 				<!-- Edit -->
@@ -522,13 +522,13 @@
 				<div class="ContainerIndent" align="center">
 					<p:outputLabel for="reportType" value="Type:" />
 					<p:selectOneMenu id="reportType"
-						value="#{GlobalControllerImpl.reportType}" effect="fold"
+						value="#{GlobalBarReportControllerImpl.reportType}" effect="fold"
 						editable="false" style="width:37%;">
 						<f:selectItem itemLabel="Cost and Time" itemValue="Cost and Time" />
 						<f:selectItem itemLabel="Task Type" itemValue="Task Type" />
 						<f:selectItem itemLabel="Task Deadline" itemValue="Task Deadline" />
 						<p:ajax event="change"
-							listener="#{GlobalControllerImpl.reportUpdate}" />
+							listener="#{GlobalBarReportControllerImpl.reportUpdate}" />
 					</p:selectOneMenu>
 				</div>
 			</div>
@@ -537,14 +537,14 @@
 				<div class="ContainerIndent" align="center">
 					<p:outputLabel for="reportUser" value="User(s):" />
 					<p:selectCheckboxMenu id="reportUser" widgetVar="reportUserWget"
-						value="#{GlobalControllerImpl.selectedReportUsers}"
-						label="#{GlobalControllerImpl.selectedValuesReportUsersDisplayString}"
+						value="#{GlobalBarReportControllerImpl.selectedReportUsers}"
+						label="#{GlobalBarReportControllerImpl.selectedValuesReportUsersDisplayString}"
 						effect="fold" editable="false" style="width:37%;"
 						converter="omnifaces.SelectItemsConverter"
 						onHide="executeOnOnhide();">
-						<f:selectItems value="#{GlobalControllerImpl.reportUsers}" />
+						<f:selectItems value="#{GlobalBarReportControllerImpl.reportUsers}" />
 						<p:ajax event="change"
-							listener="#{GlobalControllerImpl.updateSelectedValuesReportUsersDisplayString()}" />
+							listener="#{GlobalBarReportControllerImpl.updateSelectedValuesReportUsersDisplayString()}" />
 					</p:selectCheckboxMenu>
 					<p:remoteCommand name="executeOnOnhide"
 						update="@widgetVar(reportUserWget)" />
@@ -555,7 +555,7 @@
 				<div class="ContainerIndent" align="center">
 					<p:outputLabel for="reportDateStart" value="Date start:" />
 					<p:calendar id="reportDateStart"
-						value="#{GlobalControllerImpl.reportDataStart}"
+						value="#{GlobalBarReportControllerImpl.reportDataStart}"
 						pattern="dd.MM.yyyy" mask="true" style="text-align: right;">
 					</p:calendar>
 				</div>
@@ -564,7 +564,7 @@
 				<div class="ContainerIndent" align="center">
 					<p:outputLabel for="reportDateFinish" value="Date finish:" />
 					<p:calendar id="reportDateFinish"
-						value="#{GlobalControllerImpl.reportDataFinish}"
+						value="#{GlobalBarReportControllerImpl.reportDataFinish}"
 						pattern="dd.MM.yyyy" mask="true" style="text-align: right;">
 					</p:calendar>
 				</div>
@@ -573,7 +573,7 @@
 				<div class="ContainerIndent" align="center">
 					<p:commandButton value="Update" icon="fa fa-refresh"
 						aria-hidden="true" styleClass="projectCommandButtonBlue"
-						action="#{GlobalControllerImpl.reportUpdate}" />
+						action="#{GlobalBarReportControllerImpl.reportUpdate}" />
 				</div>
 			</div>
 			<div class="Container10 Responsive100 NoIndent">
@@ -586,7 +586,7 @@
 		</h:form>
 
 		<h:form id="CostAndHours"
-			rendered="#{GlobalControllerImpl.reportType =='Cost and Time'}">
+			rendered="#{GlobalBarReportControllerImpl.reportType =='Cost and Time'}">
 			
 			<h:form>
 				<div class="Container100 Responsive100 NoIndent">
@@ -594,7 +594,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Cost</div>
 							<p:chart id="barHours" type="bar" widgetVar="widgetBarHoursCost"
-								model="#{GlobalControllerImpl.createHorizontalBarModel('Cost', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createHorizontalBarModel('Cost', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -607,7 +607,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Time</div>
 							<p:chart id="barHours" type="bar" widgetVar="widgetBarHoursTime"
-								model="#{GlobalControllerImpl.createHorizontalBarModel('Time', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createHorizontalBarModel('Time', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -620,7 +620,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Cost by Time</div>
 							<p:chart id="pieHours" type="pie" widgetVar="widgetPieHoursCostByTime"
-								model="#{GlobalControllerImpl.createPieModel('Cost', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('Cost', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -633,7 +633,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Cost Accepted</div>
 							<p:chart id="pieCostFormatTimeTracking" type="pie" widgetVar="widgetPieCostFormatTimeTrackingCostAccepted"
-								model="#{GlobalControllerImpl.createPieModel('CostFormatTimeTrackingAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('CostFormatTimeTrackingAccepted', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -647,7 +647,7 @@
 							<div class="Card CardBigTopic TexAlCenter">Cost NOT
 								Accepted</div>
 							<p:chart id="pieCostFormatTimeTracking" type="pie" widgetVar="widgetPieCostFormatTimeTrackingCostNotAccepted"
-								model="#{GlobalControllerImpl.createPieModel('CostFormatTimeTrackingNotAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('CostFormatTimeTrackingNotAccepted', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -660,7 +660,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Time Accepted</div>
 							<p:chart id="pieTimeFormatTimeTracking" type="pie" widgetVar="widgetPieTimeFormatTimeTrackingTimeAccepted"
-								model="#{GlobalControllerImpl.createPieModel('TimeFormatTimeTrackingAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TimeFormatTimeTrackingAccepted', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -674,7 +674,7 @@
 							<div class="Card CardBigTopic TexAlCenter">Time NOT
 								Accepted</div>
 							<p:chart id="pieTimeFormatTimeTracking" type="pie" widgetVar="widgetPieTimeFormatTimeTrackingTimeNotAccepted"
-								model="#{GlobalControllerImpl.createPieModel('TimeFormatTimeTrackingNotAccepted', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TimeFormatTimeTrackingNotAccepted', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -684,7 +684,7 @@
 		</h:form>
 
 		<h:form id="TaskType"
-			rendered="#{GlobalControllerImpl.reportType=='Task Type'}">
+			rendered="#{GlobalBarReportControllerImpl.reportType=='Task Type'}">
 
 			<h:form>
 				<div class="Container50 Responsive100 NoIndent">
@@ -692,7 +692,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Task Time</div>
 							<p:chart id="pieFormatTimeTracking" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('FormatTimeTracking', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('FormatTimeTracking', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -705,7 +705,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Task Type</div>
 							<p:chart id="pieTaskType" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('TaskType', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TaskType', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -718,7 +718,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Task Status</div>
 							<p:chart id="pieTaskStatus" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('TaskStatus', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TaskStatus', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -731,7 +731,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Task Priority</div>
 							<p:chart id="pieTaskStatus" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('TaskPriority', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TaskPriority', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -741,7 +741,7 @@
 		</h:form>
 
 		<h:form id="TaskDeadline"
-			rendered="#{GlobalControllerImpl.reportType=='Task Deadline'}">
+			rendered="#{GlobalBarReportControllerImpl.reportType=='Task Deadline'}">
 
 			<h:form>
 				<div class="Container50 Responsive100 NoIndent">
@@ -749,7 +749,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Task Deadline</div>
 							<p:chart id="barTaskDeadline" type="bar"
-								model="#{GlobalControllerImpl.createHorizontalBarModel('TaskDeadline', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createHorizontalBarModel('TaskDeadline', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -763,7 +763,7 @@
 							<div class="Card CardBigTopic TexAlCenter">Task Deadline
 								Priority</div>
 							<p:chart id="pieTaskStatus" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('TaskDeadlinePriority', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TaskDeadlinePriority', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -777,7 +777,7 @@
 							<div class="Card CardBigTopic TexAlCenter">Task Deadline
 								Status</div>
 							<p:chart id="pieTaskStatus" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('TaskDeadlineStatus', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TaskDeadlineStatus', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -791,7 +791,7 @@
 							<div class="Card CardBigTopic TexAlCenter">Task Deadline
 								Type</div>
 							<p:chart id="pieTaskType" type="pie"
-								model="#{GlobalControllerImpl.createPieModel('TaskDeadlineType', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.createPieModel('TaskDeadlineType', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>
@@ -804,7 +804,7 @@
 						<div class="Card ShadowEffect">
 							<div class="Card CardBigTopic TexAlCenter">Project Activity</div>
 							<p:chart id="lineProjectActivity" type="line"
-								model="#{GlobalControllerImpl.initLinearModel('LinearModel', GlobalControllerImpl.reportDataStart, GlobalControllerImpl.reportDataFinish, GlobalControllerImpl.selectedReportUsers)}"
+								model="#{GlobalBarReportControllerImpl.initLinearModel('LinearModel', GlobalBarReportControllerImpl.reportDataStart, GlobalBarReportControllerImpl.reportDataFinish, GlobalBarReportControllerImpl.selectedReportUsers)}"
 								responsive="true" />
 						</div>
 					</div>

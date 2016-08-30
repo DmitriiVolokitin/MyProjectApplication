@@ -15,7 +15,7 @@ import com.MyProject.services.UserAuthenticationProviderService;
 /**
  * Provides processing service to set user authentication session
  * 
- * @author Arthur Vin
+ * @author Di
  */
 public class UserAuthenticationProviderServiceImpl implements UserAuthenticationProviderService {
 
@@ -30,7 +30,7 @@ public class UserAuthenticationProviderServiceImpl implements UserAuthentication
 	public boolean processUserAuthentication(UserEntity user) {
 		
 		try {
-			Authentication request = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
+			Authentication request = new UsernamePasswordAuthenticationToken(user.getUserName().toLowerCase(), user.getPassword());
 			Authentication result = authenticationManager.authenticate(request);
 			SecurityContextHolder.getContext().setAuthentication(result);
 			

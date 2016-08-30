@@ -288,4 +288,12 @@
 			</build>
 		</profile>
 	</profiles>
+	<url>https://myprojectapplication-myprojectaccount.rhcloud.com</url>
+	<description>MyProject Application at OpenShift</description>
+	<organization>
+		<name>MyProject Organization</name>
+	</organization>
+	<scm>
+		<developerConnection>Di</developerConnection>
+	</scm>
 </project>

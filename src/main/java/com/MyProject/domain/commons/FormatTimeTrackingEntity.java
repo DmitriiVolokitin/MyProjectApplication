@@ -38,7 +38,7 @@ public class FormatTimeTrackingEntity implements Serializable {
 	@JoinColumn(name="project_ID")
 	private ProjectEntity project;
 	
-	@Column(name="format_time_tracking_Name", length = 150, nullable = false)
+	@Column(name="format_time_tracking_Name", length = 255, nullable = false)
 	private String name;
 	
 	@Column(name="format_time_tracking_Constant", nullable = false)

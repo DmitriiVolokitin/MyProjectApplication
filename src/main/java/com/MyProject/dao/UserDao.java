@@ -8,7 +8,7 @@ import com.MyProject.commons.dao.GenericDao;
 /**
  * Data access object interface to work with User entity database operations.
  * 
- * @author Arthur Vin
+ * @author Di
  */
 public interface UserDao extends GenericDao<UserEntity, Long> {
 

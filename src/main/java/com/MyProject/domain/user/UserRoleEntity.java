@@ -27,7 +27,7 @@ public class UserRoleEntity implements Serializable {
 	@Column(name="user_role_ID", unique = true, nullable = false)
 	private Long id;
 	
-	@Column(name="user_role_Name", length = 150, unique = true, nullable = false)
+	@Column(name="user_role_Name", length = 255, unique = true, nullable = false)
 	private String name;
 	
 	@OneToMany(mappedBy="userRole")

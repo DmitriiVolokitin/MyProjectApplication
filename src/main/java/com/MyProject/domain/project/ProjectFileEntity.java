@@ -35,7 +35,7 @@ public class ProjectFileEntity implements Serializable {
 	@Column(name="project_file_Name", length = 255, nullable = false)
 	private String name;
 	
-	@Column(name="project_file_Type", length = 150, nullable = false)
+	@Column(name="project_file_Type", length = 255, nullable = false)
 	private String type;
 	
 	@Column(name="project_file_Data", columnDefinition="longblob")

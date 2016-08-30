@@ -13,7 +13,7 @@ import com.MyProject.commons.dao.GenericJpaDao;
 /**
  * Data access object JPA impl to work with User entity database operations.
  * 
- * @author Arthur Vin
+ * @author Di
  */
 public class UserJpaDao extends GenericJpaDao<UserEntity, Long> implements UserDao {
 

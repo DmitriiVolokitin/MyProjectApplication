@@ -7,7 +7,7 @@ import com.MyProject.domain.user.UserEntity;
 /**
  * Service providing service methods to work with user data and entity.
  * 
- * @author Arthur Vin
+ * @author Di
  */
 public interface UserService {
 

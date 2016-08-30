@@ -3,7 +3,6 @@ package com.MyProject.services.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,25 +14,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.TabChangeEvent;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.DateAxis;
-import org.primefaces.model.chart.HorizontalBarChartModel;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
-import org.primefaces.model.chart.PieChartModel;
 import org.springframework.context.annotation.Scope;
 import org.springframework.webflow.engine.RequestControlContext;
 import org.springframework.webflow.execution.Event;
@@ -88,7 +72,6 @@ public class GlobalControllerImpl implements Serializable {
 
 	private static final long serialVersionUID = 7852979771015680707L;
 
-
 	private TaskServiceImpl 					taskServiceImpl;
 	private TaskTimeTrackingServiceImpl 		taskTimeTrackingServiceImpl;
 	private TaskHistoryServiceImpl 				taskHistoryServiceImpl;
@@ -109,28 +92,28 @@ public class GlobalControllerImpl implements Serializable {
 	private ProjectCostSettingEntityServiceImpl projectCostSettingEntityServiceImpl;
 	private ProjectUserRoleServiceImpl			projectUserRoleServiceImpl;
 	private FormatTimeTrackingServiceImpl		formatTimeTrackingServiceImpl;
+	private GlobalBarReportControllerImpl		globalBarReportControllerImpl;
 
-
-	private ProjectDao 						projectDao;
-	private FormatTimeTrackingDao			formatTimeTrackingDao;
-	private UserDao 						userDao;
-	private UserRoleDao						userRoleDao;
-	private UserSettingDao					userSettingDao;
-	private TaskDao 						taskDao;
-	private TaskFileDao 					taskFileDao;
-	private TaskStatusHistoryDao			taskStatusHistoryDao;
-	private TaskTimeTrackingDao				taskTimeTrackingDao;
-	private TaskHistoryDao					taskHistoryDao;
-	private TaskStatusDao					taskStatusDao;
-	private TaskTypeDao						taskTypeDao;
-	private TaskPriorityDao					taskPriorityDao;
-	private ContractDao 					contractDao;
-	private ContractorOrganizationDao 		contractorOrganizationDao;
-	private CustomerOrganizationDao 		customerOrganizationDao;
-	private ProjectFileDao					projectFileDao;
-	private ProjectMilestoneDao				projectMilestoneDao;
-	private ProjectUserRoleDao				projectUserRoleDao;
-	private ProjectCostSettingDao			projectCostSettingDao;
+	private ProjectDao 							projectDao;
+	private FormatTimeTrackingDao				formatTimeTrackingDao;
+	private UserDao 							userDao;
+	private UserRoleDao							userRoleDao;
+	private UserSettingDao						userSettingDao;
+	private TaskDao 							taskDao;
+	private TaskFileDao 						taskFileDao;
+	private TaskStatusHistoryDao				taskStatusHistoryDao;
+	private TaskTimeTrackingDao					taskTimeTrackingDao;
+	private TaskHistoryDao						taskHistoryDao;
+	private TaskStatusDao						taskStatusDao;
+	private TaskTypeDao							taskTypeDao;
+	private TaskPriorityDao						taskPriorityDao;
+	private ContractDao 						contractDao;
+	private ContractorOrganizationDao 			contractorOrganizationDao;
+	private CustomerOrganizationDao 			customerOrganizationDao;
+	private ProjectFileDao						projectFileDao;
+	private ProjectMilestoneDao					projectMilestoneDao;
+	private ProjectUserRoleDao					projectUserRoleDao;
+	private ProjectCostSettingDao				projectCostSettingDao;
 
 	int menuIndex 			= 0;
 	int taskTabView 		= 0;
@@ -140,27 +123,18 @@ public class GlobalControllerImpl implements Serializable {
 	private List<String> images;
 	boolean flagNewUser = false;
 
-	String reportType 								= "";
-	UserEntity reportUser 							= null;
-	List<UserEntity> reportUsers 					= null;
-	List<UserEntity> selectedReportUsers 			= null;
-	String selectedValuesReportUsersDisplayString 	= "";
-	Date reportDataStart 							= new Date();
-	Date reportDataFinish 							= new Date();
-
 	@PostConstruct
 	public void init() {
 		System.out.println("New bean Global");
-		setReportType("Cost and Time");
 		initImages();
 	}
 
 	public void initImages() {
-//		images = new ArrayList<String>();
-//		for (int i = 1; i <= 12; i++) {
-//
-//			images.add("nature" + i + ".jpg");
-//		}
+		//		images = new ArrayList<String>();
+		//		for (int i = 1; i <= 12; i++) {
+		//
+		//			images.add("nature" + i + ".jpg");
+		//		}
 	}
 
 	public void projectMilestoneCheckAvailableNameByProject(FacesContext arg0, UIComponent arg1, Object val)
@@ -468,33 +442,6 @@ public class GlobalControllerImpl implements Serializable {
 		this.settingTabView = tv.getChildren().indexOf(event.getTab());
 	}
 
-	// Reports	
-	public BarChartModel initBarModel(String reportType, Date dateStart, Date dateFinish, ArrayList<UserEntity> users) {
-
-		BarChartModel model = new BarChartModel();
-
-		ChartSeries boys = new ChartSeries();
-		boys.setLabel("Boys");
-		boys.set("2004", 120);
-		boys.set("2005", 100);
-		boys.set("2006", 44);
-		boys.set("2007", 150);
-		boys.set("2008", 25);
-
-		ChartSeries girls = new ChartSeries();
-		girls.setLabel("Girls");
-		girls.set("2004", 52);
-		girls.set("2005", 60);
-		girls.set("2006", 110);
-		girls.set("2007", 135);
-		girls.set("2008", 120);
-
-		model.addSeries(boys);
-		model.addSeries(girls);
-
-		return model;
-	}
-
 	public void preProcessXLS(Object document){
 
 		//		HSSFWorkbook wb = (HSSFWorkbook) document;
@@ -557,463 +504,14 @@ public class GlobalControllerImpl implements Serializable {
 
 	}
 
-	public HorizontalBarChartModel createHorizontalBarModel(String reportType, Date dateStart, Date dateFinish, ArrayList<UserEntity> users) {
-
-		ProjectEntity currentProject = projectServiceImpl.getSelectedCurrentProject();
-
-		HorizontalBarChartModel horizontalBarModel = new HorizontalBarChartModel();
-
-		if (reportType.equals("Time")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.getTimeByProjectAndUsers(currentProject, dateStart, dateFinish, users);
-
-			ChartSeries Accepted = new ChartSeries();
-			Accepted.setLabel("Accepted");
-
-			ChartSeries notAccepted = new ChartSeries();
-			notAccepted.setLabel("Not accepted");
-
-			ArrayList<String> acceptedData = new ArrayList<String>();
-			ArrayList<String> notAcceptedData = new ArrayList<String>();
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				String getDisplayName = ((UserEntity) resultQuery.get(i)[0]).getDisplayName();
-
-				if ((boolean)resultQuery.get(i)[1]){
-
-					Accepted.set(getDisplayName, (Double) resultQuery.get(i)[2]);
-					acceptedData.add(getDisplayName);
-				}
-				else{
-					notAccepted.set(getDisplayName, (Double) resultQuery.get(i)[2]);
-					notAcceptedData.add(getDisplayName);
-				}
-
-			}
-
-			if (resultQuery.size() <= 0) {
-				Accepted.set("Data will appear here", 100);
-				notAccepted.set("Data will appear here", 100);
-			}
-			else {
-
-				for(String foundAcceptedData: acceptedData){
-					if(!notAcceptedData.contains(foundAcceptedData)){
-						notAccepted.set(foundAcceptedData, 0);
-					}
-				}
-
-				for(String foundNotAcceptedData: notAcceptedData){
-					if(!acceptedData.contains(foundNotAcceptedData)){
-						Accepted.set(foundNotAcceptedData, 0);
-					}
-				}
-			}
-
-			horizontalBarModel.addSeries(Accepted);
-			horizontalBarModel.addSeries(notAccepted);
-
-			Axis xAxis = horizontalBarModel.getAxis(AxisType.X);
-			//xAxis.setLabel("Time");
-			xAxis.setMin(0);
-			xAxis.setMax(100);
-
-			//Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);
-			//yAxis.setLabel("Employees");
-
-		}
-
-		if (reportType.equals("Cost")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.getCostByProjectAndUsers(currentProject, dateStart, dateFinish, users);
-
-			ChartSeries Accepted = new ChartSeries();
-			Accepted.setLabel("Accepted");
-
-			ChartSeries notAccepted = new ChartSeries();
-			notAccepted.setLabel("Not accepted");
-
-			ArrayList<String> acceptedData = new ArrayList<String>();
-			ArrayList<String> notAcceptedData = new ArrayList<String>();
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				String getDisplayName = ((String) resultQuery.get(i)[0]);
-
-				if ((boolean)resultQuery.get(i)[1]){
-
-					Accepted.set(getDisplayName, (Double) resultQuery.get(i)[2]);
-					acceptedData.add(getDisplayName);
-				}
-				else{
-					notAccepted.set(getDisplayName, (Double) resultQuery.get(i)[2]);
-					notAcceptedData.add(getDisplayName);
-				}
-
-			}
-
-			if (resultQuery.size() <= 0) {
-				Accepted.set("Data will appear here", 100);
-				notAccepted.set("Data will appear here", 100);
-			}
-			else {
-
-				for(String foundAcceptedData: acceptedData){
-					if(!notAcceptedData.contains(foundAcceptedData)){
-						notAccepted.set(foundAcceptedData, 0);
-					}
-				}
-
-				for(String foundNotAcceptedData: notAcceptedData){
-					if(!acceptedData.contains(foundNotAcceptedData)){
-						Accepted.set(foundNotAcceptedData, 0);
-					}
-				}
-			}
-
-			horizontalBarModel.addSeries(Accepted);
-			horizontalBarModel.addSeries(notAccepted);
-
-			Axis xAxis = horizontalBarModel.getAxis(AxisType.X);
-			//xAxis.setLabel("Time");
-			xAxis.setMin(0);
-
-			//Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);
-			//yAxis.setLabel("Employees");
-
-		}
-
-		if (reportType.equals("TaskDeadline")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskDeadLineByProjectAndUsers(currentProject, dateStart, dateFinish, users);
-
-			ChartSeries Done = new ChartSeries();
-			Done.setLabel("Done");
-
-			ChartSeries Requared = new ChartSeries();
-			Requared.setLabel("Requared");
-
-			String taskName = "";
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				taskName = "Task #" + (String) resultQuery.get(i)[0].toString();
-				//+ " " + (String) resultQuery.get(i)[1].toString();
-
-				Done.set(taskName, (Double) resultQuery.get(i)[2]);
-				Requared.set(taskName, 100 - ((Double) resultQuery.get(i)[2]));
-			}
-
-			if (resultQuery.size() <= 0) {
-				Done.set("Data will appear here", 50);
-				Requared.set("Data will appear here", 50);
-			}
-
-			horizontalBarModel.addSeries(Done);
-			horizontalBarModel.addSeries(Requared);
-
-			Axis xAxis = horizontalBarModel.getAxis(AxisType.X);
-			//			xAxis.setLabel("Done %");
-			xAxis.setMin(0);
-			xAxis.setMax(100);
-
-			//			Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);
-			//			yAxis.setLabel("Task");
-
-		}
-
-		horizontalBarModel.setLegendPosition("e");
-		horizontalBarModel.setStacked(true);
-		horizontalBarModel.setAnimate(true);
-
-		horizontalBarModel.setExtender("skinHorizantalBar");
-
-		return horizontalBarModel;
-	}
-
-	public PieChartModel createPieModel(String reportType, Date dateStart, Date dateFinish, ArrayList<UserEntity> users) {
-
-		PieChartModel pieModel = new PieChartModel();
-
-		if (reportType.equals("Time")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countTimeByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				if ((boolean)resultQuery.get(i)[0]){
-					pieModel.set("Accepted", (Double) resultQuery.get(i)[1]);
-				}
-				else{
-					pieModel.set("Not accepted", (Double) resultQuery.get(i)[1]);
-				}
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("Cost")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countCostByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				if ((boolean)resultQuery.get(i)[0]){
-					pieModel.set("Accepted", (Double) resultQuery.get(i)[1]);
-				}
-				else{
-					pieModel.set("Not accepted", (Double) resultQuery.get(i)[1]);
-				}
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("CostFormatTimeTrackingAccepted")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countCostFormatTimeTrackingByProjectAcceptedAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Double) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TimeFormatTimeTrackingAccepted")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countTimeFormatTimeTrackingByProjectAcceptedAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Double) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("CostFormatTimeTrackingNotAccepted")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countCostFormatTimeTrackingByProjectNotAcceptedAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Double) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TimeFormatTimeTrackingNotAccepted")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countTimeFormatTimeTrackingByProjectNotAcceptedAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Double) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("FormatTimeTracking")) {
-
-			List<Object[]> resultQuery = taskTimeTrackingDao.countFormatTimeTrackingByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TaskType")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskTypeByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TaskDeadlineType")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskDeadlineTypeByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TaskStatus")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskStatusByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TaskDeadlineStatus")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskDeadlineStatusByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TaskPriority")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskPriorityByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		if (reportType.equals("TaskDeadlinePriority")) {
-
-			List<Object[]> resultQuery = taskDao.countTaskDeadlinePriorityByProjectAndUsers(projectServiceImpl.getSelectedCurrentProject(), dateStart, dateFinish, users);
-
-			for (int i = 0; i < resultQuery.size(); i++) {
-
-				pieModel.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-			}
-
-			if (resultQuery.size() <= 0) {
-				pieModel.set("Data will appear here", 0);
-			}
-
-		}
-
-		pieModel.setLegendPosition("w");
-		pieModel.setExtender("skinPie");
-
-		return pieModel;
-	}
-
-	public LineChartModel initLinearModel(String reportType, Date dateStart, Date dateFinish, ArrayList<UserEntity> users) {
-
-		ProjectEntity currentProject = projectServiceImpl.getSelectedCurrentProject();
-
-		List<Object[]> resultQuery = taskHistoryDao.countTaskActivityByProject(currentProject, currentProject.getStartDate(), currentProject.getFinishDate());
-
-		LineChartModel model = new LineChartModel();
-
-		LineChartSeries lineChartSeries = new LineChartSeries();
-		lineChartSeries.setLabel("Task Activity");
-
-		for (int i = 0; i < resultQuery.size(); i++) {
-
-			lineChartSeries.set((String) resultQuery.get(i)[0].toString(), (Long) resultQuery.get(i)[1]);
-
-		}
-
-		if (resultQuery.size() <= 0) {
-			lineChartSeries.set(currentProject.getStartDate().toString(), 0);
-		}
-
-		model.addSeries(lineChartSeries);
-
-		model.setLegendPosition("e");
-
-		model.getAxis(AxisType.Y);
-		DateAxis axis = new DateAxis();
-		axis.setTickAngle(-51);
-		axis.setMin(currentProject.getStartDate().toString());
-		axis.setMax(currentProject.getFinishDate().toString());
-		axis.setTickFormat("%b %#d, %y");
-		model.getAxes().put(AxisType.X, axis);
-		model.setAnimate(true);
-
-		model.setExtender("skinChart");
-
-		return model;
-	}
-
-	public void reportUpdate(AjaxBehaviorEvent event) {
-
-		org.springframework.webflow.execution.RequestContext requestContext = RequestContextHolder.getRequestContext();
-		RequestControlContext rec = (RequestControlContext) requestContext;
-		//place variables you need in next flow phase here; flash,application,session scope
-		rec.handleEvent(new Event(this, "MenuReports"));
-		return;
-	}
-
-	public void reportUpdate() {
-
-		org.springframework.webflow.execution.RequestContext requestContext = RequestContextHolder.getRequestContext();
-		RequestControlContext rec = (RequestControlContext) requestContext;
-		//place variables you need in next flow phase here; flash,application,session scope
-		rec.handleEvent(new Event(this, "MenuReports"));
-		return;
-	}
-
 	public List<String> getImages() {
 		return images;
 	}
-
 
 	public String onFlowProcess(FlowEvent event) {  
 
 		return event.getNewStep();  
 	}
-
 
 	public void curentPageIsProjects() {
 
@@ -1029,7 +527,6 @@ public class GlobalControllerImpl implements Serializable {
 		}
 	}
 
-
 	public void changeListenerCurrentProjectChange(AjaxBehaviorEvent event) {
 
 		currentProjectChange(projectServiceImpl.getSelectedCurrentProject());
@@ -1041,7 +538,6 @@ public class GlobalControllerImpl implements Serializable {
 		rec.handleEvent(new Event(this, "MenuTask"));
 		return;
 	}
-
 
 	public void changeListenerEndWizard() {
 
@@ -1081,6 +577,7 @@ public class GlobalControllerImpl implements Serializable {
 			projectUserRoleServiceImpl.createProjectUserRole(projectUserRoleServiceImpl.getNewProject(), userEntity, projectUserRoleServiceImpl.getNewUserRole());
 			projectUserRoleServiceImpl.createProjectUserRole(projectUserRoleServiceImpl.getNewProject(), userEntity, userRoleDao.findByName("Base"));
 		}
+
 		projectUserRoleServiceImpl.setProjects(projectUserRoleDao.findProject(userEntity, true));
 		projectUserRoleServiceImpl.setProjectsByProjectManager(projectUserRoleDao.findProjectByUserRoleProjectMnager(userEntity, userRoleDao.findByName("Project Manager"), true));
 		projectServiceImpl.setProjects(projectUserRoleServiceImpl.getProjects());
@@ -1164,14 +661,14 @@ public class GlobalControllerImpl implements Serializable {
 		}
 
 		if (checkAvailableProjectManager(projectOpenByDefault,userEntity)) { 
-			setReportUsers(projectUserRoleDao.findUser(projectOpenByDefault, true));
-			setSelectedReportUsers(projectUserRoleDao.findUser(projectOpenByDefault, true));
+			globalBarReportControllerImpl.setReportUsers(projectUserRoleDao.findUser(projectOpenByDefault, true));
+			globalBarReportControllerImpl.setSelectedReportUsers(projectUserRoleDao.findUser(projectOpenByDefault, true));
 		}
 		else{
 			List<UserEntity> listCurrentReportUser = new ArrayList<UserEntity>();
 			listCurrentReportUser.add(userEntity);
-			setReportUsers(listCurrentReportUser);
-			setSelectedReportUsers(listCurrentReportUser);
+			globalBarReportControllerImpl.setReportUsers(listCurrentReportUser);
+			globalBarReportControllerImpl.setSelectedReportUsers(listCurrentReportUser);
 		}
 
 	}
@@ -1254,14 +751,14 @@ public class GlobalControllerImpl implements Serializable {
 		projectUserRoleServiceImpl.setUserByProject(currentProjectEntity);
 
 		if (checkAvailableProjectManager(currentProjectEntity, userServiceImpl.getCurrentUser())) { 
-			setReportUsers(projectUserRoleDao.findUser(currentProjectEntity, true));
-			setSelectedReportUsers(projectUserRoleDao.findUser(currentProjectEntity, true));
+			globalBarReportControllerImpl.setReportUsers(projectUserRoleDao.findUser(currentProjectEntity, true));
+			globalBarReportControllerImpl.setSelectedReportUsers(projectUserRoleDao.findUser(currentProjectEntity, true));
 		}
 		else{
 			List<UserEntity> listCurrentReportUser = new ArrayList<UserEntity>();
 			listCurrentReportUser.add(userServiceImpl.getCurrentUser());
-			setReportUsers(listCurrentReportUser);
-			setSelectedReportUsers(listCurrentReportUser);
+			globalBarReportControllerImpl.setReportUsers(listCurrentReportUser);
+			globalBarReportControllerImpl.setSelectedReportUsers(listCurrentReportUser);
 		}
 
 	}
@@ -1520,7 +1017,6 @@ public class GlobalControllerImpl implements Serializable {
 			for(FormatTimeTrackingEntity formatTimeTrackingEntity:formatTimeTrackingServiceImpl.getFormatTimeTrackings()){
 				formatTimeTrackingDao.delete(formatTimeTrackingEntity);
 			}
-
 
 			//ProjectByDefault
 			UserSettingEntity userSettingEntity = userSettingDao.findByUser(userServiceImpl.getCurrentUser()); 
@@ -2392,77 +1888,6 @@ public class GlobalControllerImpl implements Serializable {
 		this.images = images;
 	}
 
-	public String getReportType() {
-		return reportType;
-	}
-
-	public void setReportType(String reportType) {
-		this.reportType = reportType;
-	}
-
-	public Date getReportDataStart() {
-		return reportDataStart;
-	}
-
-	public void setReportDataStart(Date reportDataStart) {
-		this.reportDataStart = reportDataStart;
-	}
-
-	public Date getReportDataFinish() {
-		return reportDataFinish;
-	}
-
-	public void setReportDataFinish(Date reportDataFinish) {
-		this.reportDataFinish = reportDataFinish;
-	}
-
-	public UserEntity getReportUser() {
-		return reportUser;
-	}
-
-	public void setReportUser(UserEntity reportUser) {
-		this.reportUser = reportUser;
-	}
-
-	public List<UserEntity> getReportUsers() {
-		return reportUsers;
-	}
-
-	public void setReportUsers(List<UserEntity> reportUsers) {
-		this.reportUsers = reportUsers;
-	}
-
-	public List<UserEntity> getSelectedReportUsers() {
-		return selectedReportUsers;
-	}
-
-	public void setSelectedReportUsers(List<UserEntity> selectedReportUsers) {
-		if(selectedReportUsers.isEmpty()){
-			selectedReportUsers.add(userServiceImpl.getCurrentUser());
-		}
-		this.selectedReportUsers = selectedReportUsers;
-		updateSelectedValuesReportUsersDisplayString();
-	}
-
-	public String getSelectedValuesReportUsersDisplayString() {
-		return selectedValuesReportUsersDisplayString;
-	}
-
-	public void setSelectedValuesReportUsersDisplayString(String selectedValuesReportUsersDisplayString) {
-		this.selectedValuesReportUsersDisplayString = selectedValuesReportUsersDisplayString;
-	}
-
-	public void updateSelectedValuesReportUsersDisplayString(){
-
-		String currentUsersDisplayString = getSelectedReportUsers().toString();
-		currentUsersDisplayString.replace('[', ' ');
-		currentUsersDisplayString.replace(']', ' ');
-		if (currentUsersDisplayString.length() > 20){
-			currentUsersDisplayString = currentUsersDisplayString.substring(0, 19) + "..."; 
-		}
-		setSelectedValuesReportUsersDisplayString(currentUsersDisplayString);
-	}
-
 	public int getTaskTabView() {
 		return taskTabView;
 	}
@@ -2487,7 +1912,12 @@ public class GlobalControllerImpl implements Serializable {
 		this.settingTabView = settingTabView;
 	}
 
+	public GlobalBarReportControllerImpl getGlobalBarReportControllerImpl() {
+		return globalBarReportControllerImpl;
+	}
 
-
+	public void setGlobalBarReportControllerImpl(GlobalBarReportControllerImpl globalBarReportControllerImpl) {
+		this.globalBarReportControllerImpl = globalBarReportControllerImpl;
+	}
 
 }

@@ -17,9 +17,6 @@
 	
 	<aop:aspectj-autoproxy/>
 	
-	<!-- Error -->
-	<!-- <bean id="pfExceptionHandler" class="com.company.module.error.ExceptionHandlerView" /> -->
-	
 	<!-- DAO declarations -->
 
 	<!-- User -->
@@ -99,8 +96,8 @@
 
 	<bean id="TaskTimeTrackingServiceImpl" class="com.MyProject.services.impl.TaskTimeTrackingServiceImpl" scope="session">
     	<aop:scoped-proxy/>
-		<property name="taskTimeTrackingDao" ref="taskTimeTrackingDao" />
-		<property name="userSettingDao" ref="userSettingDao" />
+		<property name="taskTimeTrackingDao" 	ref="taskTimeTrackingDao" />
+		<property name="userSettingDao" 		ref="userSettingDao" />
 	</bean>
 
 	<!-- Task -->
@@ -117,8 +114,7 @@
 	<bean id="ProjectServiceImpl" class="com.MyProject.services.impl.ProjectServiceImpl" scope="session">
     	<aop:scoped-proxy/>
 		<property name="projectDao" ref="projectDao" />
-		<property name="userDao" ref="userDao" />
-		<!-- <aop:scoped-proxy proxy-target-class="false" /> -->
+		<property name="userDao" 	ref="userDao" />
 	</bean>
 
 	<!-- ProjectFile -->
@@ -197,14 +193,14 @@
     	<aop:scoped-proxy/>
 		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
 		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
-		<property name="userDao" ref="userDao" />
-		<property name="userRoleDao" ref="userRoleDao" />
+		<property name="userDao" 			ref="userDao" />
+		<property name="userRoleDao" 		ref="userRoleDao" />
 	</bean>
 
 	<bean id="projectsByUserJasperReportsBean"
 		class="com.company.module.bean.report.ProjectsByUserJasperReportsBean">
 		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
-		<property name="userServiceImpl" ref="userServiceImpl" />
+		<property name="userServiceImpl" 	ref="userServiceImpl" />
 	</bean>
 
 	<bean id="usersByProjectJasperReportsBean"
@@ -216,59 +212,70 @@
 	<bean id="timeTrackingJasperReportsBean"
 		class="com.company.module.bean.report.TimeTrackingJasperReportsBean">
 		<property name="taskTimeTrackingDao" ref="taskTimeTrackingDao" />
-		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
+		<property name="projectServiceImpl"  ref="ProjectServiceImpl" />
+	</bean>
+	
+	<!-- GlobalBarReportControllerImpl -->
+	<bean id="GlobalBarReportControllerImpl" class="com.MyProject.services.impl.GlobalBarReportControllerImpl" scope="session">
+    	<aop:scoped-proxy/>
+    	
+    	<property name="taskDao" 				ref="taskDao" />
+		<property name="taskTimeTrackingDao" 	ref="taskTimeTrackingDao" />
+		<property name="taskHistoryDao" 		ref="taskHistoryDao" />
+		<property name="userServiceImpl" 		ref="userServiceImpl" />
+		<property name="projectServiceImpl" 	ref="ProjectServiceImpl" />
+
 	</bean>
 
 	<!-- GlobalControllerImpl -->
 	<bean id="GlobalControllerImpl" class="com.MyProject.services.impl.GlobalControllerImpl" scope="session">
     	<aop:scoped-proxy/>
+    	
+    	<property name="projectDao" 				ref="projectDao" />
+		<property name="formatTimeTrackingDao" 		ref="formatTimeTrackingDao" />
+		<property name="userDao" 					ref="userDao" />
+		<property name="userRoleDao" 				ref="userRoleDao" />
+		<property name="userSettingDao" 			ref="userSettingDao" />
+		<property name="taskDao" 					ref="taskDao" />
+		<property name="taskFileDao" 				ref="taskFileDao" />
+		<property name="taskStatusHistoryDao" 		ref="taskStatusHistoryDao" />
+		<property name="taskTimeTrackingDao" 		ref="taskTimeTrackingDao" />
+		<property name="taskHistoryDao" 			ref="taskHistoryDao" />
+		<property name="taskStatusDao" 				ref="taskStatusDao" />
+		<property name="taskTypeDao" 				ref="taskTypeDao" />
+		<property name="taskPriorityDao" 			ref="taskPriorityDao" />
+		<property name="contractDao" 				ref="contractDao" />
+		<property name="contractorOrganizationDao" 	ref="contractorOrganizationDao" />
+		<property name="customerOrganizationDao" 	ref="customerOrganizationDao" />
+		<property name="projectFileDao" 			ref="projectFileDao" />
+		<property name="projectMilestoneDao" 		ref="projectMilestoneDao" />
+		<property name="projectCostSettingDao" 		ref="projectCostSettingDao" />
+		<property name="projectUserRoleDao" 		ref="projectUserRoleDao" />
 
-		<property name="taskServiceImpl" ref="TaskServiceImpl" />
-		<property name="taskTimeTrackingServiceImpl" ref="TaskTimeTrackingServiceImpl" />
-		<property name="taskHistoryServiceImpl" ref="TaskHistoryServiceImpl" />
-		<property name="taskStatusHistoryServiceImpl" ref="TaskStatusHistoryServiceImpl" />
-		<property name="taskFileServiceImpl" ref="TaskFileServiceImpl" />
-		<property name="taskTypeServiceImpl" ref="TaskTypeServiceImpl" />
-		<property name="taskStatusServiceImpl" ref="TaskStatusServiceImpl" />
-		<property name="taskPriorityServiceImpl" ref="TaskPriorityServiceImpl" />
-
-		<property name="userServiceImpl" ref="userServiceImpl" />
-		<property name="userRoleServiceImpl" ref="UserRoleServiceImpl" />
-		<property name="userSettingServiceImpl" ref="UserSettingServiceImpl" />
-		<property name="contractServiceImpl" ref="ContractServiceImpl" />
-		<property name="contractorOrganizationServiceImpl" ref="ContractorOrganizationServiceImpl" />
-		<property name="customerOrganizationServiceImpl" ref="CustomerOrganizationServiceImpl" />
-		<property name="projectServiceImpl" ref="ProjectServiceImpl" />
-		<property name="projectFileServiceImpl" ref="ProjectFileServiceImpl" />
-		<property name="projectMilestoneServiceImpl" ref="ProjectMilestoneServiceImpl" />
-		<property name="projectCostSettingEntityServiceImpl" ref="ProjectCostSettingEntityServiceImpl" />
-		<property name="projectUserRoleServiceImpl" ref="ProjectUserRoleServiceImpl" />
-		<property name="formatTimeTrackingServiceImpl" ref="FormatTimeTrackingServiceImpl" />
-
-		<property name="projectDao" ref="projectDao" />
-		<property name="formatTimeTrackingDao" ref="formatTimeTrackingDao" />
-
-		<property name="userDao" ref="userDao" />
-		<property name="userRoleDao" ref="userRoleDao" />
-		<property name="userSettingDao" ref="userSettingDao" />
-		<property name="taskDao" ref="taskDao" />
-		<property name="taskFileDao" ref="taskFileDao" />
-		<property name="taskStatusHistoryDao" ref="taskStatusHistoryDao" />
-		<property name="taskTimeTrackingDao" ref="taskTimeTrackingDao" />
-		<property name="taskHistoryDao" ref="taskHistoryDao" />
-		<property name="taskStatusDao" ref="taskStatusDao" />
-		<property name="taskTypeDao" ref="taskTypeDao" />
-		<property name="taskPriorityDao" ref="taskPriorityDao" />
-		<property name="contractDao" ref="contractDao" />
-		<property name="contractorOrganizationDao" ref="contractorOrganizationDao" />
-		<property name="customerOrganizationDao" ref="customerOrganizationDao" />
-		<property name="projectFileDao" ref="projectFileDao" />
-		<property name="projectMilestoneDao" ref="projectMilestoneDao" />
-		<property name="projectCostSettingDao" ref="projectCostSettingDao" />
-		<property name="projectUserRoleDao" ref="projectUserRoleDao" />
+		<property name="taskServiceImpl" 						ref="TaskServiceImpl" />
+		<property name="taskTimeTrackingServiceImpl" 			ref="TaskTimeTrackingServiceImpl" />
+		<property name="taskHistoryServiceImpl" 				ref="TaskHistoryServiceImpl" />
+		<property name="taskStatusHistoryServiceImpl" 			ref="TaskStatusHistoryServiceImpl" />
+		<property name="taskFileServiceImpl" 					ref="TaskFileServiceImpl" />
+		<property name="taskTypeServiceImpl" 					ref="TaskTypeServiceImpl" />
+		<property name="taskStatusServiceImpl" 					ref="TaskStatusServiceImpl" />
+		<property name="taskPriorityServiceImpl" 				ref="TaskPriorityServiceImpl" />
+		<property name="userServiceImpl" 						ref="userServiceImpl" />
+		<property name="userRoleServiceImpl" 					ref="UserRoleServiceImpl" />
+		<property name="userSettingServiceImpl" 				ref="UserSettingServiceImpl" />
+		<property name="contractServiceImpl" 					ref="ContractServiceImpl" />
+		<property name="contractorOrganizationServiceImpl" 		ref="ContractorOrganizationServiceImpl" />
+		<property name="customerOrganizationServiceImpl" 		ref="CustomerOrganizationServiceImpl" />
+		<property name="projectServiceImpl" 					ref="ProjectServiceImpl" />
+		<property name="projectFileServiceImpl" 				ref="ProjectFileServiceImpl" />
+		<property name="projectMilestoneServiceImpl" 			ref="ProjectMilestoneServiceImpl" />
+		<property name="projectCostSettingEntityServiceImpl" 	ref="ProjectCostSettingEntityServiceImpl" />
+		<property name="projectUserRoleServiceImpl" 			ref="ProjectUserRoleServiceImpl" />
+		<property name="formatTimeTrackingServiceImpl" 			ref="FormatTimeTrackingServiceImpl" />
+		<property name="globalBarReportControllerImpl" 			ref="GlobalBarReportControllerImpl" />
 
 	</bean>
-
+	
 	<bean
 		class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
 

@@ -34,7 +34,7 @@ public class TaskFileEntity implements Serializable {
 	@Column(name="task_file_Name", length = 255, nullable = false)
 	private String name;
 	
-	@Column(name="task_file_Type", length = 150, nullable = false)
+	@Column(name="task_file_Type", length = 255, nullable = false)
 	private String type;
 	
 	@Column(name="task_file_Data", columnDefinition="longblob")

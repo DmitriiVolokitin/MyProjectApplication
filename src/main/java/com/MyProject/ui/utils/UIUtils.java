@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**
  * Helper util to assist in user interface
  * 
- * @author Arthur Vin
+ * @author Di
  */
 public class UIUtils implements Serializable {
 	private static final long serialVersionUID = 7872083365595569634L;

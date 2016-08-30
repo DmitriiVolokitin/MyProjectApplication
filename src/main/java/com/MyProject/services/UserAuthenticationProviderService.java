@@ -5,7 +5,7 @@ import com.MyProject.domain.user.UserEntity;
 /**
  * Provides processing service to set user authentication session
  * 
- * @author Arthur Vin
+ * @author Di
  */
 public interface UserAuthenticationProviderService {
 

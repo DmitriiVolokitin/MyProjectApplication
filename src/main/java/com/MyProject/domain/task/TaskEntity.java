@@ -79,7 +79,7 @@ public class TaskEntity implements Serializable {
 	@Column(name="task_Dead_Line", nullable = true)
 	private Date deadLine;
 
-	@Column(name="task_short_Content", length = 100, nullable = false)
+	@Column(name="task_short_Content", length = 255, nullable = false)
 	private String shortContent;
 
 	@Column(name="task_full_Content", length = 255, nullable = true)
